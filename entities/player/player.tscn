@@ -1,0 +1,44 @@
+[gd_scene load_steps=10 format=3 uid="uid://couxwdf1cvkg8"]
+
+[ext_resource type="Script" path="res://entities/player/Player.cs" id="1_sr3iy"]
+[ext_resource type="Resource" uid="uid://72n6wvpfgs7d" path="res://entities/player/player_stats.tres" id="2_flxjy"]
+[ext_resource type="Script" path="res://entities/common/StateMachine.cs" id="3_5sb4k"]
+[ext_resource type="Texture2D" uid="uid://cpo3prfrxaq3w" path="res://entities/player/player_sprite.png" id="4_v528k"]
+[ext_resource type="Script" path="res://entities/common/HitboxComponent.cs" id="5_2kgod"]
+[ext_resource type="Script" path="res://entities/player/states/IdleState.cs" id="5_7b7do"]
+[ext_resource type="Script" path="res://entities/player/states/WalkState.cs" id="7_y4oou"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_td835"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_832pm"]
+size = Vector2(32, 32)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_sr3iy")
+Stats = ExtResource("2_flxjy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_td835")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_v528k")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+script = ExtResource("5_2kgod")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(4.76837e-07, 0)
+shape = SubResource("RectangleShape2D_832pm")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_states", "_startingState")]
+script = ExtResource("3_5sb4k")
+EnableDebugLogs = true
+_states = [NodePath("IdleState"), NodePath("WalkState")]
+_startingState = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("5_7b7do")
+
+[node name="WalkState" type="Node" parent="StateMachine"]
+script = ExtResource("7_y4oou")

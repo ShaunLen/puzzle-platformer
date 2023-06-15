@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdm8svbwmc7j8"]
+
+[ext_resource type="PackedScene" uid="uid://b6mj6k6n28qk6" path="res://world/levels/prototype_level.tscn" id="1_tq2nu"]
+[ext_resource type="PackedScene" uid="uid://couxwdf1cvkg8" path="res://entities/player/player.tscn" id="2_415dg"]
+
+[node name="PrototypeGame" type="Node2D"]
+
+[node name="PrototypeLevel" parent="." instance=ExtResource("1_tq2nu")]
+
+[node name="Player" parent="." instance=ExtResource("2_415dg")]
+position = Vector2(181, 93)
