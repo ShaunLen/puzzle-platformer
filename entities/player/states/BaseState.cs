@@ -12,5 +12,5 @@ public partial class BaseState : State
     {
         Player = (Player) GetTree().GetFirstNodeInGroup("Player");
         Stats = Player.Stats;
-    } 
+    }
 }

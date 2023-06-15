@@ -4,6 +4,18 @@
 
 [resource]
 script = ExtResource("1_8eu4b")
-WalkSpeed = 50
-WalkAcceleration = 35
-WalkDeceleration = 1
+WalkSpeed = 200
+WalkAcceleration = 120
+WalkDeceleration = 150
+AirSpeed = 200
+AirAcceleration = 120
+AirDeceleration = 150
+MaxFallSpeed = 1000
+FastFallSpeed = 20
+JumpHeight = 64
+JumpTimeToApex = 0.5
+JumpTimeToGround = 0.4
+JumpApexBoost = 2.0
+JumpCutMultiplier = 2
+WallSlideSpeed = 0
+FastSlideMultiplier = 0

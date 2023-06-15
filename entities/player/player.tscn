@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://couxwdf1cvkg8"]
+[gd_scene load_steps=12 format=3 uid="uid://couxwdf1cvkg8"]
 
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_sr3iy"]
 [ext_resource type="Resource" uid="uid://72n6wvpfgs7d" path="res://entities/player/player_stats.tres" id="2_flxjy"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://entities/common/HitboxComponent.cs" id="5_2kgod"]
 [ext_resource type="Script" path="res://entities/player/states/IdleState.cs" id="5_7b7do"]
 [ext_resource type="Script" path="res://entities/player/states/WalkState.cs" id="7_y4oou"]
+[ext_resource type="Script" path="res://entities/player/states/FallState.cs" id="8_w1yyx"]
+[ext_resource type="Script" path="res://entities/player/states/JumpState.cs" id="9_yejaq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_td835"]
 size = Vector2(32, 32)
@@ -34,7 +36,7 @@ shape = SubResource("RectangleShape2D_832pm")
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_states", "_startingState")]
 script = ExtResource("3_5sb4k")
 EnableDebugLogs = true
-_states = [NodePath("IdleState"), NodePath("WalkState")]
+_states = [NodePath("IdleState"), NodePath("WalkState"), NodePath("FallState"), NodePath("JumpState")]
 _startingState = NodePath("IdleState")
 
 [node name="IdleState" type="Node" parent="StateMachine"]
@@ -42,3 +44,11 @@ script = ExtResource("5_7b7do")
 
 [node name="WalkState" type="Node" parent="StateMachine"]
 script = ExtResource("7_y4oou")
+
+[node name="FallState" type="Node" parent="StateMachine"]
+script = ExtResource("8_w1yyx")
+
+[node name="JumpState" type="Node" parent="StateMachine"]
+script = ExtResource("9_yejaq")
+
+[connection signal="Ready" from="." to="StateMachine/JumpState" method="OnPlayerReady"]

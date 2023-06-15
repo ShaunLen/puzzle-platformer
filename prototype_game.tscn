@@ -9,3 +9,16 @@
 
 [node name="Player" parent="." instance=ExtResource("2_415dg")]
 position = Vector2(181, 93)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(181, 93)
+offset = Vector2(0, -100)
+process_callback = 0
+position_smoothing_enabled = true
+
+[node name="SpinBox" type="SpinBox" parent="."]
+offset_right = 223.0
+offset_bottom = 31.0

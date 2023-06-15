@@ -14,8 +14,11 @@ public partial class IdleState : GroundedState
 
     public override State PhysicsProcess(double delta)
     {
+        var state = base.PhysicsProcess(delta);
+        if (state != null) return state;
+        
         if (InputManager.GetAxis(InputManager.Action.MoveLeft, InputManager.Action.MoveRight) != 0)
-            return StateMachine.GetState(typeof(WalkState));
+            return StateMachine.GetState<WalkState>();
 
         return null;
     }

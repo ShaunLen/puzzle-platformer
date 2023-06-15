@@ -11,7 +11,7 @@ public partial class WalkState : GroundedState
         HandleHorizontalMovement(delta);
         
         if(Player.Velocity.X == 0)
-            return StateMachine.GetState(typeof(IdleState));
+            return StateMachine.GetState<IdleState>();
 
         return null;
     }

@@ -43,8 +43,15 @@ public partial class StateMachine : Node
             ChangeState(newState);
     }
 
-    public State GetState(Type stateType)
+    public State GetState<TState>()
     {
-        return _states.FirstOrDefault(s => s.GetType() == stateType);
+        return _states.FirstOrDefault(s => s is TState);
+    }
+
+    public void ChangeState<TState>()
+    {
+        var newState = _states.FirstOrDefault(s => s is TState);
+        if(newState is not null) 
+            ChangeState(newState);
     }
 }
