@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Godot;
 
@@ -7,12 +8,16 @@ namespace PuzzlePlatformer.entities.common;
 public partial class StateMachine : Node
 {
     [Export] public bool EnableDebugLogs;
+    [Export] private State[] _states;
     [Export] private State _startingState;
     public State CurrentState { get; private set; }
     public State PreviousState { get; private set; }
 
     public void Init()
     {
+        foreach (var state in GetChildren().OfType<State>())
+            state.StateMachine = this;
+        
         ChangeState(_startingState);
     }
     
@@ -36,5 +41,10 @@ public partial class StateMachine : Node
         State newState = CurrentState.PhysicsProcess(delta);
         if(newState is not null)
             ChangeState(newState);
+    }
+
+    public State GetState(Type stateType)
+    {
+        return _states.FirstOrDefault(s => s.GetType() == stateType);
     }
 }

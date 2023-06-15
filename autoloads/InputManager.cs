@@ -43,6 +43,14 @@ public partial class InputManager : Node
 
         return 0;
     }
+    
+    public static float GetWalkAxis(bool bypassInputEnabled = false)
+    {
+        if (_inputEnabled || bypassInputEnabled)
+            return Input.GetAxis(Action.MoveLeft.ToInputMapName(), Action.MoveRight.ToInputMapName());
+
+        return 0;
+    }
 }
 
 internal static class Extensions

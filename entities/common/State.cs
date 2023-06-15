@@ -4,7 +4,7 @@ namespace PuzzlePlatformer.entities.common;
 
 public partial class State : Node
 {
-    protected StateMachine StateMachine;
+    public StateMachine StateMachine;
 
     public virtual void Enter()
     {

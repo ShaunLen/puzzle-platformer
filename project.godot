@@ -11,13 +11,21 @@ config_version=5
 [application]
 
 config/name="Puzzle Platformer"
-run/main_scene="res://entities/player/player.tscn"
+run/main_scene="res://prototype_game.tscn"
 config/features=PackedStringArray("4.1", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
 InputManager="*res://autoloads/InputManager.cs"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
@@ -49,3 +57,5 @@ dash={
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.180392, 0.203922, 0.25098, 1)
+environment/size/viewport_height=270

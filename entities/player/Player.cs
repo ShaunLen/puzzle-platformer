@@ -16,4 +16,15 @@ public partial class Player : CharacterBody2D
         _stateMachine = GetNode<StateMachine>("StateMachine");
         _stateMachine.Init();
     }
+    
+    public override void _Process(double delta)
+    {
+        _stateMachine.Process(delta);
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        _stateMachine.PhysicsProcess(delta);
+        MoveAndSlide();
+    }
 }
