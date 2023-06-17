@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://couxwdf1cvkg8"]
+[gd_scene load_steps=15 format=3 uid="uid://couxwdf1cvkg8"]
 
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_sr3iy"]
 [ext_resource type="Resource" uid="uid://72n6wvpfgs7d" path="res://entities/player/player_stats.tres" id="2_flxjy"]
@@ -9,14 +9,22 @@
 [ext_resource type="Script" path="res://entities/player/states/WalkState.cs" id="7_y4oou"]
 [ext_resource type="Script" path="res://entities/player/states/FallState.cs" id="8_w1yyx"]
 [ext_resource type="Script" path="res://entities/player/states/JumpState.cs" id="9_yejaq"]
+[ext_resource type="Texture2D" uid="uid://beftovlukfcrh" path="res://art/light_texture.webp" id="10_juijd"]
+[ext_resource type="Script" path="res://addons/trail_2d/trail_2d.gd" id="11_73x7r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_td835"]
-size = Vector2(32, 32)
+size = Vector2(24, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_832pm"]
-size = Vector2(32, 32)
+size = Vector2(24, 48)
+
+[sub_resource type="Curve" id="Curve_m5lbe"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.252632), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+z_index = 10
+position = Vector2(15, 0)
 script = ExtResource("1_sr3iy")
 Stats = ExtResource("2_flxjy")
 
@@ -30,12 +38,10 @@ texture = ExtResource("4_v528k")
 script = ExtResource("5_2kgod")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(4.76837e-07, 0)
 shape = SubResource("RectangleShape2D_832pm")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_states", "_startingState")]
 script = ExtResource("3_5sb4k")
-EnableDebugLogs = true
 _states = [NodePath("IdleState"), NodePath("WalkState"), NodePath("FallState"), NodePath("JumpState")]
 _startingState = NodePath("IdleState")
 
@@ -45,10 +51,33 @@ script = ExtResource("5_7b7do")
 [node name="WalkState" type="Node" parent="StateMachine"]
 script = ExtResource("7_y4oou")
 
-[node name="FallState" type="Node" parent="StateMachine"]
+[node name="FallState" type="Node" parent="StateMachine" node_paths=PackedStringArray("_coyoteTimer")]
 script = ExtResource("8_w1yyx")
+_coyoteTimer = NodePath("../../CoyoteTimer")
 
 [node name="JumpState" type="Node" parent="StateMachine"]
 script = ExtResource("9_yejaq")
 
-[connection signal="Ready" from="." to="StateMachine/JumpState" method="OnPlayerReady"]
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.580346, 1, 1, 1)
+energy = 0.2
+shadow_enabled = true
+texture = ExtResource("10_juijd")
+texture_scale = 2.0
+
+[node name="Trail" type="Line2D" parent="."]
+z_index = 5
+position = Vector2(1, 0)
+width = 3.0
+width_curve = SubResource("Curve_m5lbe")
+default_color = Color(0.733333, 0.945098, 0.968627, 0.345098)
+script = ExtResource("11_73x7r")
+length = 60
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="JumpBufferTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="JumpBufferTimer" to="." method="OnJumpBufferTimerTimeout"]

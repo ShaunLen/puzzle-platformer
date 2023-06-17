@@ -1,11 +1,15 @@
 using Godot;
-using PuzzlePlatformer.entities.common;
 
-namespace PuzzlePlatformer.entities.player;
+namespace PuzzlePlatformer.resources;
 
 [GlobalClass]
 public partial class PlayerStats : Resource
 {
+    [ExportGroup("Enabled Abilities")] 
+    [Export] public bool JumpEnabled;
+    [Export] public bool DashEnabled;
+    [Export] public bool WallJumpEnabled;
+    
     [ExportGroup("Grounded")]
     [Export] public int WalkSpeed;
     [Export] public int WalkAcceleration;

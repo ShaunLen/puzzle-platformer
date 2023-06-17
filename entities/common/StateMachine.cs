@@ -7,11 +7,15 @@ namespace PuzzlePlatformer.entities.common;
 [GlobalClass]
 public partial class StateMachine : Node
 {
-    [Export] public bool EnableDebugLogs;
+    [ExportGroup("Debug")]
+    [Export] public bool EnterStateLog;
+    [Export] public bool ExitStateLog;
+    
+    [ExportGroup("States")]
     [Export] private State[] _states;
     [Export] private State _startingState;
     public State CurrentState { get; private set; }
-    public State PreviousState { get; private set; }
+    private State _previousState;
 
     public void Init()
     {
@@ -23,29 +27,26 @@ public partial class StateMachine : Node
     
     private void ChangeState(State newState)
     {
+        if (newState is null || !newState.Enabled)
+        {
+            GD.Print(this.Name + " attempted to transition to non-existent or disabled state.");
+            return;
+        }
+            
         CurrentState?.Exit();
-        PreviousState = CurrentState;
+        _previousState = CurrentState;
         CurrentState = newState;
         CurrentState.Enter();
     }
     
     public void Process(double delta)
     {
-        State newState = CurrentState.Process(delta);
-        if(newState is not null)
-            ChangeState(newState);
+        CurrentState.Process(delta);
     }
 
     public void PhysicsProcess(double delta)
     {
-        State newState = CurrentState.PhysicsProcess(delta);
-        if(newState is not null)
-            ChangeState(newState);
-    }
-
-    public State GetState<TState>()
-    {
-        return _states.FirstOrDefault(s => s is TState);
+        CurrentState.PhysicsProcess(delta);
     }
 
     public void ChangeState<TState>()
@@ -53,5 +54,15 @@ public partial class StateMachine : Node
         var newState = _states.FirstOrDefault(s => s is TState);
         if(newState is not null) 
             ChangeState(newState);
+    }
+    
+    public State GetState<TState>()
+    {
+        return _states.FirstOrDefault(s => s is TState);
+    }
+
+    public bool IsPreviousState<TState>()
+    {
+        return _previousState.GetType() == typeof(TState) || _previousState.GetType().IsSubclassOf(typeof(TState));
     }
 }

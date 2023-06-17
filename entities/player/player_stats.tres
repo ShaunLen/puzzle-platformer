@@ -1,21 +1,24 @@
 [gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://72n6wvpfgs7d"]
 
-[ext_resource type="Script" path="res://entities/player/PlayerStats.cs" id="1_8eu4b"]
+[ext_resource type="Script" path="res://resources/PlayerStats.cs" id="1_na71p"]
 
 [resource]
-script = ExtResource("1_8eu4b")
-WalkSpeed = 200
-WalkAcceleration = 120
-WalkDeceleration = 150
-AirSpeed = 200
-AirAcceleration = 120
-AirDeceleration = 150
-MaxFallSpeed = 1000
+script = ExtResource("1_na71p")
+JumpEnabled = true
+DashEnabled = false
+WallJumpEnabled = false
+WalkSpeed = 250
+WalkAcceleration = 210
+WalkDeceleration = 210
+AirSpeed = 250
+AirAcceleration = 210
+AirDeceleration = 210
+MaxFallSpeed = 700
 FastFallSpeed = 20
-JumpHeight = 64
-JumpTimeToApex = 0.5
-JumpTimeToGround = 0.4
+JumpHeight = 144
+JumpTimeToApex = 0.32
+JumpTimeToGround = 0.24
 JumpApexBoost = 2.0
 JumpCutMultiplier = 2
-WallSlideSpeed = 0
-FastSlideMultiplier = 0
+WallSlideSpeed = 10
+FastSlideMultiplier = 2

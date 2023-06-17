@@ -1,18 +1,14 @@
-using Godot;
-using System;
-using PuzzlePlatformer.autoloads;
-using PuzzlePlatformer.entities.common;
-using PuzzlePlatformer.entities.player.states;
+namespace PuzzlePlatformer.entities.player.states;
 
 public partial class WalkState : GroundedState
 {
-    public override State PhysicsProcess(double delta)
+    public override void PhysicsProcess(double delta)
     {
+        base.PhysicsProcess(delta);
+
         HandleHorizontalMovement(delta);
         
         if(Player.Velocity.X == 0)
-            return StateMachine.GetState<IdleState>();
-
-        return null;
+            StateMachine.ChangeState<IdleState>();
     }
 }

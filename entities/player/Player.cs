@@ -7,12 +7,18 @@ namespace PuzzlePlatformer.entities.player;
 [GlobalClass]
 public partial class Player : CharacterBody2D
 {
-    [Export] public PlayerStats Stats;
-
+    [Signal]
+    public delegate void StatsUpdatedEventHandler();
+    
+    [Export] public resources.PlayerStats Stats;
+    public Timer JumpBufferTimer;
+    public bool IsJumpQueued;
     private StateMachine _stateMachine;
 
     public override void _Ready()
     {
+        EmitSignal(SignalName.StatsUpdated);
+        JumpBufferTimer = GetNode<Timer>("JumpBufferTimer");
         _stateMachine = GetNode<StateMachine>("StateMachine");
         _stateMachine.Init();
     }
@@ -26,5 +32,10 @@ public partial class Player : CharacterBody2D
     {
         _stateMachine.PhysicsProcess(delta);
         MoveAndSlide();
+    }
+    
+    private void OnJumpBufferTimerTimeout()
+    {
+        IsJumpQueued = false;
     }
 }

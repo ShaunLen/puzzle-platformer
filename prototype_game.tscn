@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdm8svbwmc7j8"]
+[gd_scene load_steps=4 format=3 uid="uid://cdm8svbwmc7j8"]
 
 [ext_resource type="PackedScene" uid="uid://b6mj6k6n28qk6" path="res://world/levels/prototype_level.tscn" id="1_tq2nu"]
 [ext_resource type="PackedScene" uid="uid://couxwdf1cvkg8" path="res://entities/player/player.tscn" id="2_415dg"]
+[ext_resource type="Theme" uid="uid://ohx5n1qt52t2" path="res://ui/themes/nord_theme.tres" id="3_gr6j5"]
 
 [node name="PrototypeGame" type="Node2D"]
 
@@ -20,5 +21,11 @@ process_callback = 0
 position_smoothing_enabled = true
 
 [node name="SpinBox" type="SpinBox" parent="."]
-offset_right = 223.0
-offset_bottom = 31.0
+offset_left = -121.0
+offset_top = 201.0
+offset_right = 102.0
+offset_bottom = 232.0
+theme = ExtResource("3_gr6j5")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.580392, 0.580392, 0.580392, 1)

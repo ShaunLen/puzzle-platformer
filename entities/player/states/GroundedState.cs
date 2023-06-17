@@ -6,15 +6,20 @@ namespace PuzzlePlatformer.entities.player.states;
 
 public partial class GroundedState : BaseState
 {
-    public override State PhysicsProcess(double delta)
+    public override void Enter()
+    {
+        base.Enter();
+        if(Player.IsJumpQueued)
+            StateMachine.ChangeState<JumpState>();
+    }
+
+    public override void PhysicsProcess(double delta)
     {
         if (!Player.IsOnFloor()) 
-            return StateMachine.GetState<FallState>();
+            StateMachine.ChangeState<FallState>();
         
         if (InputManager.IsActionJustPressed(InputManager.Action.Jump)) 
-            return StateMachine.GetState<JumpState>();
-        
-        return null;
+            StateMachine.ChangeState<JumpState>();
     }
 
     protected virtual void HandleHorizontalMovement(double delta)

@@ -13,4 +13,10 @@ public partial class InAirState : BaseState
         else
             Player.Velocity = new Vector2(Mathf.MoveToward(Player.Velocity.X, 0, (Stats.AirDeceleration * 10) * (float) delta), Player.Velocity.Y);
     }
+
+    protected void QueueJump()
+    {
+        Player.IsJumpQueued = true;
+        Player.JumpBufferTimer.Start();
+    }
 }

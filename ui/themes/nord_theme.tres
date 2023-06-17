@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ohx5n1qt52t2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i6b1t"]
+content_margin_left = 7.0
+bg_color = Color(0.129412, 0.14902, 0.184314, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.156863, 0.176471, 0.219608, 1)
+
+[resource]
+LineEdit/styles/normal = SubResource("StyleBoxFlat_i6b1t")
