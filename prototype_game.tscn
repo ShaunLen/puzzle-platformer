@@ -1,31 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdm8svbwmc7j8"]
+[gd_scene load_steps=5 format=3 uid="uid://cdm8svbwmc7j8"]
 
 [ext_resource type="PackedScene" uid="uid://b6mj6k6n28qk6" path="res://world/levels/prototype_level.tscn" id="1_tq2nu"]
 [ext_resource type="PackedScene" uid="uid://couxwdf1cvkg8" path="res://entities/player/player.tscn" id="2_415dg"]
-[ext_resource type="Theme" uid="uid://ohx5n1qt52t2" path="res://ui/themes/nord_theme.tres" id="3_gr6j5"]
+[ext_resource type="PackedScene" uid="uid://crk0cgxbvpe7h" path="res://objects/interactable/terminal/terminal.tscn" id="4_jvc1e"]
+[ext_resource type="PackedScene" uid="uid://d20r5stxpp2ll" path="res://objects/interactable/terminal/terminal_screen.tscn" id="4_kwnnp"]
 
 [node name="PrototypeGame" type="Node2D"]
 
 [node name="PrototypeLevel" parent="." instance=ExtResource("1_tq2nu")]
 
 [node name="Player" parent="." instance=ExtResource("2_415dg")]
-position = Vector2(181, 93)
+position = Vector2(21, 196)
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+[node name="PlayerTransform" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera")
 
-[node name="Camera" type="Camera2D" parent="."]
-position = Vector2(181, 93)
+[node name="Camera" type="Camera2D" parent="." groups=["Camera"]]
+position = Vector2(21, 196)
 offset = Vector2(0, -100)
 process_callback = 0
 position_smoothing_enabled = true
 
-[node name="SpinBox" type="SpinBox" parent="."]
-offset_left = -121.0
-offset_top = 201.0
-offset_right = 102.0
-offset_bottom = 232.0
-theme = ExtResource("3_gr6j5")
+[node name="TerminalScreen" parent="." instance=ExtResource("4_kwnnp")]
+offset_left = 372.0
+offset_top = 190.0
+offset_right = 372.0
+offset_bottom = 190.0
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.580392, 0.580392, 0.580392, 1)
+[node name="Terminal" parent="." node_paths=PackedStringArray("_terminalScreen") instance=ExtResource("4_jvc1e")]
+position = Vector2(229, 264)
+_terminalScreen = NodePath("../TerminalScreen")

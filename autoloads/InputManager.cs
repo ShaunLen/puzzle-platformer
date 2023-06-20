@@ -11,6 +11,9 @@ public partial class InputManager : Node
         MoveRight,
         Jump,
         Dash,
+        ToggleFullscreen,
+        Interact,
+        Close
     }
 
     private static bool _inputEnabled = true;
@@ -51,6 +54,14 @@ public partial class InputManager : Node
 
         return 0;
     }
+
+    public override void _Process(double delta)
+    {
+        if(IsActionJustPressed(Action.ToggleFullscreen))
+        {
+            DisplayServer.WindowSetMode(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Windowed ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Windowed);
+        }
+    }
 }
 
 internal static class Extensions
@@ -63,6 +74,9 @@ internal static class Extensions
             InputManager.Action.MoveRight => "move_right",
             InputManager.Action.Jump => "jump",
             InputManager.Action.Dash => "dash",
+            InputManager.Action.ToggleFullscreen => "toggle_fullscreen",
+            InputManager.Action.Interact => "interact",
+            InputManager.Action.Close => "close",
             _ => ""
         };
     }

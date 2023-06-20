@@ -24,7 +24,7 @@ point_count = 2
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 10
-position = Vector2(15, 0)
+position = Vector2(54, 0)
 script = ExtResource("1_sr3iy")
 Stats = ExtResource("2_flxjy")
 
@@ -58,6 +58,8 @@ _coyoteTimer = NodePath("../../CoyoteTimer")
 [node name="JumpState" type="Node" parent="StateMachine"]
 script = ExtResource("9_yejaq")
 
+[node name="InteractingState" type="Node" parent="StateMachine"]
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0.580346, 1, 1, 1)
 energy = 0.2
@@ -79,5 +81,6 @@ wait_time = 0.1
 one_shot = true
 
 [node name="JumpBufferTimer" type="Timer" parent="."]
+wait_time = 0.3
 
 [connection signal="timeout" from="JumpBufferTimer" to="." method="OnJumpBufferTimerTimeout"]
