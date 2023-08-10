@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_na71p")
+Health = 0
 JumpEnabled = true
 DashEnabled = false
 WallJumpEnabled = false

@@ -1,7 +1,7 @@
 using Godot;
 using PuzzlePlatformer.entities.player;
 
-namespace PuzzlePlatformer.entities.common;
+namespace PuzzlePlatformer.components;
 
 [GlobalClass]
 public partial class HitboxComponent : Area2D

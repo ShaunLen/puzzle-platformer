@@ -43,7 +43,7 @@ public partial class JumpState : InAirState
         
         _velocity.Y += (float) (_jumpGravity * delta);
         
-        if(InputManager.IsActionJustReleased(InputManager.Action.Jump))
+        if((InputManager.InputEnabled || false) && Input.IsActionJustReleased(InputManager.Action.Jump.ToInputMapName()))
             _velocity.Y /= Stats.JumpCutMultiplier;
         
         Player.Velocity = new Vector2(Player.Velocity.X, _velocity.Y);

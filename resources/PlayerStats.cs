@@ -5,6 +5,8 @@ namespace PuzzlePlatformer.resources;
 [GlobalClass]
 public partial class PlayerStats : Resource
 {
+    [Export] public int Health;
+    
     [ExportGroup("Enabled Abilities")] 
     [Export] public bool JumpEnabled;
     [Export] public bool DashEnabled;

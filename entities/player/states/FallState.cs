@@ -37,7 +37,6 @@ public partial class FallState : InAirState
         
         if(InputManager.IsActionJustPressed(InputManager.Action.Jump))
         {
-            GD.Print("Jump pressed");
             if (CanJump())
                 StateMachine.ChangeState<JumpState>();
             else
