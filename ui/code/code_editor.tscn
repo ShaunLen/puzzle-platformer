@@ -1,0 +1,178 @@
+[gd_scene load_steps=10 format=3 uid="uid://ipfkpidosr05"]
+
+[ext_resource type="Texture2D" uid="uid://ceiyeyc0w3jm0" path="res://ui/code/code_border.png" id="1_suuxa"]
+[ext_resource type="Texture2D" uid="uid://blhf7714ineuq" path="res://ui/code/header_border.png" id="2_4tb01"]
+[ext_resource type="Theme" uid="uid://ohx5n1qt52t2" path="res://ui/themes/nord_theme.tres" id="2_57guy"]
+[ext_resource type="Texture2D" uid="uid://54obu34lp7f4" path="res://ui/code/code_border_flipped.png" id="2_420lr"]
+[ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="3_x2j3f"]
+[ext_resource type="Texture2D" uid="uid://c3yn261m7som7" path="res://ui/code/button_run.png" id="6_nxtt2"]
+[ext_resource type="Texture2D" uid="uid://6jobr18rtcer" path="res://ui/code/button_close.png" id="7_qqx7h"]
+[ext_resource type="Texture2D" uid="uid://da40ntwi82rsx" path="res://ui/code/button_clear.png" id="8_xftxt"]
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_36s0u"]
+number_color = Color(0.705882, 0.556863, 0.678431, 1)
+symbol_color = Color(0.368627, 0.505882, 0.67451, 1)
+function_color = Color(0.533333, 0.752941, 0.815686, 1)
+member_variable_color = Color(0.847059, 0.870588, 0.913725, 1)
+
+[node name="CodeEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CodeEditor" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -585.0
+offset_right = -545.0
+offset_bottom = 40.0
+
+[node name="CodeEditorBorder" type="NinePatchRect" parent="CodeEditor"]
+offset_left = -8.0
+offset_top = 32.0
+offset_right = 576.0
+offset_bottom = 512.0
+texture = ExtResource("1_suuxa")
+region_rect = Rect2(0, 0, 160, 160)
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="CodeEditorHeader" type="NinePatchRect" parent="CodeEditor"]
+offset_left = 16.0
+offset_top = 50.0
+offset_right = 558.0
+offset_bottom = 83.0
+texture = ExtResource("2_4tb01")
+
+[node name="CodeEditorHeaderLabel" type="Label" parent="CodeEditor"]
+offset_left = 16.0
+offset_top = 50.0
+offset_right = 558.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.419608, 0.533333, 0.552941, 1)
+theme_override_fonts/font = ExtResource("3_x2j3f")
+theme_override_font_sizes/font_size = 15
+text = "Code Editor"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CodeEdit" type="CodeEdit" parent="CodeEditor"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = 68.0
+offset_right = 533.0
+offset_bottom = 467.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_57guy")
+theme_override_fonts/font = ExtResource("3_x2j3f")
+theme_override_font_sizes/font_size = 16
+syntax_highlighter = SubResource("CodeHighlighter_36s0u")
+caret_blink = true
+gutters_draw_line_numbers = true
+code_completion_enabled = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+
+[node name="Actions" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 300.0
+offset_right = 340.0
+offset_bottom = 40.0
+
+[node name="ActionsBorder" type="NinePatchRect" parent="Actions"]
+offset_left = 659.0
+offset_top = 385.0
+offset_right = 952.0
+offset_bottom = 512.0
+texture = ExtResource("2_420lr")
+region_rect = Rect2(0, 0, 160, 160)
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="RunButton" type="TextureButton" parent="Actions"]
+offset_left = 687.0
+offset_top = 413.0
+offset_right = 757.0
+offset_bottom = 483.0
+tooltip_text = "Execute Code"
+texture_normal = ExtResource("6_nxtt2")
+
+[node name="CloseButton" type="TextureButton" parent="Actions"]
+offset_left = 847.0
+offset_top = 413.0
+offset_right = 917.0
+offset_bottom = 483.0
+tooltip_text = "Close Code Editor"
+texture_normal = ExtResource("7_qqx7h")
+
+[node name="ClearButton" type="TextureButton" parent="Actions"]
+offset_left = 767.0
+offset_top = 413.0
+offset_right = 837.0
+offset_bottom = 483.0
+tooltip_text = "Clear Console"
+texture_normal = ExtResource("8_xftxt")
+
+[node name="ConsoleWindow" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 355.0
+offset_right = 395.0
+offset_bottom = 40.0
+
+[node name="ConsoleBorder" type="NinePatchRect" parent="ConsoleWindow"]
+offset_left = 604.0
+offset_top = 32.0
+offset_right = 952.0
+offset_bottom = 377.0
+texture = ExtResource("2_420lr")
+region_rect = Rect2(0, 0, 160, 160)
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="ConsoleHeader" type="NinePatchRect" parent="ConsoleWindow"]
+offset_left = 622.0
+offset_top = 50.0
+offset_right = 928.0
+offset_bottom = 83.0
+texture = ExtResource("2_4tb01")
+
+[node name="ConsoleHeaderLabel" type="Label" parent="ConsoleWindow"]
+offset_left = 622.0
+offset_top = 50.0
+offset_right = 928.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.419608, 0.533333, 0.552941, 1)
+theme_override_fonts/font = ExtResource("3_x2j3f")
+theme_override_font_sizes/font_size = 15
+text = "Console"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Console" type="RichTextLabel" parent="ConsoleWindow"]
+offset_left = 622.0
+offset_top = 87.0
+offset_right = 928.0
+offset_bottom = 355.0
+focus_mode = 2
+theme = ExtResource("2_57guy")
+theme_override_fonts/normal_font = ExtResource("3_x2j3f")
+theme_override_font_sizes/normal_font_size = 15
