@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://couxwdf1cvkg8"]
+[gd_scene load_steps=18 format=3 uid="uid://couxwdf1cvkg8"]
 
 [ext_resource type="Script" path="res://components/HealthComponent.cs" id="1_gfvpp"]
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_sr3iy"]
@@ -23,6 +23,9 @@ size = Vector2(24, 48)
 [sub_resource type="Curve" id="Curve_m5lbe"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.252632), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_sd3gs"]
+colors = PackedColorArray(1, 0.788235, 0.0431373, 0.811765, 1, 0.764706, 0.145098, 0)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 process_mode = 1
@@ -66,6 +69,7 @@ shape = SubResource("RectangleShape2D_td835")
 texture = ExtResource("4_v528k")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 color = Color(0.580346, 1, 1, 1)
 energy = 0.2
 shadow_enabled = true
@@ -73,13 +77,18 @@ texture = ExtResource("10_juijd")
 texture_scale = 2.0
 
 [node name="Trail" type="Line2D" parent="."]
+visible = false
 z_index = 5
 position = Vector2(1, 0)
+points = PackedVector2Array(2, -6)
 width = 3.0
 width_curve = SubResource("Curve_m5lbe")
-default_color = Color(0.733333, 0.945098, 0.968627, 0.345098)
+default_color = Color(0.925781, 0.944277, 0, 0.345098)
+gradient = SubResource("Gradient_sd3gs")
+joint_mode = 2
+antialiased = true
 script = ExtResource("11_73x7r")
-length = 60
+length = 20
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -93,5 +102,8 @@ remote_path = NodePath("../../Camera")
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("1_gfvpp")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
 
 [connection signal="timeout" from="JumpBufferTimer" to="." method="OnJumpBufferTimerTimeout"]

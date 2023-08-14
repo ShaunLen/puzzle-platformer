@@ -1,6 +1,5 @@
 using Godot;
 using PuzzlePlatformer.autoloads;
-using Utils = Microsoft.VisualBasic.CompilerServices.Utils;
 
 namespace PuzzlePlatformer.ui.menus;
 

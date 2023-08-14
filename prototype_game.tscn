@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdm8svbwmc7j8"]
+[gd_scene load_steps=11 format=3 uid="uid://cdm8svbwmc7j8"]
 
 [ext_resource type="PackedScene" uid="uid://b6mj6k6n28qk6" path="res://world/levels/prototype_level.tscn" id="1_tq2nu"]
 [ext_resource type="PackedScene" uid="uid://couxwdf1cvkg8" path="res://entities/player/player.tscn" id="2_415dg"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://d20r5stxpp2ll" path="res://objects/interactable/terminal/terminal_screen.tscn" id="4_kwnnp"]
 [ext_resource type="PackedScene" uid="uid://brxgucbe5e5hm" path="res://ui/menus/pause_menu.tscn" id="6_274kw"]
 [ext_resource type="PackedScene" uid="uid://wdr0v0pcfg0y" path="res://ui/hud/main_hud.tscn" id="7_kng03"]
+[ext_resource type="Script" path="res://objects/interactable/door/Door.cs" id="9_4u6md"]
+[ext_resource type="Script" path="res://objects/interactable/TestObject.cs" id="9_smuu3"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g6ecx"]
 
 [node name="PrototypeGame" type="Node2D"]
 process_mode = 3
@@ -37,7 +41,7 @@ offset_top = -280.0
 offset_right = 899.0
 offset_bottom = -280.0
 
-[node name="Terminal" parent="." node_paths=PackedStringArray("_terminalScreen") instance=ExtResource("4_jvc1e")]
+[node name="Terminal" parent="." node_paths=PackedStringArray("_terminalScreen") groups=["terminal"] instance=ExtResource("4_jvc1e")]
 position = Vector2(752, -152)
 _terminalScreen = NodePath("../TerminalScreen")
 
@@ -47,3 +51,16 @@ _terminalScreen = NodePath("../TerminalScreen")
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("6_274kw")]
 visible = false
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="TestObject" type="Node2D" parent="Interactables" groups=["interactable"]]
+script = ExtResource("9_smuu3")
+
+[node name="PinkDoor" type="Node2D" parent="Interactables" groups=["interactable"]]
+script = ExtResource("9_4u6md")
+
+[node name="Sprite2D" type="Sprite2D" parent="Interactables/PinkDoor"]
+position = Vector2(1084, -259)
+scale = Vector2(7.87528, 262.125)
+texture = SubResource("PlaceholderTexture2D_g6ecx")

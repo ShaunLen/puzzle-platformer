@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Godot;
+using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript.Exceptions;
 using PuzzlePlatformer.litescript.Runtime.Values;
 
@@ -34,7 +35,7 @@ public static class NativeFunctions
         }
         
         GD.Print(output);
-        env.Terminal.ConsoleWrite(output.ToString());
+        CodeManager.Instance.ConsoleWrite(output.ToString());
         
         return new NullValue();
     }
@@ -63,9 +64,6 @@ public static class NativeFunctions
                     throw new InterpreterException("PrintLine method may only contain numbers and strings - type: " + arg.Type);
             }
         }
-        
-        GD.Print(output + "\n");
-        env.Terminal.ConsoleWrite(output + "\n");
         
         return new NullValue();
     }

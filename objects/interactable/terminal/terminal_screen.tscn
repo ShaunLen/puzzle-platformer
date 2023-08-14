@@ -57,20 +57,20 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_3kt1e")
-text = "var name = \"Shaun\";
-
-# Only Steve is allowed access
-if(name == \"Steve\")
+text = "if(BlueDoor.IsOpen)
 {
-	Print(\"Access granted\");
+	Print(\"Closing BlueDoor\")
+	BlueDoor.Close()
 }
 else
 {
-	Print(\"Access denied\");
+	Print(\"Opening BlueDoor\")
+	BlueDoor.Open()
 }"
 syntax_highlighter = ExtResource("3_cf8np")
 caret_blink = true
 gutters_draw_line_numbers = true
+code_completion_enabled = true
 indent_automatic = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
@@ -99,7 +99,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -128.0
-offset_top = 80.0
+offset_top = 82.0
 offset_right = 128.0
 offset_bottom = 149.0
 grow_horizontal = 2
@@ -113,14 +113,14 @@ patch_margin_bottom = 10
 
 [node name="Console" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -124.0
-offset_top = 82.0
-offset_right = 124.0
-offset_bottom = 144.0
+offset_left = -126.0
+offset_top = 88.0
+offset_right = 126.0
+offset_bottom = 146.0
+focus_mode = 2
 theme = ExtResource("1_3kt1e")
 theme_override_fonts/normal_font = ExtResource("7_yfow8")
 theme_override_font_sizes/normal_font_size = 6
-text = "Test"
 
 [node name="CloseButton" type="TextureButton" parent="."]
 layout_mode = 0
@@ -130,3 +130,15 @@ offset_right = 125.0
 offset_bottom = -71.0
 texture_normal = ExtResource("5_yehrj")
 texture_hover = ExtResource("6_e8gpw")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -125.0
+offset_top = 83.0
+offset_right = -110.0
+offset_bottom = 91.0
+theme = ExtResource("1_3kt1e")
+theme_override_colors/font_color = Color(0.423529, 0.423529, 0.423529, 1)
+theme_override_fonts/font = ExtResource("7_yfow8")
+theme_override_font_sizes/font_size = 4
+text = "Console"

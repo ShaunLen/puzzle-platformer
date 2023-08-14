@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Godot;
+using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript.Exceptions;
 using PuzzlePlatformer.litescript.Runtime.Values;
 using PuzzlePlatformer.objects.interactable.terminal;
@@ -12,7 +14,6 @@ public class Env
     private Env? _parent;
     public Dictionary<string, IRuntimeValue> Variables;
     public HashSet<string> Constants;
-    public Terminal Terminal;
 
     public Env(Env? parent)
     {

@@ -4,4 +4,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>PuzzlePlatformer</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="ui\code\" />
+  </ItemGroup>
 </Project>

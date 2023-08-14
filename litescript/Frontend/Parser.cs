@@ -225,8 +225,10 @@ public class Parser
     {
         var member = ParseMemberExpression();
 
-        if (CurrentToken().TokenType == TokenType.OpenParen)
+        if (CurrentToken().TokenType == TokenType.OpenParen) // this is a function call
             return ParseCallExpression(member);
+        
+        // else check for property?
 
         return member;
     }
@@ -237,8 +239,9 @@ public class Parser
 
         if (CurrentToken().TokenType == TokenType.OpenParen)
             callExpression = ParseCallExpression(callExpression) as CallExpression;
-        
-        ExpectToken(TokenType.SemiColon, "Expected semicolon following function call.");
+
+        // TODO: Temporarily disabled as causing issues with 'var x = foo.bar();' - it expects 2 semi-colons, both for function call and variable declaration
+        // ExpectToken(TokenType.SemiColon, "Expected semicolon following function call.");
 
         return callExpression ?? throw new InvalidOperationException();
     }

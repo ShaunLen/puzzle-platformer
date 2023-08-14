@@ -37,8 +37,8 @@ public partial class Camera2DPlus : Camera2D
     {
         base._PhysicsProcess(delta);
         
-        if (Offset.Y != 0)
-            GD.Print(Offset.Y);
+        // if (Offset.Y != 0)
+        //     GD.Print(Offset.Y);
 
         if (!_initialised)
             PositionSmoothingEnabled = false;
@@ -77,7 +77,7 @@ public partial class Camera2DPlus : Camera2D
 
     private void SetLimits()
     {
-        var bounds = GetNode<LevelRoot>("../Level").LevelBounds;
+        var bounds = GetNode<LevelRoot>("../Tilemaps").LevelBounds;
 
         LimitLeft = 0;
         LimitBottom = 0;

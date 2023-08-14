@@ -16,9 +16,12 @@ public partial class InputManager : Node
         ToggleFullscreen,
         Interact,
         Escape,
+        ToggleCode,
         RunCode,
         ClearConsole,
-        CloseTerminal
+        ZoomIn,
+        ZoomOut,
+        HighlightInteractables
     }
     
     /* Properties */
@@ -69,7 +72,7 @@ public partial class InputManager : Node
     }
 }
 
-internal static class Extensions
+internal static class InputExtensions
 {
     public static string ToInputMapName(this InputManager.Action action)
     {
@@ -82,9 +85,12 @@ internal static class Extensions
             InputManager.Action.ToggleFullscreen => "toggle_fullscreen",
             InputManager.Action.Interact => "interact",
             InputManager.Action.Escape => "escape",
+            InputManager.Action.ToggleCode => "toggle_code",
             InputManager.Action.RunCode => "run_code",
             InputManager.Action.ClearConsole => "clear_console",
-            InputManager.Action.CloseTerminal => "close_terminal",
+            InputManager.Action.ZoomIn => "zoom_in",
+            InputManager.Action.ZoomOut => "zoom_out",
+            InputManager.Action.HighlightInteractables => "highlight_interactables",
             _ => ""
         };
     }
