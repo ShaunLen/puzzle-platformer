@@ -126,15 +126,17 @@ shape = SubResource("RectangleShape2D_ejq8o")
 
 [node name="Hint" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
+z_index = 100
 offset_left = 385.0
 offset_top = -81.0
 offset_right = 449.0
 offset_bottom = -62.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("4_baa00")
-text = "Door"
+text = "Button"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="HitboxComponent" type="Area2D" parent="."]
 position = Vector2(417, -66)

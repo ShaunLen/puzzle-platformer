@@ -225,12 +225,8 @@ public class Parser
     {
         var member = ParseMemberExpression();
 
-        if (CurrentToken().TokenType == TokenType.OpenParen) // this is a function call
-            return ParseCallExpression(member);
-        
-        // else check for property?
-
-        return member;
+        return CurrentToken().TokenType == TokenType.OpenParen ? // this is a function call
+            ParseCallExpression(member) : member;
     }
 
     private IExpression ParseCallExpression(IExpression caller)

@@ -124,6 +124,7 @@ attenuation = 2.0
 
 [node name="Hint" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
+z_index = 100
 offset_left = -31.0
 offset_top = -28.0
 offset_right = 33.0
@@ -133,3 +134,4 @@ theme_override_fonts/font = ExtResource("4_8g02n")
 text = "Door"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2

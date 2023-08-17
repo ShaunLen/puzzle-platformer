@@ -2,6 +2,8 @@ using System;
 using Godot;
 using PuzzlePlatformer.litescript.Frontend;
 using PuzzlePlatformer.litescript.Runtime;
+using PuzzlePlatformer.ui.guide;
+using PuzzlePlatformer.ui.menus.guidebook;
 using PuzzlePlatformer.ui.themes;
 using PuzzlePlatformer.world;
 
@@ -13,6 +15,8 @@ public partial class CodeManager : Node
     
     /* Signals */
     [Signal] public delegate void CodeExecutedEventHandler();
+    [Signal] public delegate void CodeWindowOpenedEventHandler();
+    [Signal] public delegate void CodeWindowClosedEventHandler();
 
     /* Public Properties */
     public bool EditorOpen;
@@ -29,6 +33,7 @@ public partial class CodeManager : Node
     private TextureButton _runButton;
     private TextureButton _clearButton;
     private TextureButton _closeButton;
+    private Guide _guide;
     
     /* Syntax Highlighting */
     private NordColors _nordColors;
@@ -51,14 +56,19 @@ public partial class CodeManager : Node
         _runButton = _code.GetNode<TextureButton>("Actions/RunButton");
         _clearButton = _code.GetNode<TextureButton>("Actions/ClearButton");
         _closeButton = _code.GetNode<TextureButton>("Actions/CloseButton");
+        
+        _guide = (Guide) GetTree().GetFirstNodeInGroup("Guide");
 
         _nordColors = new NordColors();
         SetSyntaxHighlighting(_codeEdit.SyntaxHighlighter);
+        
+        _code.Show();
         
         /* Signal Connections */
         _runButton.Pressed += ExecuteCode;
         _clearButton.Pressed += ConsoleClear;
         _closeButton.Pressed += CloseCode;
+        _guide.GuideOpened += CloseCode;
     }
 
     public override void _Process(double delta)
@@ -91,7 +101,7 @@ public partial class CodeManager : Node
     {
         AudioManager.Instance.PlaySound(AudioManager.Sound.Error);
 
-        _console.PushColor(Color.Color8(200, 0 ,0));
+        _console.PushColor(Color.Color8(181, 91 ,91));
         _console.AddText("\nError: " + output);
     }
 
@@ -100,50 +110,46 @@ public partial class CodeManager : Node
         _console.Clear();
     }
     
-    /* Private Methods */
-    
-    private void OpenCode()
+    public void OpenCode()
     {
+        EmitSignal(SignalName.CodeWindowOpened);
+        
         EditorOpen = true;
         _codeEdit.GrabFocus();
         
         InputManager.InputEnabled = false;
         Input.MouseMode = Input.MouseModeEnum.Confined;
         Input.WarpMouse(GetTree().Root.Size / 2);
-        
-        Console.WriteLine("\n\nCode visible: " + _code.Visible);
-        Console.WriteLine("Has focus: " + _codeEdit.HasFocus());
-        Console.WriteLine("Input enabled: " + InputManager.InputEnabled);
 
         var codeTween = CreateTween();
         var consoleTween = CreateTween();
         var actionsTween = CreateTween();
         
-        codeTween.TweenProperty(_codeEditorParent, "position:x", 0, 0.2);
-        consoleTween.TweenProperty(_consoleParent, "position:x", 0, 0.2);
-        actionsTween.TweenProperty(_actionsParent, "position:x", 0, 0.2);
+        codeTween.TweenProperty(_codeEditorParent, "position:x", 0, 0.1);
+        consoleTween.TweenProperty(_consoleParent, "position:x", 0, 0.1);
+        actionsTween.TweenProperty(_actionsParent, "position:x", 0, 0.1);
     }
     
-    private void CloseCode()
+    public void CloseCode()
     {
+        EmitSignal(SignalName.CodeWindowClosed);
+        
         EditorOpen = false;
         _codeEdit.ReleaseFocus();
         
         InputManager.InputEnabled = true;
         Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
         
-        Console.WriteLine("\n\nCode visible: " + _code.Visible);
-        Console.WriteLine("Has focus: " + _codeEdit.HasFocus());
-        Console.WriteLine("Input enabled: " + InputManager.InputEnabled);
-        
         var codeTween = CreateTween();
         var consoleTween = CreateTween();
         var actionsTween = CreateTween();
         
-        codeTween.TweenProperty(_codeEditorParent, "position:x", -585, 0.2);
-        consoleTween.TweenProperty(_consoleParent, "position:x", 355, 0.2);
-        actionsTween.TweenProperty(_actionsParent, "position:x", 300, 0.2);
+        codeTween.TweenProperty(_codeEditorParent, "position:x", -585, 0.1);
+        consoleTween.TweenProperty(_consoleParent, "position:x", 355, 0.1);
+        actionsTween.TweenProperty(_actionsParent, "position:x", 300, 0.1);
     }
+    
+    /* Private Methods */
     
     private void ExecuteCode()
     {
@@ -153,9 +159,19 @@ public partial class CodeManager : Node
         
         var input = _codeEdit.Text;
         var script = _parser.ProduceAst(input);
-        var result = _interpreter.Evaluate(script, LevelManager.Instance.Environment);
+
+        if (!LevelManager.Instance.CheckRequirementsMet(script))
+            return;
         
+        var result = _interpreter.Evaluate(script, LevelManager.Instance.Environment);
+
+        if (result == null)
+            return;
+
         ConsoleWriteLine("\n" + "Program finished with 0 errors.");
+            
+        if(!EditorOpen)
+            HudManager.Instance.WriteNotification("Program finished with 0 errors.");
     }
     
     private void SetSyntaxHighlighting(SyntaxHighlighter syntaxHighlighter)

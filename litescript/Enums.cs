@@ -17,9 +17,7 @@ public enum NodeType
     StringLiteral,
     Identifier,
     ObjectLiteral,
-    BinaryExpression,
-    ObjectReference,
-    MethodCall
+    BinaryExpression
 }
 
 public enum TokenType

@@ -9,6 +9,9 @@ namespace PuzzlePlatformer.objects.interactable.door;
 
 public partial class Door : Interactable
 {
+    public override Dictionary<string, string> Properties { get; set; } = new();
+    public override Dictionary<string, string> Methods { get; set; } = new();
+    
     public bool IsOpen;
     
     private AnimationPlayer _animationPlayer;
@@ -20,7 +23,12 @@ public partial class Door : Interactable
         _audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
         
         _animationPlayer.AnimationStarted += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.Door, _audioStreamPlayer); 
-        _animationPlayer.AnimationFinished += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.DoorStop, _audioStreamPlayer); 
+        _animationPlayer.AnimationFinished += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.DoorStop, _audioStreamPlayer);
+        
+        Properties.Add("IsOpen", "Set to 'true' when door is open, and 'false' when door is closed.");
+        
+        Methods.Add("Open()", "Opens the door.");
+        Methods.Add("Close()", "Closes the door.");
     }
     
     /* Methods */
@@ -58,7 +66,7 @@ public partial class Door : Interactable
     }
     
     /* Overrides */
-    
+
     public override Dictionary<string, IRuntimeValue> GetProperties()
     {
         var properties = new Dictionary<string, IRuntimeValue>();

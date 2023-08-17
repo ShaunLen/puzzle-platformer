@@ -1,0 +1,54 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://du35uralxpcrh"]
+
+[ext_resource type="FontFile" uid="uid://orxfqg8xb0js" path="res://ui/fonts/Caveat-VariableFont_wght.ttf" id="1_04n0o"]
+[ext_resource type="Texture2D" uid="uid://7ckv5n6uoi6d" path="res://art/open_book.png" id="2_q5lc6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cy3ap"]
+texture = ExtResource("2_q5lc6")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wbhg"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+bg_color = Color(0.745098, 0.745098, 0.701961, 1)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lgmjf"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+bg_color = Color(0.858824, 0.858824, 0.8, 1)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_287gc"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+bg_color = Color(0.670588, 0.670588, 0.623529, 1)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[resource]
+Label/colors/font_color = Color(0.25098, 0.25098, 0.25098, 1)
+Label/fonts/font = ExtResource("1_04n0o")
+RichTextLabel/colors/default_color = Color(0.25098, 0.25098, 0.25098, 1)
+RichTextLabel/fonts/bold_font = ExtResource("1_04n0o")
+RichTextLabel/fonts/bold_italics_font = ExtResource("1_04n0o")
+RichTextLabel/fonts/italics_font = ExtResource("1_04n0o")
+RichTextLabel/fonts/mono_font = ExtResource("1_04n0o")
+RichTextLabel/fonts/normal_font = ExtResource("1_04n0o")
+TabContainer/colors/font_selected_color = Color(0.25098, 0.25098, 0.25098, 1)
+TabContainer/colors/font_unselected_color = Color(0.25098, 0.25098, 0.25098, 1)
+TabContainer/fonts/font = ExtResource("1_04n0o")
+TabContainer/styles/panel = SubResource("StyleBoxTexture_cy3ap")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_4wbhg")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_lgmjf")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_287gc")

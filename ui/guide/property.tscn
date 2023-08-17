@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://pydp5g4hmxvx"]
+
+[ext_resource type="Script" path="res://ui/guide/GuideProperty.cs" id="1_1q5qh"]
+[ext_resource type="Theme" uid="uid://g21rvq02mmol" path="res://ui/themes/guide_theme.tres" id="1_82h16"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihp08"]
+bg_color = Color(0.0666667, 0.0980392, 0.105882, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.0703441, 0.0977035, 0.105516, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ro52"]
+content_margin_left = 5.0
+content_margin_top = 4.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0862745, 0.121569, 0.133333, 1)
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0703441, 0.0977035, 0.105516, 1)
+
+[node name="Property" type="MarginContainer"]
+offset_right = 567.0
+offset_bottom = 45.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 3
+script = ExtResource("1_1q5qh")
+
+[node name="PropertyContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PropertyName" type="Button" parent="PropertyContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_82h16")
+theme_override_colors/font_color = Color(0.560784, 0.670588, 0.690196, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_ihp08")
+button_mask = 0
+text = "IsOpen"
+
+[node name="PropertyDesc" type="RichTextLabel" parent="PropertyContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_82h16")
+theme_override_colors/default_color = Color(0.443076, 0.556909, 0.57644, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_0ro52")
+text = "Set to 'true' if button is pressed, and 'false' if button is not pressed."
+fit_content = true

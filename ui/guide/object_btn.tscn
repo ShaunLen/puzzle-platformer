@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbxipfpknygmk"]
+
+[ext_resource type="Theme" uid="uid://g21rvq02mmol" path="res://ui/themes/guide_theme.tres" id="1_m31qk"]
+[ext_resource type="Script" path="res://ui/guide/ObjectBtn.cs" id="2_qvpjs"]
+
+[node name="ObjectBtn" type="Button"]
+theme = ExtResource("1_m31qk")
+text = "RedButton
+"
+script = ExtResource("2_qvpjs")

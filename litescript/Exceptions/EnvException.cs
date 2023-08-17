@@ -4,12 +4,9 @@ using PuzzlePlatformer.world;
 
 namespace PuzzlePlatformer.litescript.Exceptions;
 
-public class EnvException : Exception
+public class EnvException : LsException
 {
-    public EnvException(string message)
+    public EnvException(string message) : base("Environment", message)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.Error.WriteLine("Environment Error: " + message);
-        CodeManager.Instance.ConsoleWriteError(message);
     }
 }

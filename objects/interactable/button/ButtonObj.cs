@@ -10,6 +10,9 @@ namespace PuzzlePlatformer.objects.interactable.button;
 
 public partial class ButtonObj : Interactable
 {
+    public override Dictionary<string, string> Properties { get; set; } = new();
+    public override Dictionary<string, string> Methods { get; set; } = new();
+    
     public bool IsPressed;
     
     private AnimationPlayer _animationPlayer;
@@ -22,8 +25,6 @@ public partial class ButtonObj : Interactable
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
         _hitbox = GetNode<HitboxComponent>("HitboxComponent");
-        
-        // _animationPlayer.AnimationStarted += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonPress, _audioStreamPlayer);
 
         _hitbox.PlayerEntered += () =>
         {
@@ -39,6 +40,8 @@ public partial class ButtonObj : Interactable
             IsPressed = false;
             UpdateProperties();
         };
+        
+        Properties.Add("IsPressed", "Set to 'true' if button is pressed, and 'false' if button is not pressed.");
     }
     
     /* Overrides */

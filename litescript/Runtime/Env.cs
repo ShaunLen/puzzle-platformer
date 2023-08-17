@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Godot;
-using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript.Exceptions;
 using PuzzlePlatformer.litescript.Runtime.Values;
-using PuzzlePlatformer.objects.interactable.terminal;
 
 namespace PuzzlePlatformer.litescript.Runtime;
 

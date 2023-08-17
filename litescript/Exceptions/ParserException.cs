@@ -3,12 +3,9 @@ using PuzzlePlatformer.autoloads;
 
 namespace PuzzlePlatformer.litescript.Exceptions;
 
-public class ParserException : Exception
+public class ParserException : LsException
 {
-    public ParserException(string message)
+    public ParserException(string message) : base("Environment", message)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.Error.WriteLine("Parser Error: " + message);
-        CodeManager.Instance.ConsoleWriteError(message);
     }
 }

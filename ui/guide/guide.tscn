@@ -1,0 +1,320 @@
+[gd_scene load_steps=7 format=3 uid="uid://cdwsvv01dipe5"]
+
+[ext_resource type="Texture2D" uid="uid://b68evdp38sk7i" path="res://ui/guide/guide_border.png" id="1_4kcdt"]
+[ext_resource type="Theme" uid="uid://g21rvq02mmol" path="res://ui/themes/guide_theme.tres" id="1_eg8cj"]
+[ext_resource type="Script" path="res://ui/guide/Guide.cs" id="1_gv6jj"]
+[ext_resource type="Texture2D" uid="uid://blhf7714ineuq" path="res://ui/code/header_border.png" id="2_mbxms"]
+[ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="3_dil0u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xibpd"]
+bg_color = Color(0.0703441, 0.0977035, 0.105516, 1)
+border_width_bottom = 1
+border_color = Color(0.0703441, 0.0977035, 0.105516, 1)
+
+[node name="Guide" type="Control" node_paths=PackedStringArray("_nativeFuncsContainer", "_nativeFuncsButton", "_closeButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 495.0
+offset_right = 5.0
+offset_bottom = 495.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gv6jj")
+_nativeFuncsContainer = NodePath("NinePatchRect/RightPane/TabContainer/NativeFunctions/NativeFuncsContainer")
+_nativeFuncsButton = NodePath("NinePatchRect/LeftPane/LinksPanel/LinksContainer/NativeFuncsBtn")
+_closeButton = NodePath("NinePatchRect/LeftPane/LinksPanel/LinksContainer/CloseGuideBtn")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -341.0
+offset_top = -219.0
+offset_right = 343.0
+offset_bottom = 195.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_eg8cj")
+texture = ExtResource("1_4kcdt")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 32
+
+[node name="LeftPane" type="Control" parent="NinePatchRect"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="NinePatchRect/LeftPane"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 51.0
+offset_right = 196.0
+offset_bottom = 397.0
+theme = ExtResource("1_eg8cj")
+
+[node name="ObjectsPanel" type="Control" parent="NinePatchRect/LeftPane"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ObjectsHeader" type="NinePatchRect" parent="NinePatchRect/LeftPane/ObjectsPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 196.0
+offset_bottom = 51.0
+texture = ExtResource("2_mbxms")
+
+[node name="ObjectsHeaderLabel" type="Label" parent="NinePatchRect/LeftPane/ObjectsPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 196.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0.6, 0.713726, 0.733333, 1)
+theme_override_fonts/font = ExtResource("3_dil0u")
+theme_override_font_sizes/font_size = 15
+text = "Objects"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="NinePatchRect/LeftPane/ObjectsPanel"]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 15.0
+offset_right = 199.0
+offset_bottom = 397.0
+theme = ExtResource("1_eg8cj")
+
+[node name="ObjectsScrollContainer" type="ScrollContainer" parent="NinePatchRect/LeftPane/ObjectsPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 51.0
+offset_right = 196.0
+offset_bottom = 250.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xibpd")
+
+[node name="ObjectsContainer" type="VBoxContainer" parent="NinePatchRect/LeftPane/ObjectsPanel/ObjectsScrollContainer"]
+custom_minimum_size = Vector2(178, 0)
+layout_mode = 2
+theme = ExtResource("1_eg8cj")
+theme_override_constants/separation = 1
+
+[node name="HSeparator" type="HSeparator" parent="NinePatchRect/LeftPane/ObjectsPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 249.0
+offset_right = 196.0
+offset_bottom = 253.0
+theme = ExtResource("1_eg8cj")
+
+[node name="LinksPanel" type="Control" parent="NinePatchRect/LeftPane"]
+anchors_preset = 0
+offset_left = 18.0
+offset_top = 207.0
+offset_right = 196.0
+offset_bottom = 394.0
+
+[node name="LinksHeader" type="NinePatchRect" parent="NinePatchRect/LeftPane/LinksPanel"]
+layout_mode = 0
+offset_top = 45.0
+offset_right = 178.0
+offset_bottom = 78.0
+texture = ExtResource("2_mbxms")
+
+[node name="LinksHeaderLabel" type="Label" parent="NinePatchRect/LeftPane/LinksPanel"]
+layout_mode = 0
+offset_top = 45.0
+offset_right = 178.0
+offset_bottom = 73.0
+theme_override_colors/font_color = Color(0.599893, 0.713726, 0.733257, 1)
+theme_override_fonts/font = ExtResource("3_dil0u")
+theme_override_font_sizes/font_size = 15
+text = "Links"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LinksContainer" type="VBoxContainer" parent="NinePatchRect/LeftPane/LinksPanel"]
+custom_minimum_size = Vector2(178, 0)
+layout_mode = 0
+offset_top = 78.0
+offset_right = 178.0
+offset_bottom = 182.0
+theme = ExtResource("1_eg8cj")
+theme_override_constants/separation = 1
+
+[node name="LevelOverviewBtn" type="Button" parent="NinePatchRect/LeftPane/LinksPanel/LinksContainer"]
+layout_mode = 2
+theme = ExtResource("1_eg8cj")
+text = "Level Overview"
+
+[node name="NativeFuncsBtn" type="Button" parent="NinePatchRect/LeftPane/LinksPanel/LinksContainer"]
+layout_mode = 2
+theme = ExtResource("1_eg8cj")
+text = "Native Functions"
+
+[node name="LiteScriptDocsBtn" type="Button" parent="NinePatchRect/LeftPane/LinksPanel/LinksContainer"]
+layout_mode = 2
+theme = ExtResource("1_eg8cj")
+text = "LiteScript Docs"
+
+[node name="CloseGuideBtn" type="Button" parent="NinePatchRect/LeftPane/LinksPanel/LinksContainer"]
+layout_mode = 2
+theme = ExtResource("1_eg8cj")
+text = "Close Guide"
+
+[node name="RightPane" type="Control" parent="NinePatchRect"]
+anchors_preset = 0
+offset_left = 198.0
+offset_top = 18.0
+offset_right = 666.0
+offset_bottom = 397.0
+
+[node name="RightPaneHeader" type="NinePatchRect" parent="NinePatchRect/RightPane"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 33.0
+texture = ExtResource("2_mbxms")
+
+[node name="RightPaneHeaderLabel" type="Label" parent="NinePatchRect/RightPane/RightPaneHeader"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.6, 0.713726, 0.733333, 1)
+theme_override_fonts/font = ExtResource("3_dil0u")
+theme_override_font_sizes/font_size = 15
+text = "Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="NinePatchRect/RightPane"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 468.0
+offset_bottom = 379.0
+theme = ExtResource("1_eg8cj")
+tabs_visible = false
+
+[node name="LevelOverview" type="Control" parent="NinePatchRect/RightPane/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="LevelOverviewContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/LevelOverview"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 346.0
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="LevelDesc" type="RichTextLabel" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_eg8cj")
+bbcode_enabled = true
+text = "[center]Description."
+fit_content = true
+
+[node name="RequirementsHeader" type="NinePatchRect" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("2_mbxms")
+
+[node name="RequirementsHeaderLabel" type="Label" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer/RequirementsHeader"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.6, 0.713726, 0.733333, 1)
+theme_override_fonts/font = ExtResource("3_dil0u")
+theme_override_font_sizes/font_size = 15
+text = "Requirements"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RequirementsContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer"]
+layout_mode = 2
+
+[node name="ObjectOverview" type="Control" parent="NinePatchRect/RightPane/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ObjectOverviewContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 346.0
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ObjectDesc" type="RichTextLabel" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_eg8cj")
+bbcode_enabled = true
+text = "[center]"
+fit_content = true
+
+[node name="PropertiesContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer"]
+custom_minimum_size = Vector2(232, 0)
+layout_mode = 2
+
+[node name="PropertiesHeader" type="NinePatchRect" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/PropertiesContainer"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("2_mbxms")
+
+[node name="PropertiesHeaderLabel" type="Label" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/PropertiesContainer/PropertiesHeader"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.6, 0.713726, 0.733333, 1)
+theme_override_fonts/font = ExtResource("3_dil0u")
+theme_override_font_sizes/font_size = 15
+text = "Properties"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MethodsContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer"]
+custom_minimum_size = Vector2(232, 0)
+layout_mode = 2
+
+[node name="MethodsHeader" type="NinePatchRect" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/MethodsContainer"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("2_mbxms")
+
+[node name="MethodsHeaderLabel" type="Label" parent="NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/MethodsContainer/MethodsHeader"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.6, 0.713726, 0.733333, 1)
+theme_override_fonts/font = ExtResource("3_dil0u")
+theme_override_font_sizes/font_size = 15
+text = "Methods"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NativeFunctions" type="Control" parent="NinePatchRect/RightPane/TabContainer"]
+layout_mode = 2
+
+[node name="NativeFuncsContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/NativeFunctions"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 345.0

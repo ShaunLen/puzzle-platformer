@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Godot;
 using PuzzlePlatformer.addons.camera_2d_plus;
@@ -9,6 +8,8 @@ using PuzzlePlatformer.litescript.Runtime;
 using PuzzlePlatformer.litescript.Runtime.Values;
 using PuzzlePlatformer.objects.interactable;
 using PuzzlePlatformer.objects.interactable.terminal;
+using PuzzlePlatformer.world.levels;
+using Script = PuzzlePlatformer.litescript.Statements.Script;
 
 namespace PuzzlePlatformer.world;
 
@@ -17,6 +18,7 @@ public partial class LevelManager : Node
     public static LevelManager Instance { get; private set; }
     public Env Environment;
     public AudioStreamPlayer AudioStreamPlayer;
+    public LevelRoot CurrentLevel;
 
     private Terminal _terminal;
     private Camera2DPlus _camera;
@@ -29,6 +31,7 @@ public partial class LevelManager : Node
         _terminal = (Terminal) GetTree().GetFirstNodeInGroup("Terminal");
         _camera = (Camera2DPlus) GetTree().GetFirstNodeInGroup("Camera");
         AudioStreamPlayer = GetTree().GetFirstNodeInGroup("AudioPlayer") as AudioStreamPlayer;
+        CurrentLevel = (LevelRoot) GetTree().GetFirstNodeInGroup("Level");
         
         CreateEnvironment();
 
@@ -49,8 +52,6 @@ public partial class LevelManager : Node
 
     private void CreateEnvironment()
     {
-        Console.WriteLine("Creating environment");
-        
         // Create LS environment
         Environment = Env.CreateGlobalEnvironment();
         
@@ -93,6 +94,11 @@ public partial class LevelManager : Node
         obj.GetType().GetMethod(methodName)?.Invoke(obj, new object[]{ new List<IRuntimeValue>(), Environment });
 
         return true;
+    }
+
+    public bool CheckRequirementsMet(Script script)
+    {
+        return CurrentLevel.Requirements.All(req => req.RequirementMet(script));
     }
 
     private void HighlightInteractables(double delta)

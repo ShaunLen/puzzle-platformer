@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Godot;
+using PuzzlePlatformer.autoloads;
 
 namespace PuzzlePlatformer.ui.menus.guidebook;
 
@@ -15,18 +17,58 @@ namespace PuzzlePlatformer.ui.menus.guidebook;
 */
 public partial class Guidebook : Control
 {
-    private Tree _levelTree;
-
+    /* Signals */
+    [Signal] public delegate void GuidebookOpenedEventHandler();
+    
+    public bool GuidebookOpen;
+    
+    private TabContainer _tabContainer;
+    
     public override void _Ready()
     {
-        Input.MouseMode = Input.MouseModeEnum.Confined;
-        _levelTree = GetNode<Tree>("TabContainer/LevelTree");
-        
-        var descriptionHeader = _levelTree.CreateItem();
-        descriptionHeader.SetText(0, "Description");
+        _tabContainer = GetNode<TabContainer>("TabContainer");
 
-        var description = _levelTree.CreateItem(descriptionHeader);
-        description.SetText(0, "This is a simple test description for a level. This level contains two objects - " +
-                               "\nRedButton and BlueDoor. Try interacting with them via the PocketTerminal!");
+        _tabContainer.TabChanged += tab =>
+        {
+            AudioManager.Instance.PlaySoundFromList(new List<AudioManager.Sound>
+            {
+                AudioManager.Sound.PageFlip1, AudioManager.Sound.PageFlip2, AudioManager.Sound.PageFlip3
+            });
+        };
+
+        CodeManager.Instance.CodeWindowOpened += CloseGuidebook;
+    }
+
+    public override void _Process(double delta)
+    {
+        if(InputManager.IsActionJustPressed(InputManager.Action.ToggleGuidebook, true))
+        {
+            if(GuidebookOpen)
+                CloseGuidebook();
+            else
+                OpenGuidebook();
+        }
+    }
+
+    public void OpenGuidebook()
+    {
+        EmitSignal(SignalName.GuidebookOpened);
+        
+        GuidebookOpen = true;
+        InputManager.InputEnabled = false;
+        Input.MouseMode = Input.MouseModeEnum.Confined;
+
+        var tween = CreateTween();
+        tween.TweenProperty(_tabContainer, "position:y", 45, 0.1);
+    }
+
+    public void CloseGuidebook()
+    {
+        GuidebookOpen = false;
+        InputManager.InputEnabled = true;
+        Input.MouseMode = Input.MouseModeEnum.ConfinedHidden;
+        
+        var tween = CreateTween();
+        tween.TweenProperty(_tabContainer, "position:y", 545, 0.1);
     }
 }

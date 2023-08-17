@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using PuzzlePlatformer.world.levels;
 
@@ -30,7 +31,7 @@ public partial class Camera2DPlus : Camera2D
         _offsetSmoothingSpeed *= 20;
 
         if (_useLevelBounds)
-            SetLimits();
+            GetTree().CurrentScene.Ready += SetLimits;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -77,7 +78,7 @@ public partial class Camera2DPlus : Camera2D
 
     private void SetLimits()
     {
-        var bounds = GetNode<LevelRoot>("../Tilemaps").LevelBounds;
+        var bounds = GetNode<LevelRoot>(GetTree().CurrentScene.GetPath()).LevelBounds;
 
         LimitLeft = 0;
         LimitBottom = 0;

@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca6m632owubug"]
+
+[ext_resource type="Theme" uid="uid://g21rvq02mmol" path="res://ui/themes/guide_theme.tres" id="1_6mrcj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ud5xk"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0980392, 0.141176, 0.14902, 1)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.0703441, 0.0977035, 0.105516, 1)
+
+[node name="Requirement" type="MarginContainer"]
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+
+[node name="RequirementDesc" type="RichTextLabel" parent="."]
+layout_mode = 2
+theme = ExtResource("1_6mrcj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ud5xk")
+bbcode_enabled = true
+text = "[center]Requirement Desc Here"
+fit_content = true

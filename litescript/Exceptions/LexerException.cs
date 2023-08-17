@@ -3,12 +3,9 @@ using PuzzlePlatformer.autoloads;
 
 namespace PuzzlePlatformer.litescript.Exceptions;
 
-public class LexerException : Exception
+public class LexerException : LsException
 {
-    public LexerException(string message)
+    public LexerException(string message) : base("Environment", message)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.Error.WriteLine("Lexer Error: " + message);
-        CodeManager.Instance.ConsoleWriteError(message);
     }
 }
