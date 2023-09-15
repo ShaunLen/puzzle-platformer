@@ -8,20 +8,22 @@ namespace PuzzlePlatformer.world.levels.requirements;
 public partial class NodeRequirement : Requirement
 {
     public override sealed string Desc { get; set; }
-    public NodeType NodeType;
+    private NodeType _nodeType;
     
-    public NodeRequirement(string desc, NodeType nodeType)
+    public NodeRequirement(NodeType nodeType)
     {
-        Desc = desc;
-        NodeType = nodeType;
+        Desc = nodeType.ToDesc();
+        _nodeType = nodeType;
     }
     
     public override bool RequirementMet(Script script)
     {
-        if (script.Body.Any(stmt => stmt.Type == NodeType))
+        if (script.Body.Any(stmt => stmt.Type == _nodeType))
             return true;
         
         CodeManager.Instance.ConsoleWriteError("level requirement not met: " + Desc);
         return false;
     }
+    
+    
 }

@@ -25,6 +25,10 @@ LevelManager="*res://world/LevelManager.cs"
 AudioManager="*res://autoloads/AudioManager.cs"
 HudManager="*res://autoloads/HudManager.cs"
 
+[debug]
+
+file_logging/enable_file_logging=true
+
 [display]
 
 window/size/viewport_width=960

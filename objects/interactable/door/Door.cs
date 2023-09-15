@@ -9,8 +9,8 @@ namespace PuzzlePlatformer.objects.interactable.door;
 
 public partial class Door : Interactable
 {
-    public override Dictionary<string, string> Properties { get; set; } = new();
-    public override Dictionary<string, string> Methods { get; set; } = new();
+    public override Dictionary<string, string> Properties { get; } = new();
+    public override Dictionary<string, string> Methods { get; } = new();
     
     public bool IsOpen;
     
@@ -25,10 +25,14 @@ public partial class Door : Interactable
         _animationPlayer.AnimationStarted += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.Door, _audioStreamPlayer); 
         _animationPlayer.AnimationFinished += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.DoorStop, _audioStreamPlayer);
         
-        Properties.Add("IsOpen", "Set to 'true' when door is open, and 'false' when door is closed.");
+        Properties.Add("IsOpen", "Set to '" + "true".Highlight() + "' when door is open, and '" + "false".Highlight() + "' when door is closed.\n" +
+                                 "Value type: boolean".Darken());
         
-        Methods.Add("Open()", "Opens the door.");
-        Methods.Add("Close()", "Closes the door.");
+        Methods.Add("Open()", "Opens the door.\n" +
+                              "Return type: null".Darken());
+        
+        Methods.Add("Close()", "Closes the door.\n" +
+                               "Return type: null".Darken());
     }
     
     /* Methods */
@@ -81,7 +85,7 @@ public partial class Door : Interactable
         return properties;
     }
 
-    public override void UpdateProperties()
+    override protected void UpdateProperties()
     {
         var obj = LevelManager.Instance.Environment.LookupVar(Name) as ObjectValue;
         obj!.Properties["IsOpen"] = new BooleanValue(IsOpen);

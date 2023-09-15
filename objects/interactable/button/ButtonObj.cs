@@ -10,38 +10,36 @@ namespace PuzzlePlatformer.objects.interactable.button;
 
 public partial class ButtonObj : Interactable
 {
-    public override Dictionary<string, string> Properties { get; set; } = new();
-    public override Dictionary<string, string> Methods { get; set; } = new();
-    
-    public bool IsPressed;
-    
-    private AnimationPlayer _animationPlayer;
-    private AudioStreamPlayer2D _audioStreamPlayer;
+    public override Dictionary<string, string> Properties { get; } = new();
+    public override Dictionary<string, string> Methods { get; } = new();
+
+    private bool _isPressed;
 
     private HitboxComponent _hitbox;
 
     public override void _Ready()
     {
-        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        _audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+        base._Ready();
+        
         _hitbox = GetNode<HitboxComponent>("HitboxComponent");
 
         _hitbox.PlayerEntered += () =>
         {
-            _animationPlayer.Play("button_press");
-            AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonPress, _audioStreamPlayer);
-            IsPressed = true;
+            AnimationPlayer.Play("button_press");
+            AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonPress, AudioStreamPlayer);
+            _isPressed = true;
             UpdateProperties();
         };
         _hitbox.PlayerExited += () =>
         {
-            _animationPlayer.PlayBackwards("button_press");
-            AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonRelease, _audioStreamPlayer);
-            IsPressed = false;
+            AnimationPlayer.PlayBackwards("button_press");
+            AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonRelease, AudioStreamPlayer);
+            _isPressed = false;
             UpdateProperties();
         };
         
-        Properties.Add("IsPressed", "Set to 'true' if button is pressed, and 'false' if button is not pressed.");
+        Properties.Add("IsPressed", "Set to '" + "true".Highlight() + "' if button is pressed, and '" + "false".Highlight() + "' if button is not pressed.\n" +
+                                    "Value type: boolean".Darken());
     }
     
     /* Overrides */
@@ -51,14 +49,14 @@ public partial class ButtonObj : Interactable
         var properties = new Dictionary<string, IRuntimeValue>();
         
         // Properties
-        properties.Add("IsPressed", new BooleanValue(IsPressed));
+        properties.Add("IsPressed", new BooleanValue(_isPressed));
 
         return properties;
     }
 
-    public override void UpdateProperties()
+    override protected void UpdateProperties()
     {
         var obj = LevelManager.Instance.Environment.LookupVar(Name) as ObjectValue;
-        obj!.Properties["IsPressed"] = new BooleanValue(IsPressed);
+        obj!.Properties["IsPressed"] = new BooleanValue(_isPressed);
     }
 }

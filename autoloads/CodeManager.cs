@@ -2,6 +2,7 @@ using System;
 using Godot;
 using PuzzlePlatformer.litescript.Frontend;
 using PuzzlePlatformer.litescript.Runtime;
+using PuzzlePlatformer.litescript.Statements;
 using PuzzlePlatformer.ui.guide;
 using PuzzlePlatformer.ui.menus.guidebook;
 using PuzzlePlatformer.ui.themes;
@@ -69,6 +70,12 @@ public partial class CodeManager : Node
         _clearButton.Pressed += ConsoleClear;
         _closeButton.Pressed += CloseCode;
         _guide.GuideOpened += CloseCode;
+        
+        GetTree().CurrentScene.Ready += () =>
+        {
+            _codeEdit.SetCaretLine(500);
+            _codeEdit.SetCaretColumn(500);
+        };
     }
 
     public override void _Process(double delta)
@@ -86,6 +93,11 @@ public partial class CodeManager : Node
     }
     
     /* Public Methods */
+
+    public void SetCode(string code)
+    {
+        _codeEdit.Text = code;
+    }
     
     public void ConsoleWrite(string output)
     {
@@ -162,6 +174,13 @@ public partial class CodeManager : Node
 
         if (!LevelManager.Instance.CheckRequirementsMet(script))
             return;
+
+        // foreach (var stmt in script.Body)
+        // {
+        //     var expr = stmt as CallExpression;
+        //     Console.WriteLine(expr.Caller);
+        //     Console.WriteLine(expr.Args);
+        // }
         
         var result = _interpreter.Evaluate(script, LevelManager.Instance.Environment);
 

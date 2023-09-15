@@ -50,5 +50,6 @@ size_flags_horizontal = 3
 theme = ExtResource("1_82h16")
 theme_override_colors/default_color = Color(0.443076, 0.556909, 0.57644, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_0ro52")
+bbcode_enabled = true
 text = "Set to 'true' if button is pressed, and 'false' if button is not pressed."
 fit_content = true

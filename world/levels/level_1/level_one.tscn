@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bwwyslacygcax"]
+[gd_scene load_steps=16 format=3 uid="uid://bwwyslacygcax"]
 
 [ext_resource type="Script" path="res://world/levels/level_1/LevelOne.cs" id="1_6sqrh"]
 [ext_resource type="Texture2D" uid="uid://yoi5myrwxkwi" path="res://world/tiles/bg_sheet.png" id="2_uieim"]
@@ -7,8 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://couxwdf1cvkg8" path="res://entities/player/player.tscn" id="5_7qey8"]
 [ext_resource type="PackedScene" uid="uid://dj0q7jpnhan8x" path="res://objects/interactable/door/door.tscn" id="6_be15w"]
 [ext_resource type="PackedScene" uid="uid://xaipx1vexax7" path="res://objects/interactable/button/button.tscn" id="7_1trvf"]
+[ext_resource type="Texture2D" uid="uid://da1cg7wpbvpq3" path="res://objects/interactable/button/sprites/red-button_32x.png" id="8_h8rie"]
 [ext_resource type="PackedScene" uid="uid://wdr0v0pcfg0y" path="res://ui/hud/hud.tscn" id="8_o84vr"]
 [ext_resource type="PackedScene" uid="uid://ipfkpidosr05" path="res://ui/code/code_editor.tscn" id="9_bgpdq"]
+[ext_resource type="Texture2D" uid="uid://bq20mjhq50ok1" path="res://objects/interactable/button/sprites/green-button_32x.png" id="9_kysga"]
 [ext_resource type="PackedScene" uid="uid://brxgucbe5e5hm" path="res://ui/menus/pause_menu/pause_menu.tscn" id="10_tc1ci"]
 [ext_resource type="PackedScene" uid="uid://cdwsvv01dipe5" path="res://ui/guide/guide.tscn" id="11_dr7la"]
 
@@ -29,6 +31,11 @@ sources/1 = SubResource("TileSetAtlasSource_esc1a")
 script = ExtResource("1_6sqrh")
 LevelName = "Level 1 - If I press this.."
 LevelDesc = "Let's take things up a notch. Your goal is to pass through the blue door blocking your path. However, it won't be as simple as just using a handle - the door can only be opened via code. Remember to look at the objects you can interact with on the left of this guide - and make use of the LiteScript docs if you get stuck. All level requirements must be met!"
+InitialCode = "# This is a comment.
+# Comments are denoted with a '#' at the start of a line.
+# They will continue until the end of the line.
+
+"
 GroundTilemap = NodePath("Tilemaps/GroundTilemap")
 
 [node name="Tilemaps" type="Node2D" parent="."]
@@ -72,21 +79,24 @@ _respawnDelay = 1.0
 Description = "A blue door blocking the exit from the level."
 
 [node name="RedButton" parent="Interactables" instance=ExtResource("7_1trvf")]
+Sprite = ExtResource("8_h8rie")
 Description = "A red button situated in the middle of the room."
 
 [node name="GreenButton" parent="Interactables" instance=ExtResource("7_1trvf")]
-position = Vector2(-128, -1)
-Description = "Just a little test."
+position = Vector2(87, 0)
+Sprite = ExtResource("9_kysga")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="UI" groups=["HUD"] instance=ExtResource("8_o84vr")]
 
 [node name="Code" parent="UI" groups=["Code"] instance=ExtResource("9_bgpdq")]
+visible = false
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("10_tc1ci")]
 visible = false
 
 [node name="Guide" parent="UI" groups=["Guide"] instance=ExtResource("11_dr7la")]
+visible = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
