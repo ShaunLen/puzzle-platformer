@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PuzzlePlatformer.litescript;
-using PuzzlePlatformer.litescript.Statements;
+using PuzzlePlatformer.litescript_two.Nodes;
 
 namespace PuzzlePlatformer.world.levels.requirements;
 
@@ -24,42 +23,42 @@ public partial class ObjectPropertyRequirement : Requirement
         _isMethod = isMethod;
     }
 
-    public override bool RequirementMet(Script script)
+    public override bool RequirementMet(ProgramNode program)
     {
-        MemberExpression memberExpr = null;
+        MemberExpressionNode memberExpr = null;
         
-        foreach (var stmt in script.Body)
+        foreach (var stmt in program.Body)
         {
             switch (stmt.Type)
             {
-                case NodeType.IfStatement:
+                case NodeType.IfStatementNode:
                 {
-                    var memberExprs = GetMemberExpressions(stmt as IfStatement);
+                    var memberExprs = GetMemberExpressions(stmt as IfStatementNode);
 
                     if (memberExprs.Any(MemberExpressionMatch))
                         return true;
 
                     continue;
                 }
-                case NodeType.CallExpression:
+                case NodeType.CallExpressionNode:
                 {
-                    var expr = stmt as CallExpression;
+                    var expr = stmt as CallExpressionNode;
 
-                    if (expr!.Caller.Type != NodeType.MemberExpression)
+                    if (expr!.Caller.Type != NodeType.MemberExpressionNode)
                         continue;
                 
-                    memberExpr = expr.Caller as MemberExpression;
+                    memberExpr = expr.Caller as MemberExpressionNode;
                     break;
                 }
-                case NodeType.MemberExpression:
+                case NodeType.MemberExpressionNode:
                     if (_isMethod)
                         continue;
                         
-                    memberExpr = stmt as MemberExpression;
+                    memberExpr = stmt as MemberExpressionNode;
                     break;
             }
 
-            if(memberExpr is not { Type: NodeType.MemberExpression })
+            if(memberExpr is not { Type: NodeType.MemberExpressionNode })
                 continue;
 
             Console.WriteLine(memberExpr.Type);
@@ -68,26 +67,26 @@ public partial class ObjectPropertyRequirement : Requirement
                 return true;
         }
 
-        base.RequirementMet(script);
+        base.RequirementMet(program);
         return false;
     }
 
-    private List<MemberExpression> GetMemberExpressions(IfStatement ifStmt)
+    private List<MemberExpressionNode> GetMemberExpressions(IfStatementNode ifStmt)
     {
-        var memberExpressions = new List<MemberExpression>();
+        var memberExpressions = new List<MemberExpressionNode>();
         
         switch (ifStmt.Condition.Type)
         {
-            case NodeType.MemberExpression:
-                memberExpressions.Add(ifStmt.Condition as MemberExpression);
+            case NodeType.MemberExpressionNode:
+                memberExpressions.Add(ifStmt.Condition as MemberExpressionNode);
                 break;
             
-            case NodeType.CallExpression:
+            case NodeType.CallExpressionNode:
             {
-                var callExpr = ifStmt.Condition as CallExpression;
+                var callExpr = ifStmt.Condition as CallExpressionNode;
                 
-                if(callExpr!.Caller.Type == NodeType.MemberExpression)
-                    memberExpressions.Add(callExpr.Caller as MemberExpression);
+                if(callExpr!.Caller.Type == NodeType.MemberExpressionNode)
+                    memberExpressions.Add(callExpr.Caller as MemberExpressionNode);
 
                 break;
             }
@@ -97,18 +96,18 @@ public partial class ObjectPropertyRequirement : Requirement
         {
             switch (stmt.Type)
             {
-                case NodeType.IfStatement:
-                    var memberExprs = GetMemberExpressions(stmt as IfStatement);
+                case NodeType.IfStatementNode:
+                    var memberExprs = GetMemberExpressions(stmt as IfStatementNode);
                     memberExpressions.AddRange(memberExprs);
                     break;
 
-                case NodeType.MemberExpression:
-                    memberExpressions.Add(stmt as MemberExpression);
+                case NodeType.MemberExpressionNode:
+                    memberExpressions.Add(stmt as MemberExpressionNode);
                     break;
 
-                case NodeType.CallExpression:
-                    var callExpr = stmt as CallExpression;
-                    memberExpressions.Add(callExpr!.Caller as MemberExpression);
+                case NodeType.CallExpressionNode:
+                    var callExpr = stmt as CallExpressionNode;
+                    memberExpressions.Add(callExpr!.Caller as MemberExpressionNode);
                     break;
             }
         }
@@ -117,18 +116,18 @@ public partial class ObjectPropertyRequirement : Requirement
         {
             switch (stmt.Type)
             {
-                case NodeType.IfStatement:
-                    var memberExprs = GetMemberExpressions(stmt as IfStatement);
+                case NodeType.IfStatementNode:
+                    var memberExprs = GetMemberExpressions(stmt as IfStatementNode);
                     memberExpressions.AddRange(memberExprs);
                     break;
 
-                case NodeType.MemberExpression:
-                    memberExpressions.Add(stmt as MemberExpression);
+                case NodeType.MemberExpressionNode:
+                    memberExpressions.Add(stmt as MemberExpressionNode);
                     break;
                 
-                case NodeType.CallExpression:
-                    var callExpr = stmt as CallExpression;
-                    memberExpressions.Add(callExpr!.Caller as MemberExpression);
+                case NodeType.CallExpressionNode:
+                    var callExpr = stmt as CallExpressionNode;
+                    memberExpressions.Add(callExpr!.Caller as MemberExpressionNode);
                     break;
             }
         }
@@ -136,13 +135,13 @@ public partial class ObjectPropertyRequirement : Requirement
         return memberExpressions;
     }
 
-    private bool MemberExpressionMatch(MemberExpression expr)
+    private bool MemberExpressionMatch(MemberExpressionNode expr)
     {
         if (expr == null)
             return false;
         
-        var obj = expr.Object as Identifier;
-        var property = expr.Property as Identifier;
+        var obj = expr.Object as IdentifierNode;
+        var property = expr.Property as IdentifierNode;
         
         return obj!.Symbol == _object && property!.Symbol == _property;
     }

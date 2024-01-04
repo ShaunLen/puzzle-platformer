@@ -1,7 +1,6 @@
 using Godot;
 using PuzzlePlatformer.autoloads;
-using PuzzlePlatformer.litescript;
-using Script = PuzzlePlatformer.litescript.Statements.Script;
+using PuzzlePlatformer.litescript_two.Nodes;
 
 namespace PuzzlePlatformer.world.levels.requirements;
 
@@ -9,7 +8,7 @@ public abstract partial class Requirement : Node
 {
     public abstract string Desc { get; set; }
 
-    public virtual bool RequirementMet(Script script)
+    public virtual bool RequirementMet(ProgramNode program)
     {
         if(!CodeManager.Instance.EditorOpen)
             HudManager.Instance.WriteErrorNotification("level requirement not met - see console for details.");
@@ -26,7 +25,7 @@ internal static class RequirementExtensions
     {
         return nodeType switch
         {
-            NodeType.IfStatement => "Use an 'if' statement.",
+            NodeType.IfStatementNode => "Use an 'if' statement.",
             _ => "AST Node does not have a desc."
         };
     }

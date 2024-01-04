@@ -3,7 +3,7 @@ using Godot;
 using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.components;
 using PuzzlePlatformer.entities.player;
-using PuzzlePlatformer.litescript.Runtime.Values;
+using PuzzlePlatformer.litescript_two.Runtime.Values;
 using PuzzlePlatformer.world;
 
 namespace PuzzlePlatformer.objects.interactable.button;

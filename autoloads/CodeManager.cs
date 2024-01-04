@@ -1,8 +1,10 @@
 using System;
 using Godot;
-using PuzzlePlatformer.litescript.Frontend;
-using PuzzlePlatformer.litescript.Runtime;
-using PuzzlePlatformer.litescript.Statements;
+using Godot.Collections;
+using PuzzlePlatformer.litescript_two;
+using PuzzlePlatformer.litescript_two.IO;
+using PuzzlePlatformer.litescript_two.Runtime;
+using PuzzlePlatformer.litescript_two.Tokenization;
 using PuzzlePlatformer.ui.guide;
 using PuzzlePlatformer.ui.menus.guidebook;
 using PuzzlePlatformer.ui.themes;
@@ -23,6 +25,9 @@ public partial class CodeManager : Node
     public bool EditorOpen;
 
     /* Private Properties */
+    private ErrorReporter _reporter;
+    private TextReader _reader;
+    private Tokenizer _tokenizer;
     private Parser _parser;
     private Interpreter _interpreter;
     private Control _code;
@@ -44,9 +49,6 @@ public partial class CodeManager : Node
     public override void _Ready()
     {
         Instance = this;
-        
-        _parser = new Parser();
-        _interpreter = new Interpreter();
         
         _code = GetTree().GetFirstNodeInGroup("Code") as Control;
         _codeEditorParent = _code.GetNode<Control>("CodeEditor");
@@ -109,12 +111,12 @@ public partial class CodeManager : Node
         _console.AddText("\n" + output);
     }
     
-    public void ConsoleWriteError(string output)
+    public void ConsoleWriteError(string output, bool errorText = true)
     {
         AudioManager.Instance.PlaySound(AudioManager.Sound.Error);
 
         _console.PushColor(Color.Color8(181, 91 ,91));
-        _console.AddText("\nError: " + output);
+        _console.AddText(errorText ? $"\nError: {output}" : $"\n{output}");
     }
 
     public void ConsoleClear()
@@ -170,23 +172,33 @@ public partial class CodeManager : Node
         ConsoleClear();
         
         var input = _codeEdit.Text;
-        var script = _parser.ProduceAst(input);
+        _reporter = new ErrorReporter();
+        _reader = new TextReader(input);
+        _tokenizer = new Tokenizer(_reporter, _reader);
+        _parser = new Parser(_reporter);
+        _interpreter = new Interpreter(_reporter);
 
-        if (!LevelManager.Instance.CheckRequirementsMet(script))
+        var tokens = _tokenizer.GetAllTokens();
+        
+        if (_reporter.WriteErrorsIfAny())
+            return;
+        
+        var program = _parser.Parse(tokens);
+        
+        if (_reporter.WriteErrorsIfAny())
             return;
 
-        // foreach (var stmt in script.Body)
-        // {
-        //     var expr = stmt as CallExpression;
-        //     Console.WriteLine(expr.Caller);
-        //     Console.WriteLine(expr.Args);
-        // }
+        if (!LevelManager.Instance.CheckRequirementsMet(program))
+            return;
         
-        var result = _interpreter.Evaluate(script, LevelManager.Instance.Environment);
+        var result = _interpreter.Evaluate(program, LevelManager.Instance.Environment);
 
         if (result == null)
             return;
 
+        if (_reporter.WriteErrorsIfAny())
+            return;
+        
         ConsoleWriteLine("\n" + "Program finished with 0 errors.");
             
         if(!EditorOpen)

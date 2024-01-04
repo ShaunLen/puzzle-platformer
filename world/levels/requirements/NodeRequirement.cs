@@ -1,7 +1,6 @@
 using System.Linq;
 using PuzzlePlatformer.autoloads;
-using PuzzlePlatformer.litescript;
-using PuzzlePlatformer.litescript.Statements;
+using PuzzlePlatformer.litescript_two.Nodes;
 
 namespace PuzzlePlatformer.world.levels.requirements;
 
@@ -16,9 +15,9 @@ public partial class NodeRequirement : Requirement
         _nodeType = nodeType;
     }
     
-    public override bool RequirementMet(Script script)
+    public override bool RequirementMet(ProgramNode program)
     {
-        if (script.Body.Any(stmt => stmt.Type == _nodeType))
+        if (program.Body.Any(stmt => stmt.Type == _nodeType))
             return true;
         
         CodeManager.Instance.ConsoleWriteError("level requirement not met: " + Desc);

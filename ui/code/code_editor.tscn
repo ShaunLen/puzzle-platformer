@@ -98,6 +98,9 @@ else
 		Print(\"Not pressed\")
 	}
 }"
+context_menu_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
 syntax_highlighter = SubResource("CodeHighlighter_36s0u")
 caret_blink = true
 gutters_draw_line_numbers = true

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using PuzzlePlatformer.litescript;
 using PuzzlePlatformer.world.levels.requirements;
 
 namespace PuzzlePlatformer.world.levels.level_template;

@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using PuzzlePlatformer.litescript;
-using PuzzlePlatformer.litescript.Statements;
+using PuzzlePlatformer.litescript_two.Nodes;
 
 namespace PuzzlePlatformer.world.levels.requirements;
 
@@ -18,39 +16,39 @@ public partial class NativeFuncRequirement : Requirement
         _methodName = methodName;
     }
 
-    public override bool RequirementMet(Script script)
+    public override bool RequirementMet(ProgramNode program)
     {
-        foreach (var stmt in script.Body)
+        foreach (var stmt in program.Body)
         {
             switch (stmt.Type)
             {
-                case NodeType.IfStatement:
+                case NodeType.IfStatementNode:
                 {
-                    var callExpressions = GetCallExpressions(stmt as IfStatement);
+                    var callExpressions = GetCallExpressions(stmt as IfStatementNode);
 
                     if (callExpressions.Any(NativeFuncMatch))
                         return true;
                 } break;
 
-                case NodeType.CallExpression:
+                case NodeType.CallExpressionNode:
                 {
-                    if (NativeFuncMatch(stmt as CallExpression))
+                    if (NativeFuncMatch(stmt as CallExpressionNode))
                         return true;
                 } break;
             }
             
         }
 
-        base.RequirementMet(script);
+        base.RequirementMet(program);
         return false;
     }
 
-    private List<CallExpression> GetCallExpressions(IfStatement ifStmt)
+    private List<CallExpressionNode> GetCallExpressions(IfStatementNode ifStmt)
     {
-        var callExpressions = new List<CallExpression>();
+        var callExpressions = new List<CallExpressionNode>();
 
-        if(ifStmt.Condition.Type == NodeType.CallExpression)
-            callExpressions.Add(ifStmt.Condition as CallExpression);
+        if(ifStmt.Condition.Type == NodeType.CallExpressionNode)
+            callExpressions.Add(ifStmt.Condition as CallExpressionNode);
 
         var statements = ifStmt.Consequent.Concat(ifStmt.Alternate);
 
@@ -58,13 +56,13 @@ public partial class NativeFuncRequirement : Requirement
         {
             switch (stmt.Type)
             {
-                case NodeType.IfStatement:
-                    var callExprs = GetCallExpressions(stmt as IfStatement);
+                case NodeType.IfStatementNode:
+                    var callExprs = GetCallExpressions(stmt as IfStatementNode);
                     callExpressions.AddRange(callExprs);
                     break;
                 
-                case NodeType.CallExpression:
-                    callExpressions.Add(stmt as CallExpression);
+                case NodeType.CallExpressionNode:
+                    callExpressions.Add(stmt as CallExpressionNode);
                     break;
             }
         }
@@ -72,11 +70,11 @@ public partial class NativeFuncRequirement : Requirement
         return callExpressions;
     }
 
-    private bool NativeFuncMatch(CallExpression expr)
+    private bool NativeFuncMatch(CallExpressionNode expr)
     {
-        if (expr!.Caller.Type != NodeType.Identifier)
+        if (expr!.Caller.Type != NodeType.IdentifierNode)
             return false;
 
-        return ((Identifier) expr.Caller).Symbol == _methodName;
+        return ((IdentifierNode) expr.Caller).Symbol == _methodName;
     }
 }

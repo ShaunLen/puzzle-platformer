@@ -4,12 +4,12 @@ using System.Linq;
 using Godot;
 using PuzzlePlatformer.addons.camera_2d_plus;
 using PuzzlePlatformer.autoloads;
-using PuzzlePlatformer.litescript.Runtime;
-using PuzzlePlatformer.litescript.Runtime.Values;
+using PuzzlePlatformer.litescript_two.Nodes;
+using PuzzlePlatformer.litescript_two.Runtime;
+using PuzzlePlatformer.litescript_two.Runtime.Values;
 using PuzzlePlatformer.objects.interactable;
 using PuzzlePlatformer.objects.interactable.terminal;
 using PuzzlePlatformer.world.levels;
-using Script = PuzzlePlatformer.litescript.Statements.Script;
 
 namespace PuzzlePlatformer.world;
 
@@ -53,7 +53,7 @@ public partial class LevelManager : Node
     private void CreateEnvironment()
     {
         // Create LS environment
-        Environment = Env.CreateGlobalEnvironment();
+        Environment = Env.CreateStandardEnvironment();
         
         // Get list of all interactable objects in level
         var interactables = GetTree().GetNodesInGroup("Interactable").ToList();
@@ -96,9 +96,9 @@ public partial class LevelManager : Node
         return true;
     }
 
-    public bool CheckRequirementsMet(Script script)
+    public bool CheckRequirementsMet(ProgramNode program)
     {
-        return CurrentLevel.Requirements.All(req => req.RequirementMet(script));
+        return CurrentLevel.Requirements.All(req => req.RequirementMet(program));
     }
 
     private void HighlightInteractables(double delta)

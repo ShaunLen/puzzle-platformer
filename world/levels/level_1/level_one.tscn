@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bwwyslacygcax"]
+[gd_scene load_steps=17 format=3 uid="uid://bwwyslacygcax"]
 
 [ext_resource type="Script" path="res://world/levels/level_1/LevelOne.cs" id="1_6sqrh"]
 [ext_resource type="Texture2D" uid="uid://yoi5myrwxkwi" path="res://world/tiles/bg_sheet.png" id="2_uieim"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bq20mjhq50ok1" path="res://objects/interactable/button/sprites/green-button_32x.png" id="9_kysga"]
 [ext_resource type="PackedScene" uid="uid://brxgucbe5e5hm" path="res://ui/menus/pause_menu/pause_menu.tscn" id="10_tc1ci"]
 [ext_resource type="PackedScene" uid="uid://cdwsvv01dipe5" path="res://ui/guide/guide.tscn" id="11_dr7la"]
+[ext_resource type="PackedScene" uid="uid://dunngemtbx6i2" path="res://objects/win_button/win-button.tscn" id="14_p6y2l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_esc1a"]
 texture = ExtResource("2_uieim")
@@ -41,7 +42,6 @@ GroundTilemap = NodePath("Tilemaps/GroundTilemap")
 [node name="Tilemaps" type="Node2D" parent="."]
 
 [node name="BackgroundTilemap" type="TileMap" parent="Tilemaps"]
-position = Vector2(-12, 12)
 tile_set = SubResource("TileSet_fxjjo")
 cell_quadrant_size = 32
 format = 2
@@ -100,3 +100,6 @@ visible = false
 visible = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
+
+[node name="WinButton" parent="." instance=ExtResource("14_p6y2l")]
+position = Vector2(992, -208)

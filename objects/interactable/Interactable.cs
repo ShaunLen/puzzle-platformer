@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-using PuzzlePlatformer.litescript.Runtime.Values;
+using PuzzlePlatformer.litescript_two.Runtime.Values;
 
 namespace PuzzlePlatformer.objects.interactable;
 
