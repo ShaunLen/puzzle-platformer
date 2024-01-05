@@ -128,8 +128,8 @@ public class Tokenizer(ErrorReporter reporter, TextReader reader)
                 return TokenType.Comma;
             
             case '\"':
-                Consume();
-                while (char.IsLetterOrDigit(Reader.Current))
+                Reader.MoveNext();
+                while (Reader.Current != '\"')
                     Consume();
 
                 if (Reader.Current != '\"')
@@ -138,7 +138,7 @@ public class Tokenizer(ErrorReporter reporter, TextReader reader)
                     return TokenType.Error;
                 }
                 
-                Consume();
+                Reader.MoveNext();
                 return TokenType.StringLiteral;
         }
         

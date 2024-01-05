@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Godot;
 using PuzzlePlatformer.litescript_two.IO;
 using PuzzlePlatformer.litescript_two.Nodes;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
@@ -95,7 +97,7 @@ public class Interpreter(ErrorReporter reporter)
     {
         var conditional = Evaluate(node.Condition, env);
         var counter = 0;
-
+    
         while (IsTrue(conditional))
         {
             counter++;
@@ -110,10 +112,10 @@ public class Interpreter(ErrorReporter reporter)
             
             conditional = Evaluate(node.Condition, env);
         }
-
+    
         return new NullValue();
     }
-
+    
     private IRuntimeValue EvaluateMemberExpression(MemberExpressionNode node, Env env)
     {
         if (node.Object is not IdentifierNode objIdent)

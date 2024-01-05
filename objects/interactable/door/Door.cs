@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using PuzzlePlatformer.autoloads;
@@ -44,7 +45,7 @@ public partial class Door : Interactable
 		if (IsOpen)
 		{
 			CodeManager.Instance.ConsoleWriteError("Can't call method '" + Name + ".Open()' - door is already open!");
-			return new NullValue();
+			throw new Exception();
 		}
 			
 		IsOpen = true;
@@ -60,7 +61,7 @@ public partial class Door : Interactable
 		if (!IsOpen)
 		{
 			CodeManager.Instance.ConsoleWriteError("Can't call method '" + Name + ".Close()' - door is already closed!");
-			return new NullValue();
+			throw new Exception();
 		}
 			
 		IsOpen = false;
@@ -85,7 +86,7 @@ public partial class Door : Interactable
 		return properties;
 	}
 
-	override protected void UpdateProperties()
+	protected override void UpdateProperties()
 	{
 		var obj = LevelManager.Instance.Environment.LookupVar(Name) as ObjectValue;
 		obj!.Properties["IsOpen"] = new BooleanValue(IsOpen);

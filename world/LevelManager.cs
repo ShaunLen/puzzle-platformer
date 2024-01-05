@@ -20,7 +20,6 @@ public partial class LevelManager : Node
     public AudioStreamPlayer AudioStreamPlayer;
     public LevelRoot CurrentLevel;
 
-    private Terminal _terminal;
     private Camera2DPlus _camera;
     
     public List<Interactable> Objects = new();
@@ -28,14 +27,17 @@ public partial class LevelManager : Node
     public override void _Ready()
     {
         Instance = this;
-        _terminal = (Terminal) GetTree().GetFirstNodeInGroup("Terminal");
         _camera = (Camera2DPlus) GetTree().GetFirstNodeInGroup("Camera");
         AudioStreamPlayer = GetTree().GetFirstNodeInGroup("AudioPlayer") as AudioStreamPlayer;
         CurrentLevel = (LevelRoot) GetTree().GetFirstNodeInGroup("Level");
         
         CreateEnvironment();
+        _camera.Zoom = new Vector2(CurrentLevel.DefaultZoom, CurrentLevel.DefaultZoom);
 
-        CodeManager.Instance.CodeExecuted += CreateEnvironment;
+        CodeManager.Instance.Ready += () =>
+        {
+            CodeManager.Instance.CodeExecuted += CreateEnvironment;
+        };
     }
 
     public override void _Process(double delta)

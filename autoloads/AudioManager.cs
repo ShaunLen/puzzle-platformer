@@ -6,6 +6,7 @@ namespace PuzzlePlatformer.autoloads;
 
 public partial class AudioManager : Node
 {
+    [Signal] public delegate void PlayGlobalSoundEventHandler(Sound sound);
     public static AudioManager Instance { get; private set; }
 
     public enum Sound
@@ -20,12 +21,9 @@ public partial class AudioManager : Node
         PageFlip3
     }
 
-    private AudioStreamPlayer _audioStreamPlayer;
-
     public override void _Ready()
     {
         Instance = this;
-        _audioStreamPlayer = GetTree().GetFirstNodeInGroup("AudioPlayer") as AudioStreamPlayer;
     }
 
     public void PlaySound(Sound sound, AudioStreamPlayer2D player = null)
@@ -37,8 +35,7 @@ public partial class AudioManager : Node
         }
         else
         {
-            _audioStreamPlayer.Stream = sound.ToAudioStream();
-            _audioStreamPlayer.Play();
+            EmitSignal(SignalName.PlayGlobalSound, (int) Sound.Error);
         }
     }
     

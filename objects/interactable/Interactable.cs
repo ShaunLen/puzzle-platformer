@@ -6,7 +6,7 @@ namespace PuzzlePlatformer.objects.interactable;
 
 public abstract partial class Interactable : Node2D
 {
-    [Export] public Texture2D Sprite;
+    [Export] public Texture2D OverwriteSprite;
     [Export(PropertyHint.MultilineText)] public string Description;
     public abstract Dictionary<string, string> Properties { get; }
     public abstract Dictionary<string, string> Methods { get; }
@@ -22,7 +22,9 @@ public abstract partial class Interactable : Node2D
     {
         AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         AudioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
-        GetNode<Sprite2D>("Sprite2D").Texture = Sprite;
+        
+        if(OverwriteSprite != null)
+            GetNode<Sprite2D>("Sprite2D").Texture = OverwriteSprite;
     }
 }
 

@@ -22,7 +22,8 @@ public partial class InputManager : Node
         ZoomIn,
         ZoomOut,
         HighlightInteractables,
-        ToggleGuidebook
+        ToggleGuidebook,
+        RestartLevel
     }
     
     /* Properties */
@@ -93,6 +94,7 @@ internal static class InputExtensions
             InputManager.Action.ZoomOut => "zoom_out",
             InputManager.Action.HighlightInteractables => "highlight_interactables",
             InputManager.Action.ToggleGuidebook => "toggle_guidebook",
+            InputManager.Action.RestartLevel => "restart_level",
             _ => ""
         };
     }

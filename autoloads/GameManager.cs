@@ -39,6 +39,14 @@ public partial class GameManager : Node
     {
         if (InputManager.IsActionJustPressed(InputManager.Action.Escape, true))
             GamePaused = !GamePaused;
+        
+        if(InputManager.IsActionJustPressed(InputManager.Action.RestartLevel))
+        {
+            var scene = GetTree().CurrentScene.GetPath();
+            GetTree().ChangeSceneToFile("res://world/levels/prototype_level.tscn");
+            GetTree().ChangeSceneToFile(scene);
+            HudManager.Instance.WriteNotification("Restarted level.");
+        }
     }
     
     

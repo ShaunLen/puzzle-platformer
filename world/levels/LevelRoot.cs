@@ -11,9 +11,12 @@ public abstract partial class LevelRoot : Node2D
     [Export] public string LevelName { get; set; }
     [Export(PropertyHint.MultilineText)] public string LevelDesc { get; set; }
     [Export(PropertyHint.MultilineText)] public string InitialCode { get; set; }
+
+    [Export(PropertyHint.Range, "1,2,0.2")]
+    public float DefaultZoom { get; set; }
     
     [Export] protected private TileMap GroundTilemap;
-
+    
     public Vector2 LevelBounds;
     
     public List<requirements.Requirement> Requirements { get; set; }

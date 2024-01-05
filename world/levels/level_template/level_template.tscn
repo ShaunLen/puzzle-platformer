@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://x0jn43i4ytuk"]
+[gd_scene load_steps=13 format=3 uid="uid://x0jn43i4ytuk"]
 
 [ext_resource type="Script" path="res://world/levels/level_template/LevelTemplate.cs" id="1_qyb73"]
 [ext_resource type="Texture2D" uid="uid://yoi5myrwxkwi" path="res://world/tiles/bg_sheet.png" id="2_60oor"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://wdr0v0pcfg0y" path="res://ui/hud/hud.tscn" id="8_q8d16"]
 [ext_resource type="PackedScene" uid="uid://ipfkpidosr05" path="res://ui/code/code_editor.tscn" id="9_6jf3d"]
 [ext_resource type="PackedScene" uid="uid://brxgucbe5e5hm" path="res://ui/menus/pause_menu/pause_menu.tscn" id="10_rvdh2"]
+[ext_resource type="Script" path="res://audio/scripts/GlobalAudioPlayer.cs" id="10_t5lsj"]
 [ext_resource type="PackedScene" uid="uid://cdwsvv01dipe5" path="res://ui/guide/guide.tscn" id="11_lqd2n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_esc1a"]
@@ -81,4 +82,5 @@ visible = false
 [node name="Guide" parent="UI" groups=["Guide"] instance=ExtResource("11_lqd2n")]
 visible = false
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
+[node name="GlobalAudioPlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
+script = ExtResource("10_t5lsj")
