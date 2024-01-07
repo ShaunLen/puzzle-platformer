@@ -1,17 +1,19 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
-using Godot.Collections;
 using PuzzlePlatformer.litescript_two;
 using PuzzlePlatformer.litescript_two.IO;
 using PuzzlePlatformer.litescript_two.Runtime;
+using PuzzlePlatformer.litescript_two.Runtime.Values;
 using PuzzlePlatformer.litescript_two.Tokenization;
+using PuzzlePlatformer.objects.interactable;
 using PuzzlePlatformer.ui.guide;
-using PuzzlePlatformer.ui.menus.guidebook;
 using PuzzlePlatformer.ui.themes;
 using PuzzlePlatformer.world;
 
 namespace PuzzlePlatformer.autoloads;
 
+//TODO: Decouple this
 public partial class CodeManager : Node
 {
     public static CodeManager Instance { get; private set; }
@@ -21,10 +23,12 @@ public partial class CodeManager : Node
     [Signal] public delegate void CodeWindowOpenedEventHandler();
     [Signal] public delegate void CodeWindowClosedEventHandler();
 
-    /* Public Properties */
+    /* Public Fields */
     public bool EditorOpen;
+    public Env Environment;
+    public List<Interactable> Objects = new();
 
-    /* Private Properties */
+    /* Private Fields */
     private ErrorReporter _reporter;
     private TextReader _reader;
     private Tokenizer _tokenizer;
@@ -49,7 +53,6 @@ public partial class CodeManager : Node
     public override void _Ready()
     {
         Instance = this;
-        
         _code = GetTree().GetFirstNodeInGroup("Code") as Control;
         _codeEditorParent = _code.GetNode<Control>("CodeEditor");
         _consoleParent = _code.GetNode<Control>("ConsoleWindow");
@@ -59,8 +62,9 @@ public partial class CodeManager : Node
         _runButton = _code.GetNode<TextureButton>("Actions/RunButton");
         _clearButton = _code.GetNode<TextureButton>("Actions/ClearButton");
         _closeButton = _code.GetNode<TextureButton>("Actions/CloseButton");
-        
         _guide = (Guide) GetTree().GetFirstNodeInGroup("Guide");
+        
+        CreateEnvironment();
 
         _nordColors = new NordColors();
         SetSyntaxHighlighting(_codeEdit.SyntaxHighlighter);
@@ -165,10 +169,56 @@ public partial class CodeManager : Node
     
     /* Private Methods */
     
+    private void CreateEnvironment()
+    {
+        // Create LS environment
+        Environment = Env.CreateStandardEnvironment();
+        
+        // Get list of all interactable objects in level
+        var interactables = GetTree().GetNodesInGroup("Interactable").ToList();
+
+        foreach (Interactable obj in interactables)
+        {
+            Objects.Add(obj);
+            Environment.DeclareVariable(obj.Name, new ObjectValue(GetObjectProperties(obj.Name)), false);
+
+        }
+    }
+
+    private Dictionary<string, IRuntimeValue> GetObjectProperties(string objName) {
+        
+        var obj = GetObject(objName);
+        Dictionary<string, IRuntimeValue> propertyList = obj.GetType().GetMethod("GetProperties")?.Invoke(obj, null) as Dictionary<string, IRuntimeValue>;
+
+        return propertyList;
+    }
+
+    private bool ObjectExists(string objName)
+    {
+        return Objects.Any(obj => obj.Name.Equals(objName));
+    }
+
+    private Interactable GetObject(string objName)
+    {
+        return Objects.Find(obj => obj.Name.Equals(objName));
+    }
+    
+    private bool CallMethod(string objName, string methodName)
+    {
+        if (!ObjectExists(objName))
+            return false;
+
+        var obj = GetObject(objName); 
+
+        obj.GetType().GetMethod(methodName)?.Invoke(obj, new object[]{ new List<IRuntimeValue>(), Environment });
+
+        return true;
+    }
+    
     private void ExecuteCode()
     {
         EmitSignal(SignalName.CodeExecuted);
-        
+        CreateEnvironment();
         ConsoleClear();
         
         var input = _codeEdit.Text;
@@ -191,7 +241,7 @@ public partial class CodeManager : Node
         if (!LevelManager.Instance.CheckRequirementsMet(program))
             return;
         
-        var result = _interpreter.Evaluate(program, LevelManager.Instance.Environment);
+        var result = _interpreter.Evaluate(program, Environment);
 
         if (result == null)
             return;
@@ -202,7 +252,7 @@ public partial class CodeManager : Node
         ConsoleWriteLine("\n" + "Program finished with 0 errors.");
             
         if(!EditorOpen)
-            HudManager.Instance.WriteNotification("Program finished with 0 errors.");
+            ui.hud.HudManager.Instance.SendNotification("Program finished with 0 errors.");
     }
     
     private void SetSyntaxHighlighting(SyntaxHighlighter syntaxHighlighter)

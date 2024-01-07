@@ -1,6 +1,7 @@
 ﻿using System;
 using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript_two.IO;
+using HudManager = PuzzlePlatformer.ui.hud.HudManager;
 
 namespace PuzzlePlatformer.litescript_two.Exceptions;
 
@@ -14,6 +15,6 @@ public class ParserException : Exception
             CodeManager.Instance.ConsoleWriteError(error, false);
         
         if(!CodeManager.Instance.EditorOpen)
-            HudManager.Instance.WriteErrorNotification("Error: See console for details.");
+            HudManager.Instance.SendNotification("Error: See console for details.", true);
     }
 }

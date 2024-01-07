@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://3mq80saqtvlt"]
+[gd_scene load_steps=10 format=3 uid="uid://3mq80saqtvlt"]
 
 [ext_resource type="Script" path="res://objects/interactable/conveyor/ConveyorObj.cs" id="1_kkvje"]
 [ext_resource type="Shader" path="res://shaders/highlight.gdshader" id="1_ysbjl"]
 [ext_resource type="Texture2D" uid="uid://bsxflw5rmo8hq" path="res://objects/interactable/conveyor/conveyor.png" id="2_pbifk"]
-[ext_resource type="Script" path="res://components/HitboxComponent.cs" id="3_snaod"]
 [ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="5_7rmr0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_afpdm"]
@@ -52,9 +51,6 @@ _data = {
 "conveyor_move": SubResource("Animation_jo34j")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3jnh2"]
-size = Vector2(24, 156)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_83gx5"]
 radius = 9.0
 height = 156.0
@@ -76,15 +72,6 @@ libraries = {
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 max_distance = 1500.0
 attenuation = 2.0
-
-[node name="HitboxComponent" type="Area2D" parent="."]
-visible = false
-script = ExtResource("3_snaod")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(4.88701e-05, -19)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_3jnh2")
 
 [node name="Hint" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)

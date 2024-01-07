@@ -20,7 +20,6 @@ public partial class ConveyorObj : Interactable
 	[Export(PropertyHint.Range, "10,200,10")] private int _moveSpeed = 50;
 
 	[Export] private StaticBody2D _body;
-	private HitboxComponent _hitbox;
 	private AnimationPlayer _animationPlayer;
 	private AudioStreamPlayer2D _audioStreamPlayer;
 
@@ -30,7 +29,6 @@ public partial class ConveyorObj : Interactable
 
 		_body.ConstantLinearVelocity = new Vector2(0, 0);
 		
-		_hitbox = GetNode<HitboxComponent>("HitboxComponent");
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 		
@@ -170,7 +168,7 @@ public partial class ConveyorObj : Interactable
 
 	protected override void UpdateProperties()
 	{
-		var obj = LevelManager.Instance.Environment.LookupVar(Name) as ObjectValue;
+		var obj = CodeManager.Instance.Environment.LookupVar(Name) as ObjectValue;
 		obj!.Properties["IsMoving"] = new BooleanValue(_isMoving);
 	}
 }

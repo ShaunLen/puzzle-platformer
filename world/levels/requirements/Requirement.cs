@@ -1,6 +1,7 @@
 using Godot;
 using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript_two.Nodes;
+using HudManager = PuzzlePlatformer.ui.hud.HudManager;
 
 namespace PuzzlePlatformer.world.levels.requirements;
 
@@ -11,7 +12,7 @@ public abstract partial class Requirement : Node
     public virtual bool RequirementMet(ProgramNode program)
     {
         if(!CodeManager.Instance.EditorOpen)
-            HudManager.Instance.WriteErrorNotification("level requirement not met - see console for details.");
+            HudManager.Instance.SendNotification("level requirement not met - see console for details.", true);
         
         CodeManager.Instance.ConsoleWriteError("level requirement not met - " + Desc);
         

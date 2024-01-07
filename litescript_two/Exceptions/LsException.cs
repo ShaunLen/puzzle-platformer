@@ -1,5 +1,6 @@
 using System;
 using PuzzlePlatformer.autoloads;
+using HudManager = PuzzlePlatformer.ui.hud.HudManager;
 
 namespace PuzzlePlatformer.litescript_two.Exceptions;
 
@@ -12,6 +13,6 @@ public class LsException : Exception
         CodeManager.Instance.ConsoleWriteError(message);
         
         if(!CodeManager.Instance.EditorOpen)
-            HudManager.Instance.WriteErrorNotification("Error: See console for details.");
+            HudManager.Instance.SendNotification("Error: See console for details.", true);
     }
 }

@@ -18,7 +18,8 @@ public partial class AudioManager : Node
         ButtonRelease,
         PageFlip1,
         PageFlip2,
-        PageFlip3
+        PageFlip3,
+        Fabricate
     }
 
     public override void _Ready()
@@ -62,6 +63,7 @@ internal static class AudioExtensions
             AudioManager.Sound.PageFlip1 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_1.wav") as AudioStream,
             AudioManager.Sound.PageFlip2 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_2.wav") as AudioStream,
             AudioManager.Sound.PageFlip3 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_3.wav") as AudioStream,
+            AudioManager.Sound.Fabricate => ResourceLoader.Load("res://audio/effects/warp-sound.wav") as AudioStream,
             _ => null
         };
     }

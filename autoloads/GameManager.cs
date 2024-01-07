@@ -45,14 +45,7 @@ public partial class GameManager : Node
             var scene = GetTree().CurrentScene.GetPath();
             GetTree().ChangeSceneToFile("res://world/levels/prototype_level.tscn");
             GetTree().ChangeSceneToFile(scene);
-            HudManager.Instance.WriteNotification("Restarted level.");
+            ui.hud.HudManager.Instance.SendNotification("Restarted level.");
         }
-    }
-    
-    
-    /* Public Methods */
-    public Vector2 GetRespawnPosition()
-    {
-        return GetTree().GetFirstNodeInGroup("Level").GetNode<Node2D>("RespawnPos").Position;
     }
 }

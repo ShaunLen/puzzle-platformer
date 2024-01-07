@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Godot;
 using PuzzlePlatformer.litescript_two.Exceptions;
 using PuzzlePlatformer.litescript_two.IO;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
@@ -30,7 +31,9 @@ public class Env(Env? parent)
     public IRuntimeValue DeclareVariable(string varName, IRuntimeValue value, bool isConstant)
     {
         if (Variables.ContainsKey(varName))
+        {
             throw new EnvException($"Variable {varName} is already defined.");
+        }
         
         Variables.Add(varName, value);
 

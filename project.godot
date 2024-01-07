@@ -19,10 +19,7 @@ config/icon="res://icon.svg"
 
 InputManager="*res://autoloads/InputManager.cs"
 GameManager="*res://autoloads/GameManager.cs"
-Lib="*res://autoloads/Lib.cs"
-LevelManager="*res://world/LevelManager.cs"
 AudioManager="*res://autoloads/AudioManager.cs"
-HudManager="*res://autoloads/HudManager.cs"
 
 [debug]
 

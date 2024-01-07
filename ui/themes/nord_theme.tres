@@ -75,7 +75,11 @@ bg_color = Color(0.133333, 0.192157, 0.211765, 1)
 border_color = Color(0.156802, 0.176349, 0.219333, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqdq6"]
-bg_color = Color(0.921569, 0.796078, 0.545098, 0.705882)
+bg_color = Color(0.270588, 0.364706, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [resource]
 Button/font_sizes/font_size = 11

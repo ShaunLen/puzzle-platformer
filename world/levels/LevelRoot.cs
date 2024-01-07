@@ -11,11 +11,9 @@ public abstract partial class LevelRoot : Node2D
     [Export] public string LevelName { get; set; }
     [Export(PropertyHint.MultilineText)] public string LevelDesc { get; set; }
     [Export(PropertyHint.MultilineText)] public string InitialCode { get; set; }
-
-    [Export(PropertyHint.Range, "1,2,0.2")]
-    public float DefaultZoom { get; set; }
-    
-    [Export] protected private TileMap GroundTilemap;
+    [Export(PropertyHint.Range, "1,2,0.2")]  public float DefaultZoom { get; set; }
+    [Export] private Node2D RespawnPosition;
+    [Export] private protected TileMap GroundTilemap;
     
     public Vector2 LevelBounds;
     
@@ -26,6 +24,11 @@ public abstract partial class LevelRoot : Node2D
         LevelBounds = GroundTilemap.GetUsedRect().Size * GroundTilemap.CellQuadrantSize;
         DefineRequirements();
         AddInitialCode();
+    }
+    
+    public Vector2 GetRespawnPosition()
+    {
+        return RespawnPosition.Position;
     }
 
     private void AddInitialCode()

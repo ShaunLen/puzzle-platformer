@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://wdr0v0pcfg0y"]
+[gd_scene load_steps=2 format=3 uid="uid://wdr0v0pcfg0y"]
+
+[ext_resource type="Script" path="res://ui/hud/Hud.cs" id="1_nd57q"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_nd57q")
 
 [node name="NotificationContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

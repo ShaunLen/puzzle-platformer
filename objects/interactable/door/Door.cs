@@ -88,7 +88,7 @@ public partial class Door : Interactable
 
 	protected override void UpdateProperties()
 	{
-		var obj = LevelManager.Instance.Environment.LookupVar(Name) as ObjectValue;
+		var obj = CodeManager.Instance.Environment.LookupVar(Name) as ObjectValue;
 		obj!.Properties["IsOpen"] = new BooleanValue(IsOpen);
 	}
 }

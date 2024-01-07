@@ -1,5 +1,7 @@
 using System;
 using Godot;
+using PuzzlePlatformer.autoloads;
+using PuzzlePlatformer.world;
 using PuzzlePlatformer.world.levels;
 
 namespace PuzzlePlatformer.addons.camera_2d_plus;
@@ -26,12 +28,22 @@ public partial class Camera2DPlus : Camera2D
 
     public override void _Ready()
     {
+        var defaultZoom = LevelManager.Instance.CurrentLevel.DefaultZoom;
         TargetOffset = Offset;
-        TargetZoom = Zoom;
+        TargetZoom = new Vector2(defaultZoom, defaultZoom);
         _offsetSmoothingSpeed *= 20;
 
         if (_useLevelBounds)
             GetTree().CurrentScene.Ready += SetLimits;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (InputManager.IsActionJustPressed(InputManager.Action.ZoomIn) && TargetZoom < new Vector2(2, 2))
+            TargetZoom = new Vector2(TargetZoom.X + 0.2f, TargetZoom.Y + 0.2f);
+        
+        if (InputManager.IsActionJustPressed(InputManager.Action.ZoomOut) && TargetZoom > new Vector2(1, 1))
+            TargetZoom = new Vector2(TargetZoom.X - 0.2f, TargetZoom.Y - 0.2f);
     }
 
     public override void _PhysicsProcess(double delta)

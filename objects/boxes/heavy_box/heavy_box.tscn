@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjqmk7xwdb0c6"]
+
+[ext_resource type="Script" path="res://objects/boxes/heavy_box/HeavyBox.cs" id="1_kd24q"]
+[ext_resource type="Texture2D" uid="uid://b5c80ycp50sqb" path="res://objects/boxes/heavy_box/heavy_box.png" id="1_psupk"]
+[ext_resource type="Shader" path="res://shaders/teleport.gdshader" id="2_27vjj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgabt"]
+size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnw8o"]
+resource_local_to_scene = true
+shader = ExtResource("2_27vjj")
+shader_parameter/progress = 1.0
+shader_parameter/noise_desnity = 72.81
+shader_parameter/beam_size = 0.03
+shader_parameter/color = Color(0.211765, 0.521569, 0.396078, 1)
+
+[sub_resource type="Environment" id="Environment_itx13"]
+background_mode = 3
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 1.0
+glow_levels/3 = 0.0
+glow_intensity = 5.0
+glow_strength = 1.67
+glow_blend_mode = 1
+glow_hdr_threshold = 1.5
+
+[node name="HeavyBox" type="RigidBody2D"]
+z_index = 1
+mass = 0.1
+can_sleep = false
+freeze_mode = 1
+script = ExtResource("1_kd24q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kgabt")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1.5, 1.5, 1.5, 1)
+material = SubResource("ShaderMaterial_rnw8o")
+texture = ExtResource("1_psupk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_itx13")
