@@ -19,7 +19,8 @@ public partial class AudioManager : Node
         PageFlip1,
         PageFlip2,
         PageFlip3,
-        Fabricate
+        Fabricate,
+        Static
     }
 
     public override void _Ready()
@@ -36,7 +37,7 @@ public partial class AudioManager : Node
         }
         else
         {
-            EmitSignal(SignalName.PlayGlobalSound, (int) Sound.Error);
+            EmitSignal(SignalName.PlayGlobalSound, (int) sound);
         }
     }
     
@@ -64,6 +65,7 @@ internal static class AudioExtensions
             AudioManager.Sound.PageFlip2 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_2.wav") as AudioStream,
             AudioManager.Sound.PageFlip3 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_3.wav") as AudioStream,
             AudioManager.Sound.Fabricate => ResourceLoader.Load("res://audio/effects/warp-sound.wav") as AudioStream,
+            AudioManager.Sound.Static => ResourceLoader.Load("res://audio/effects/static.wav") as AudioStream,
             _ => null
         };
     }

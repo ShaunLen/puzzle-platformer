@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvqvpuh22w81v"]
+
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_o268v"]
+[ext_resource type="Script" path="res://ui/transitions/reload_level/ReloadLevel.cs" id="2_tyx52"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ui2lx"]
+shader = ExtResource("1_o268v")
+shader_parameter/res = Vector2(20, 20)
+shader_parameter/mask_type = 0
+shader_parameter/bloom_type = 0
+shader_parameter/hardScan = -7.12
+shader_parameter/hardPix = -2.0
+shader_parameter/hardBloomScan = -2.0
+shader_parameter/hardBloomPix = -1.5
+shader_parameter/bloomAmount = 16.0
+shader_parameter/warp = Vector2(64, 24)
+shader_parameter/maskDark = 0.5
+shader_parameter/maskLight = 1.5
+
+[node name="LevelRestartTransition" type="Control" node_paths=PackedStringArray("_colorRect")]
+process_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_tyx52")
+_colorRect = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_ui2lx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

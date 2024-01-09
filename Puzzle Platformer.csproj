@@ -6,7 +6,6 @@
     <RootNamespace>PuzzlePlatformer</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="ui\code\" />
     <Folder Include="ui\guide\" />
     <Folder Include="world\levels\level_1\" />
   </ItemGroup>

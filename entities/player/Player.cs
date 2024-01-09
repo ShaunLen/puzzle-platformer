@@ -17,14 +17,16 @@ public partial class Player : CharacterBody2D
 	[Export] public PlayerStats Stats;
 	[Export] private float _respawnDelay = 0.5f;
 	
-	/* Variables */
+	/* Fields */
 	private StateMachine _stateMachine;
 	private RemoteTransform2D _remoteTransform;
 	private HealthComponent _healthComponent;
+	private AnimationPlayer _animationPlayer;
 	
 	/* Properties */
 	public Timer JumpBufferTimer { get; private set; }
 	public bool IsJumpQueued { get; set; }
+	public bool IsFacingLeft { get; set; }
 
 	/* Override Methods */
 	
@@ -34,13 +36,14 @@ public partial class Player : CharacterBody2D
 		
 		/* Emit Signals */
 		EmitSignal(SignalName.StatsUpdated);
-
-		/* Signal Connections */
-		_healthComponent.Died += HandleDeath;
 		
 		/* Initialise State Machine */
 		_stateMachine = GetNode<StateMachine>("StateMachine");
 		_stateMachine.Init();
+		
+		/* Signal Connections */
+		_healthComponent.Died += HandleDeath;
+		_stateMachine.ChangeAnimation += ChangeAnimation;
 		
 		/* Initialise Components */
 		_healthComponent.Init(Stats.Health);
@@ -62,6 +65,7 @@ public partial class Player : CharacterBody2D
 	{
 		JumpBufferTimer = GetNode<Timer>("JumpBufferTimer");
 		_healthComponent = GetNode<HealthComponent>("HealthComponent");
+		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_remoteTransform = GetNode<RemoteTransform2D>("PlayerTransform");
 		_remoteTransform.RemotePath = GetTree().GetFirstNodeInGroup("Camera").GetPath();
 	}
@@ -83,5 +87,22 @@ public partial class Player : CharacterBody2D
 			Visible = true;
 			InputManager.InputEnabled = true;
 		};
+	}
+
+	private void ChangeAnimation(string animationName)
+	{
+		GD.Print(animationName);
+
+		switch (animationName)
+		{
+			case "walk_left" or "walk_right":
+				IsFacingLeft = animationName == "walk_left";
+				break;
+			case "idle":
+				_animationPlayer.Play(IsFacingLeft ? "idle_left" : "idle_right");
+				return;
+		}
+
+		_animationPlayer.Play(animationName);
 	}
 }

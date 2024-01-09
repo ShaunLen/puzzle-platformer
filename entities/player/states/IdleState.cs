@@ -9,6 +9,7 @@ public partial class IdleState : GroundedState
     {
         base.Enter();
         Player.Velocity = Vector2.Zero;
+        StateMachine.SetAnimation("idle");
     }
 
     public override void PhysicsProcess(double delta)

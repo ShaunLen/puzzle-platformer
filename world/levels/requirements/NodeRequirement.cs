@@ -1,6 +1,7 @@
 using System.Linq;
 using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript_two.Nodes;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.world.levels.requirements;
 

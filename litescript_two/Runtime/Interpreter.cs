@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Godot;
 using PuzzlePlatformer.litescript_two.IO;
 using PuzzlePlatformer.litescript_two.Nodes;
@@ -10,13 +9,70 @@ using ValueType = PuzzlePlatformer.litescript_two.Runtime.Values.ValueType;
 
 namespace PuzzlePlatformer.litescript_two.Runtime;
 
-/* TODO:
- * Handle lhs of assignment expression being a member expression.
- */
-
-public class Interpreter(ErrorReporter reporter)
+public partial class Interpreter(ErrorReporter reporter) : Node
 {
+    [Signal] public delegate void StartLoopEventHandler();
+    [Signal] public delegate void ExecutionFinishedEventHandler();
+    
     private ErrorReporter Reporter { get; } = reporter;
+    
+    // Needed for while loops
+    private bool _isLooping;
+    private Timer _loopTimer;
+    private IRuntimeValue _conditional;
+    private WhileStatementNode _node;
+    private Env _env;
+
+    public override void _Ready()
+    {
+        _loopTimer = new Timer();
+        _loopTimer.OneShot = true;
+        _loopTimer.WaitTime = 10;
+        GetTree().Root.AddChild(_loopTimer);
+        
+        StartLoop += () =>
+        {
+            _isLooping = true;
+            _loopTimer.Start();
+        };
+
+        _loopTimer.Timeout += () =>
+        {
+            if (!_isLooping) return;
+            
+            _isLooping = false;
+            Reporter.RecordError(_node.Position, "Whoops! The loop is infinite!");
+        };
+    }
+
+    public override void _Process(double delta)
+    {
+        if (_isLooping)
+        {
+            ExecuteLoop();
+        }
+        
+        return;
+
+        void ExecuteLoop()
+        {
+            if (IsTrue(_conditional))
+            {
+                foreach (var statement in _node.Body)
+                    Evaluate(statement, _env);
+            
+                _conditional = Evaluate(_node.Condition, _env);
+            }
+            else
+            {
+                EmitSignal(SignalName.ExecutionFinished);
+                _isLooping = false;
+                _conditional = null;
+                _node = null;
+                _env = null;
+            }
+        }
+    }
 
     public IRuntimeValue Evaluate(IStatementNode node, Env env)
     {
@@ -96,22 +152,11 @@ public class Interpreter(ErrorReporter reporter)
     private IRuntimeValue EvaluateWhileStatement(WhileStatementNode node, Env env)
     {
         var conditional = Evaluate(node.Condition, env);
-        var counter = 0;
-    
-        while (IsTrue(conditional))
-        {
-            counter++;
-            if (counter > 1000)
-            {
-                Reporter.RecordError(node.Position, "Whoops! The loop is infinite!");
-                break;
-            }
-            
-            foreach (var statement in node.Body)
-                Evaluate(statement, env);
-            
-            conditional = Evaluate(node.Condition, env);
-        }
+
+        EmitSignal(SignalName.StartLoop);
+        _conditional = conditional;
+        _node = node;
+        _env = env;
     
         return new NullValue();
     }
@@ -286,6 +331,10 @@ public class Interpreter(ErrorReporter reporter)
         foreach (var statement in node.Body)
             lastEvaluated = Evaluate(statement, env);
 
+
+        if (!_isLooping)
+            EmitSignal(SignalName.ExecutionFinished);
+        
         return lastEvaluated;
     }
 }

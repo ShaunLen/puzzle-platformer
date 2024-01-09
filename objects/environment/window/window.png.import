@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl7ck0frmkdnh"
-path="res://.godot/imported/terminal_window_bar.png-0ebc7eb7933ddf1b2487a40ec7fd6fc3.ctex"
+uid="uid://bx8cyqcr4wvu"
+path="res://.godot/imported/window.png-550d69d839e15149ffd70caf5918ecfa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://objects/interactable/terminal/terminal_window_bar.png"
-dest_files=["res://.godot/imported/terminal_window_bar.png-0ebc7eb7933ddf1b2487a40ec7fd6fc3.ctex"]
+source_file="res://objects/environment/window/window.png"
+dest_files=["res://.godot/imported/window.png-550d69d839e15149ffd70caf5918ecfa.ctex"]
 
 [params]
 

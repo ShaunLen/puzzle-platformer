@@ -6,6 +6,7 @@ using PuzzlePlatformer.components;
 using PuzzlePlatformer.litescript_two.Runtime;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
 using PuzzlePlatformer.world;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 using ValueType = PuzzlePlatformer.litescript_two.Runtime.Values.ValueType;
 
 namespace PuzzlePlatformer.objects.interactable.conveyor;

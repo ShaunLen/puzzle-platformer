@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bj0ngp2b6n2wk"
-path="res://.godot/imported/close_button.png-89dc29cc87b71236e7addb4f2c5d76df.ctex"
+uid="uid://coy15egh0chpg"
+path="res://.godot/imported/cctv_bracket.png-65bc8a5f3f68538f168939d739352afb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://objects/interactable/terminal/close_button.png"
-dest_files=["res://.godot/imported/close_button.png-89dc29cc87b71236e7addb4f2c5d76df.ctex"]
+source_file="res://objects/environment/cctv/cctv_bracket.png"
+dest_files=["res://.godot/imported/cctv_bracket.png-65bc8a5f3f68538f168939d739352afb.ctex"]
 
 [params]
 

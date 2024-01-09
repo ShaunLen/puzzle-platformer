@@ -3,6 +3,7 @@ using System.Text;
 using Godot;
 using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.litescript_two.Runtime;
 
@@ -30,7 +31,6 @@ public static class NativeFunctions
             }
         }
         
-        GD.Print(output);
         CodeManager.Instance.ConsoleWrite(output.ToString());
 
         return new NullValue();

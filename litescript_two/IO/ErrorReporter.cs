@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PuzzlePlatformer.autoloads;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.litescript_two.IO;
 

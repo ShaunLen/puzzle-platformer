@@ -1,6 +1,5 @@
 using Godot;
 using PuzzlePlatformer.autoloads;
-using PuzzlePlatformer.entities.common;
 
 namespace PuzzlePlatformer.entities.player.states;
 

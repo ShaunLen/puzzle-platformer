@@ -7,6 +7,7 @@ using PuzzlePlatformer.litescript_two.Runtime;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
 using PuzzlePlatformer.objects.boxes.heavy_box;
 using PuzzlePlatformer.world;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.objects.interactable.fabricator;
 
@@ -126,10 +127,7 @@ public partial class Fabricator : Interactable
 		
 		if (_isFabricating)
 		{
-			// TODO: Maybe I can use a timer here instead to "queue" the opening of the hatch.
 			FinishedFabricating += OpenHatch;
-			// CodeManager.Instance.ConsoleWriteError("Can't call method '" + Name + ".Open()' while fabricating!");
-			// throw new Exception();
 		}
 		else
 			OpenHatch();
@@ -141,15 +139,19 @@ public partial class Fabricator : Interactable
 			_isOpening = true;
 		
 			_animationPlayer.Play("open_hatch");
-		
-			_hatchTimer.Timeout += () =>
+
+			_hatchTimer.Timeout += CloseHatch;
+			_hatchTimer.Start();
+			FinishedFabricating -= OpenHatch;
+			return;
+
+			void CloseHatch()
 			{
 				_animationPlayer.Play("close_hatch");
 				_containsBox = false;
 				_isOpening = false;
-			};
-			_hatchTimer.Start();
-			FinishedFabricating -= OpenHatch;
+				_hatchTimer.Timeout -= CloseHatch;
+			}
 		}
 	}
 	

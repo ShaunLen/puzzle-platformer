@@ -54,6 +54,7 @@ size = Vector2(50, 47)
 script = ExtResource("1_vr0h1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 material = SubResource("ShaderMaterial_afpdm")
 texture = ExtResource("3_s65jd")
 hframes = 10

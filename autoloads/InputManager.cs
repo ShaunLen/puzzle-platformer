@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Godot;
 
@@ -22,7 +21,7 @@ public partial class InputManager : Node
         ZoomIn,
         ZoomOut,
         HighlightInteractables,
-        ToggleGuidebook,
+        ToggleGuide,
         RestartLevel
     }
     
@@ -93,7 +92,7 @@ internal static class InputExtensions
             InputManager.Action.ZoomIn => "zoom_in",
             InputManager.Action.ZoomOut => "zoom_out",
             InputManager.Action.HighlightInteractables => "highlight_interactables",
-            InputManager.Action.ToggleGuidebook => "toggle_guidebook",
+            InputManager.Action.ToggleGuide => "toggle_guide",
             InputManager.Action.RestartLevel => "restart_level",
             _ => ""
         };

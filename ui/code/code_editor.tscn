@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://ipfkpidosr05"]
+[gd_scene load_steps=11 format=3 uid="uid://ipfkpidosr05"]
 
 [ext_resource type="Texture2D" uid="uid://ceiyeyc0w3jm0" path="res://ui/code/code_border.png" id="1_suuxa"]
+[ext_resource type="Script" path="res://ui/code/CodeInterface.cs" id="1_tgyo1"]
 [ext_resource type="Texture2D" uid="uid://blhf7714ineuq" path="res://ui/code/header_border.png" id="2_4tb01"]
 [ext_resource type="Theme" uid="uid://ohx5n1qt52t2" path="res://ui/themes/nord_theme.tres" id="2_57guy"]
 [ext_resource type="Texture2D" uid="uid://54obu34lp7f4" path="res://ui/code/code_border_flipped.png" id="2_420lr"]
@@ -15,7 +16,7 @@ symbol_color = Color(0.368627, 0.505882, 0.67451, 1)
 function_color = Color(0.533333, 0.752941, 0.815686, 1)
 member_variable_color = Color(0.847059, 0.870588, 0.913725, 1)
 
-[node name="CodeEditor" type="Control"]
+[node name="CodeEditor" type="Control" node_paths=PackedStringArray("_codeEditorParent", "_consoleParent", "_actionsParent", "_codeEdit", "_console", "_runButton", "_clearButton", "_closeButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +27,15 @@ offset_right = 8.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tgyo1")
+_codeEditorParent = NodePath("CodeEditor")
+_consoleParent = NodePath("ConsoleWindow")
+_actionsParent = NodePath("Actions")
+_codeEdit = NodePath("CodeEditor/CodeEdit")
+_console = NodePath("ConsoleWindow/Console")
+_runButton = NodePath("Actions/RunButton")
+_clearButton = NodePath("Actions/ClearButton")
+_closeButton = NodePath("Actions/CloseButton")
 
 [node name="CodeEditor" type="Control" parent="."]
 anchors_preset = 0
@@ -206,5 +216,3 @@ theme = ExtResource("2_57guy")
 theme_override_colors/default_color = Color(0.870588, 0.890196, 0.886275, 1)
 theme_override_fonts/normal_font = ExtResource("3_x2j3f")
 theme_override_font_sizes/normal_font_size = 15
-text = "
-"

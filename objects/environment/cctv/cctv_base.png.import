@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csij2nhk7eolc"
-path="res://.godot/imported/close_button_hover.png-4d7b22b26a8a798e0f476fedea23784f.ctex"
+uid="uid://cd1nnfkq86t6"
+path="res://.godot/imported/cctv_base.png-756239ae8d27a9f56013bf5d79828ad8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://objects/interactable/terminal/close_button_hover.png"
-dest_files=["res://.godot/imported/close_button_hover.png-4d7b22b26a8a798e0f476fedea23784f.ctex"]
+source_file="res://objects/environment/cctv/cctv_base.png"
+dest_files=["res://.godot/imported/cctv_base.png-756239ae8d27a9f56013bf5d79828ad8.ctex"]
 
 [params]
 

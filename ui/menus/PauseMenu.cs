@@ -12,11 +12,16 @@ public partial class PauseMenu : Control
 		_resumeButton = GetNode<Button>("MenuContainer/ResumeButton");
 		_optionsButton = GetNode<Button>("MenuContainer/OptionsButton");
 		_quitButton = GetNode<Button>("MenuContainer/QuitButton");
-		
-		Hide();
+
+		Visible = false;
 		GameManager.Instance.PauseToggled += OnPauseToggled;
 		_resumeButton.Pressed += () => GameManager.Instance.GamePaused = false;
 		_quitButton.Pressed += () => GetTree().Quit();
+	}
+
+	public override void _ExitTree()
+	{
+		GameManager.Instance.PauseToggled -= OnPauseToggled;
 	}
 
 	private void OnPauseToggled(bool paused)

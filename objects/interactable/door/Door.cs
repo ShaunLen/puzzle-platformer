@@ -5,6 +5,7 @@ using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript_two.Runtime;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
 using PuzzlePlatformer.world;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.objects.interactable.door;
 

@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://brg2kwvgntwcn"]
+
+[ext_resource type="Texture2D" uid="uid://coy15egh0chpg" path="res://objects/environment/cctv/cctv_bracket.png" id="1_vu1q8"]
+[ext_resource type="Texture2D" uid="uid://cd1nnfkq86t6" path="res://objects/environment/cctv/cctv_base.png" id="2_m5kx0"]
+[ext_resource type="Script" path="res://objects/environment/cctv/Cctv.cs" id="2_mb4p7"]
+[ext_resource type="Script" path="res://components/HitboxComponent.cs" id="4_ge4ol"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rct1x"]
+size = Vector2(16, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3oy1t"]
+size = Vector2(86, 43)
+
+[node name="Camera" type="Node2D" node_paths=PackedStringArray("_rigidBody")]
+script = ExtResource("2_mb4p7")
+_rigidBody = NodePath("RigidBody2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vu1q8")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+freeze = true
+freeze_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+rotation = -1.5708
+texture = ExtResource("2_m5kx0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_rct1x")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+script = ExtResource("4_ge4ol")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_3oy1t")

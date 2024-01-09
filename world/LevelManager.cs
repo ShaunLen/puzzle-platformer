@@ -1,6 +1,7 @@
 using System.Linq;
 using Godot;
 using PuzzlePlatformer.autoloads;
+using PuzzlePlatformer.entities.player;
 using PuzzlePlatformer.litescript_two.Nodes;
 using PuzzlePlatformer.world.levels;
 
@@ -10,6 +11,8 @@ public partial class LevelManager : Node
 {
     public static LevelManager Instance { get; private set; }
     [Export] public LevelRoot CurrentLevel;
+    [Export] private Player _player;
+    public Vector2 PlayerPosition => _player.Position;
 
     public override void _Ready() => Instance = this;
 
@@ -44,4 +47,6 @@ public partial class LevelManager : Node
             hintTween.TweenProperty(hint, "modulate:a", 0, 1.5);
         }
     }
+
+    
 }

@@ -6,6 +6,7 @@ using PuzzlePlatformer.components;
 using PuzzlePlatformer.entities.player;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
 using PuzzlePlatformer.world;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.objects.interactable.button;
 
@@ -55,7 +56,6 @@ public partial class ButtonObj : Interactable
 
 	private void PressButton()
 	{
-		GD.Print("PRESSING BUTTON");
 		AnimationPlayer.Play("button_press");
 		AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonPress, AudioStreamPlayer);
 		_isPressed = true;
@@ -64,7 +64,6 @@ public partial class ButtonObj : Interactable
 
 	private void ReleaseButton()
 	{
-		GD.Print("RELEASING BUTTON");
 		AnimationPlayer.PlayBackwards("button_press");
 		AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonRelease, AudioStreamPlayer);
 		_isPressed = false;

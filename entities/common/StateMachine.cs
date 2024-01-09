@@ -1,12 +1,14 @@
-using System;
 using System.Linq;
 using Godot;
+using PuzzlePlatformer.autoloads;
 
 namespace PuzzlePlatformer.entities.common;
 
 [GlobalClass]
 public partial class StateMachine : Node
 {
+    [Signal] public delegate void ChangeAnimationEventHandler(string animationName);
+    
     [ExportGroup("Debug")]
     [Export] public bool EnterStateLog;
     [Export] public bool ExitStateLog;
@@ -64,5 +66,10 @@ public partial class StateMachine : Node
     public bool IsPreviousState<TState>()
     {
         return _previousState.GetType() == typeof(TState) || _previousState.GetType().IsSubclassOf(typeof(TState));
+    }
+
+    public void SetAnimation(string animationName)
+    {
+        EmitSignal(SignalName.ChangeAnimation, animationName);
     }
 }

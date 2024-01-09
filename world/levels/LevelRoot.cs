@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 using PuzzlePlatformer.autoloads;
+using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.world.levels;
 
@@ -33,7 +34,7 @@ public abstract partial class LevelRoot : Node2D
 
     private void AddInitialCode()
     {
-        // If settings.showInitialCode = true...
+        // TODO: If settings.showInitialCode = true...
         CodeManager.Instance.SetCode(InitialCode);
     }
     

@@ -1,19 +1,16 @@
 using Godot;
+using static PuzzlePlatformer.autoloads.AudioManager.Sound;
+using static PuzzlePlatformer.autoloads.InputManager.Action;
 
 namespace PuzzlePlatformer.autoloads;
 
 public partial class GameManager : Node
 {
-    public static GameManager Instance { get; private set; }
-    
-    /* Signals */
     [Signal] public delegate void PauseToggledEventHandler(bool isPaused);
-
-    /* Backing Fields */
-    private bool _gamePaused;
+    public static GameManager Instance { get; private set; }
+    public int LevelRestarts;
     
-    /* Properties */
-    public bool TerminalOpen { get; set; }
+    private bool _gamePaused;
 
     public bool GamePaused
     {
@@ -37,15 +34,14 @@ public partial class GameManager : Node
 
     public override void _Process(double delta)
     {
-        if (InputManager.IsActionJustPressed(InputManager.Action.Escape, true))
+        if (InputManager.IsActionJustPressed(Escape, true))
             GamePaused = !GamePaused;
-        
-        if(InputManager.IsActionJustPressed(InputManager.Action.RestartLevel))
+
+        if (InputManager.IsActionJustPressed(RestartLevel) && !_gamePaused)
         {
-            var scene = GetTree().CurrentScene.GetPath();
-            GetTree().ChangeSceneToFile("res://world/levels/prototype_level.tscn");
-            GetTree().ChangeSceneToFile(scene);
-            ui.hud.HudManager.Instance.SendNotification("Restarted level.");
+            LevelRestarts++;
+            GetTree().ReloadCurrentScene();
+            GD.Print(LevelRestarts);
         }
     }
 }
