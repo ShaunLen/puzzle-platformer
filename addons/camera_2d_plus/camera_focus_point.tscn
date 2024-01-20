@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl6xd6677eo42"]
+
+[ext_resource type="Script" path="res://addons/camera_2d_plus/CameraFocusPoint.cs" id="1_dvmhp"]
+
+[node name="CameraFocusPoint" type="Area2D"]
+script = ExtResource("1_dvmhp")

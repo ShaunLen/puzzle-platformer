@@ -16,9 +16,10 @@ public partial class ConveyorObj : Interactable
 	public override Dictionary<string, string> Properties { get; } = new();
 	public override Dictionary<string, string> Methods { get; } = new();
 
+	[Export(PropertyHint.Range, "10,200,10")] private int _moveSpeed = 50;
+	[Export] private bool _moveOnStart;
 	private bool _isMoving;
 	private bool _moveBackwards;
-	[Export(PropertyHint.Range, "10,200,10")] private int _moveSpeed = 50;
 
 	[Export] private StaticBody2D _body;
 	private AnimationPlayer _animationPlayer;
@@ -49,14 +50,16 @@ public partial class ConveyorObj : Interactable
 								 "Args: (Number) Speed | ".Darken() +
 								 "Return type: null".Darken());
 
-		
+		if (_moveOnStart)
+			Start(null, null);
 	}
 	
 	/* Methods */
 
 	private IRuntimeValue Start(List<IRuntimeValue> args, Env env)
 	{
-		UpdateProperties();
+		if(!LevelManager.Instance.CodelessLevel)
+			UpdateProperties();
 
 		if (_isMoving)
 		{
@@ -169,7 +172,7 @@ public partial class ConveyorObj : Interactable
 
 	protected override void UpdateProperties()
 	{
-		var obj = CodeManager.Instance.Environment.LookupVar(Name) as ObjectValue;
+		var obj = CodeManager.Instance.GlobalEnvironment.LookupVar(Name) as ObjectValue;
 		obj!.Properties["IsMoving"] = new BooleanValue(_isMoving);
 	}
 }

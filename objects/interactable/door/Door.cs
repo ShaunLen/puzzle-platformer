@@ -4,7 +4,6 @@ using Godot;
 using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript_two.Runtime;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
-using PuzzlePlatformer.world;
 using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.objects.interactable.door;
@@ -13,17 +12,22 @@ public partial class Door : Interactable
 {
 	public override Dictionary<string, string> Properties { get; } = new();
 	public override Dictionary<string, string> Methods { get; } = new();
-	
-	public bool IsOpen;
+
+	private bool _isOpen;
 	
 	private AnimationPlayer _animationPlayer;
 	private AudioStreamPlayer2D _audioStreamPlayer;
+	private LightOccluder2D _lightOccluder2D;
 
 	public override void _Ready()
 	{
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
-		
+		_lightOccluder2D = GetNode<LightOccluder2D>("LightOccluder2D");
+
+		_lightOccluder2D.Occluder.Polygon = new[]
+			{ new Vector2(-12, -48), new Vector2(-12, 48), new Vector2(12, 48), new Vector2(12, -48) };
+
 		_animationPlayer.AnimationStarted += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.Door, _audioStreamPlayer); 
 		_animationPlayer.AnimationFinished += _ => AudioManager.Instance.PlaySound(AudioManager.Sound.DoorStop, _audioStreamPlayer);
 		
@@ -43,13 +47,13 @@ public partial class Door : Interactable
 	{
 		UpdateProperties();
 
-		if (IsOpen)
+		if (_isOpen)
 		{
 			CodeManager.Instance.ConsoleWriteError("Can't call method '" + Name + ".Open()' - door is already open!");
 			throw new Exception();
 		}
 			
-		IsOpen = true;
+		_isOpen = true;
 		_animationPlayer.Play("door_open");
 
 		return new NullValue();
@@ -59,13 +63,13 @@ public partial class Door : Interactable
 	{
 		UpdateProperties();
 		
-		if (!IsOpen)
+		if (!_isOpen)
 		{
 			CodeManager.Instance.ConsoleWriteError("Can't call method '" + Name + ".Close()' - door is already closed!");
 			throw new Exception();
 		}
 			
-		IsOpen = false;
+		_isOpen = false;
 		_animationPlayer.PlayBackwards("door_open");
 		
 		return new NullValue();
@@ -82,14 +86,14 @@ public partial class Door : Interactable
 		properties.Add("Close", new NativeFunctionValue(Close));
 		
 		// Properties
-		properties.Add("IsOpen", new BooleanValue(IsOpen));
+		properties.Add("IsOpen", new BooleanValue(_isOpen));
 
 		return properties;
 	}
 
 	protected override void UpdateProperties()
 	{
-		var obj = CodeManager.Instance.Environment.LookupVar(Name) as ObjectValue;
-		obj!.Properties["IsOpen"] = new BooleanValue(IsOpen);
+		var obj = CodeManager.Instance.GlobalEnvironment.LookupVar(Name) as ObjectValue;
+		obj!.Properties["IsOpen"] = new BooleanValue(_isOpen);
 	}
 }

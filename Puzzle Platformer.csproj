@@ -9,4 +9,10 @@
     <Folder Include="ui\guide\" />
     <Folder Include="world\levels\level_1\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="objects\environment\camera\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="objects\environment\camera\**" />
+  </ItemGroup>
 </Project>

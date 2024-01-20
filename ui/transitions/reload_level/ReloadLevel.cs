@@ -1,4 +1,7 @@
 using Godot;
+using PuzzlePlatformer.autoloads;
+
+namespace PuzzlePlatformer.ui.transitions.reload_level;
 
 public partial class ReloadLevel : Control
 {
@@ -7,7 +10,8 @@ public partial class ReloadLevel : Control
 
 	public override void _Ready()
 	{
-		Show();
+		if(GameManager.Instance.CanRestart)
+			Show();
 	}
 
 	public override void _PhysicsProcess(double delta)

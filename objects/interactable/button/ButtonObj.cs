@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.components;
-using PuzzlePlatformer.entities.player;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
-using PuzzlePlatformer.world;
 using CodeManager = PuzzlePlatformer.ui.code.CodeManager;
 
 namespace PuzzlePlatformer.objects.interactable.button;
@@ -84,7 +82,7 @@ public partial class ButtonObj : Interactable
 
 	protected override void UpdateProperties()
 	{
-		var obj = CodeManager.Instance.Environment.LookupVar(Name) as ObjectValue;
+		var obj = CodeManager.Instance.GlobalEnvironment.LookupVar(Name) as ObjectValue;
 		obj!.Properties["IsPressed"] = new BooleanValue(_isPressed);
 	}
 }

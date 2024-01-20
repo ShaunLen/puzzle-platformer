@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjqmk7xwdb0c6"]
+[gd_scene load_steps=8 format=3 uid="uid://cjqmk7xwdb0c6"]
 
 [ext_resource type="Script" path="res://objects/boxes/heavy_box/HeavyBox.cs" id="1_kd24q"]
 [ext_resource type="Texture2D" uid="uid://b5c80ycp50sqb" path="res://objects/boxes/heavy_box/heavy_box.png" id="1_psupk"]
 [ext_resource type="Shader" path="res://shaders/teleport.gdshader" id="2_27vjj"]
+[ext_resource type="Script" path="res://components/HealthComponent.cs" id="4_auno1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kgabt"]
 size = Vector2(32, 32)
@@ -15,23 +16,17 @@ shader_parameter/noise_desnity = 72.81
 shader_parameter/beam_size = 0.03
 shader_parameter/color = Color(0.211765, 0.521569, 0.396078, 1)
 
-[sub_resource type="Environment" id="Environment_itx13"]
-background_mode = 3
-glow_enabled = true
-glow_levels/1 = 1.0
-glow_levels/2 = 1.0
-glow_levels/3 = 0.0
-glow_intensity = 5.0
-glow_strength = 1.67
-glow_blend_mode = 1
-glow_hdr_threshold = 1.5
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kjmux"]
+polygon = PackedVector2Array(-16, 16, -16, -16, 16, -16, 16, 16)
 
-[node name="HeavyBox" type="RigidBody2D"]
+[node name="HeavyBox" type="RigidBody2D" node_paths=PackedStringArray("_healthComponent", "_audioPlayer")]
 z_index = 1
 mass = 0.1
 can_sleep = false
 freeze_mode = 1
 script = ExtResource("1_kd24q")
+_healthComponent = NodePath("HealthComponent")
+_audioPlayer = NodePath("AudioStreamPlayer2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kgabt")
@@ -42,5 +37,12 @@ modulate = Color(1.5, 1.5, 1.5, 1)
 material = SubResource("ShaderMaterial_rnw8o")
 texture = ExtResource("1_psupk")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_itx13")
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_kjmux")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("4_auno1")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0
+max_distance = 700.0

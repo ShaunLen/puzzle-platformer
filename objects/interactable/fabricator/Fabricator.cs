@@ -175,7 +175,7 @@ public partial class Fabricator : Interactable
 
 	protected override void UpdateProperties()
 	{
-		var obj = CodeManager.Instance.Environment.LookupVar(Name) as ObjectValue;
+		var obj = CodeManager.Instance.GlobalEnvironment.LookupVar(Name) as ObjectValue;
 		obj!.Properties["IsFabricating"] = new BooleanValue(_isFabricating);
 		obj!.Properties["IsOpening"] = new BooleanValue(_isOpening);
 		obj!.Properties["ContainsBox"] = new BooleanValue(_containsBox);

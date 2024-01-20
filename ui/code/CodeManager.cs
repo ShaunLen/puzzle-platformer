@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using PuzzlePlatformer.autoloads;
 using PuzzlePlatformer.litescript_two;
 using PuzzlePlatformer.litescript_two.IO;
 using PuzzlePlatformer.litescript_two.Runtime;
@@ -21,9 +22,11 @@ public partial class CodeManager : Node
     [Signal] public delegate void CodeExecutedEventHandler();
 
     /* Public Fields */
-    public Env Environment;
+    public Env GlobalEnvironment;
     public List<Interactable> Objects = new();
     public bool CodeInterfaceOpen => UiManager.Instance.CodeInterfaceOpen;
+    public bool Executing;
+    public bool FinishedExecuting;
 
     /* Private Fields */
     [Export] private CodeInterface _codeInterface;
@@ -32,6 +35,7 @@ public partial class CodeManager : Node
     private Tokenizer _tokenizer;
     private Parser _parser;
     private Interpreter _interpreter;
+    private Interpreter _initialInterpreter;
 
     /* Overrides */
     
@@ -43,12 +47,18 @@ public partial class CodeManager : Node
         
         /* Signal Connections */
         _codeInterface.RequestCodeExecute += ExecuteCode;
+        GameManager.Instance.SceneRestarted += () => FinishedExecuting = false;
     }
     
     /* Public Methods */
 
-    public void SetCode(string code) =>_codeInterface.SetCode(code);
-    
+    public void SetCode(string code)
+    {
+        _codeInterface.SetCode(GameManager.Instance.PlayerWrittenCode == ""
+            ? code
+            : GameManager.Instance.PlayerWrittenCode);
+    }
+
     public void ConsoleWrite(string output) => _codeInterface.ConsoleWrite(output);
 
     public void ConsoleWriteLine(string output) => _codeInterface.ConsoleWriteLine("\n" + output);
@@ -60,7 +70,7 @@ public partial class CodeManager : Node
     private void CreateEnvironment()
     {
         // Create LS environment
-        Environment = Env.CreateStandardEnvironment();
+        GlobalEnvironment = Env.CreateStandardEnvironment();
         
         // Get list of all interactable objects in level
         var interactables = GetTree().GetNodesInGroup("Interactable").ToList();
@@ -68,7 +78,7 @@ public partial class CodeManager : Node
         foreach (Interactable obj in interactables)
         {
             Objects.Add(obj);
-            Environment.DeclareVariable(obj.Name, new ObjectValue(GetObjectProperties(obj.Name)), false);
+            GlobalEnvironment.DeclareVariable(obj.Name, new ObjectValue(GetObjectProperties(obj.Name)), false);
 
         }
     }
@@ -98,13 +108,17 @@ public partial class CodeManager : Node
 
         var obj = GetObject(objName); 
 
-        obj.GetType().GetMethod(methodName)?.Invoke(obj, new object[]{ new List<IRuntimeValue>(), Environment });
+        obj.GetType().GetMethod(methodName)?.Invoke(obj, new object[]{ new List<IRuntimeValue>(), GlobalEnvironment });
 
         return true;
     }
 
     private void ExecuteCode(string code)
     {
+        if (Executing)
+            return;
+        Executing = true;
+        
         EmitSignal(SignalName.CodeExecuted);
         CreateEnvironment();
         _reporter = new ErrorReporter();
@@ -112,7 +126,17 @@ public partial class CodeManager : Node
         _tokenizer = new Tokenizer(_reporter, _reader);
         _parser = new Parser(_reporter);
         _interpreter = new Interpreter(_reporter);
+        _initialInterpreter ??= _interpreter;
         GetTree().Root.AddChild(_interpreter);
+
+        if (_initialInterpreter.IsLooping)
+            return;
+
+        if (FinishedExecuting)
+            return;
+
+        if (_reporter.WriteErrorsIfAny())
+            return;
 
         var tokens = _tokenizer.GetAllTokens();
 
@@ -127,20 +151,24 @@ public partial class CodeManager : Node
         if (!LevelManager.Instance.CheckRequirementsMet(program))
             return;
 
-        var result = _interpreter.Evaluate(program, Environment);
+        var result = _initialInterpreter.Evaluate(program, GlobalEnvironment);
 
         if (result == null)
             return;
 
         _reporter.WriteErrorsIfAny();
         
-        _interpreter.ExecutionFinished += () =>
+        GD.Print("Made it to just before the event catch");
+        
+        _initialInterpreter.ExecutionFinished += () =>
         {
-            GD.Print("caught signal");
+            GD.Print("CodeManager knows execution has finished.");
+            Executing = false;
+            FinishedExecuting = true;
             ConsoleWriteLine("\n" + "Program finished with 0 errors.");
         
             if (!UiManager.Instance.CodeInterfaceOpen)
-                HudManager.Instance.SendNotification("Program finished with 0 errors.");
+                HudManager.Instance.SendNotification("Program finished with 0 errors");
         };
     }
 }

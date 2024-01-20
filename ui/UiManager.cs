@@ -17,13 +17,9 @@ public partial class UiManager : Node
 
     public bool CodeInterfaceOpen;
     public bool GuideOpen;
-    private PackedScene _levelRestartTransition = GD.Load<PackedScene>("res://ui/transitions/reload_level/reload_level.tscn");
 
-    public override void _Ready()
-    {
-        Instance = this;
-        AudioManager.Instance.PlaySound(Door);
-    }
+    public override void _Ready() => Instance = this;
+
     public override void _Process(double delta)
     {
         if (InputManager.IsActionJustPressed(InputManager.Action.ToggleCode, true))

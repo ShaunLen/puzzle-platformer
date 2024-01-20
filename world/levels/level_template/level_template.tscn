@@ -1,15 +1,26 @@
-[gd_scene load_steps=13 format=3 uid="uid://x0jn43i4ytuk"]
+[gd_scene load_steps=25 format=3 uid="uid://x0jn43i4ytuk"]
 
 [ext_resource type="Script" path="res://world/levels/level_template/LevelTemplate.cs" id="1_qyb73"]
 [ext_resource type="Texture2D" uid="uid://yoi5myrwxkwi" path="res://world/tiles/bg_sheet.png" id="2_60oor"]
+[ext_resource type="Script" path="res://ui/UiManager.cs" id="2_vyyfd"]
 [ext_resource type="TileSet" uid="uid://bxxc5cggpvo7n" path="res://world/tilesets/ground_tile_set.tres" id="3_l1hjg"]
+[ext_resource type="Script" path="res://ui/code/CodeManager.cs" id="3_rkoto"]
 [ext_resource type="Script" path="res://addons/camera_2d_plus/Camera2DPlus.cs" id="4_54v2v"]
+[ext_resource type="Script" path="res://world/LevelManager.cs" id="4_ljwc0"]
+[ext_resource type="Script" path="res://ui/hud/HudManager.cs" id="5_dju26"]
 [ext_resource type="PackedScene" uid="uid://couxwdf1cvkg8" path="res://entities/player/player.tscn" id="5_ktwjp"]
+[ext_resource type="Script" path="res://audio/scripts/VoiceManager.cs" id="6_v6i7e"]
+[ext_resource type="Script" path="res://audio/scripts/VoicePlayer.cs" id="8_iihoj"]
 [ext_resource type="PackedScene" uid="uid://wdr0v0pcfg0y" path="res://ui/hud/hud.tscn" id="8_q8d16"]
 [ext_resource type="PackedScene" uid="uid://ipfkpidosr05" path="res://ui/code/code_editor.tscn" id="9_6jf3d"]
+[ext_resource type="AudioStream" uid="uid://b6o7wif8mtwpk" path="res://audio/ambience/laboratory.wav" id="9_024nu"]
 [ext_resource type="PackedScene" uid="uid://brxgucbe5e5hm" path="res://ui/menus/pause_menu/pause_menu.tscn" id="10_rvdh2"]
 [ext_resource type="Script" path="res://audio/scripts/GlobalAudioPlayer.cs" id="10_t5lsj"]
 [ext_resource type="PackedScene" uid="uid://cdwsvv01dipe5" path="res://ui/guide/guide.tscn" id="11_lqd2n"]
+[ext_resource type="PackedScene" uid="uid://dunngemtbx6i2" path="res://objects/win_button/win_button.tscn" id="18_h80vn"]
+[ext_resource type="PackedScene" uid="uid://cvqvpuh22w81v" path="res://ui/transitions/reload_level/reload_level.tscn" id="18_kdokg"]
+[ext_resource type="PackedScene" uid="uid://dl6xd6677eo42" path="res://addons/camera_2d_plus/camera_focus_point.tscn" id="19_111oi"]
+[ext_resource type="Resource" uid="uid://bgodgdlx1nijq" path="res://entities/player/player_stats_experimental.tres" id="21_4lhqp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_esc1a"]
 texture = ExtResource("2_60oor")
@@ -25,17 +36,54 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/1 = SubResource("TileSetAtlasSource_esc1a")
 
-[node name="LevelTemplate" type="Node2D" node_paths=PackedStringArray("GroundTilemap") groups=["Level"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ykwqi"]
+radius = 69.029
+
+[node name="LevelTemplate" type="Node2D" node_paths=PackedStringArray("RespawnPosition", "GroundTilemap") groups=["Level"]]
 script = ExtResource("1_qyb73")
 LevelName = "Template Level"
 LevelDesc = "This level is just a template and will not be in the game.
 "
+DefaultZoom = 1.0
+RespawnPosition = NodePath("RespawnPos")
 GroundTilemap = NodePath("Tilemaps/GroundTilemap")
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="UiManager" type="Node" parent="Managers"]
+script = ExtResource("2_vyyfd")
+
+[node name="CodeManager" type="Node" parent="Managers" node_paths=PackedStringArray("_codeInterface")]
+script = ExtResource("3_rkoto")
+_codeInterface = NodePath("../../UI/Code")
+
+[node name="LevelManager" type="Node" parent="Managers" node_paths=PackedStringArray("CurrentLevel", "Player")]
+script = ExtResource("4_ljwc0")
+CurrentLevel = NodePath("../..")
+Player = NodePath("../../Player")
+
+[node name="HudManager" type="Node" parent="Managers"]
+script = ExtResource("5_dju26")
+
+[node name="VoiceManager" type="Node" parent="Managers"]
+script = ExtResource("6_v6i7e")
+
+[node name="GlobalAudioPlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
+script = ExtResource("10_t5lsj")
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
+volume_db = -7.0
+pitch_scale = 0.95
+script = ExtResource("8_iihoj")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_024nu")
+volume_db = -15.0
+autoplay = true
 
 [node name="Tilemaps" type="Node2D" parent="."]
 
 [node name="BackgroundTilemap" type="TileMap" parent="Tilemaps"]
-position = Vector2(-12, 12)
 tile_set = SubResource("TileSet_fxjjo")
 cell_quadrant_size = 32
 format = 2
@@ -48,11 +96,11 @@ format = 2
 layer_0/tile_data = PackedInt32Array(-65523, 196609, 1, -131059, 196609, 1, -65524, 196609, 1, -131060, 65537, 1, -65525, 196609, 1, -131061, 196609, 0, -65526, 196609, 1, -131062, 196609, 0, -65527, 196609, 1, -131063, 196609, 0, -65528, 196609, 1, -131064, 196609, 0, -65529, 196609, 1, -131065, 196609, 0, -65530, 196609, 1, -131066, 196609, 0, -65531, 196609, 1, -131067, 196609, 0, -65532, 196609, 1, -131068, 196609, 0, -65533, 196609, 1, -131069, 196609, 0, -65534, 196609, 1, -131070, 196609, 0, -65535, 196609, 1, -131071, 1, 1, -65536, 196609, 1, -131072, 196609, 1, -196607, 262145, 1, -196608, 196609, 1, -524277, 196609, 2, -589813, 196609, 1, -524278, 196609, 2, -589814, 196609, 1, -524279, 196609, 2, -589815, 196609, 1, -524282, 196609, 2, -589818, 196609, 1, -524283, 196609, 2, -589819, 196609, 1, -524284, 196609, 2, -589820, 196609, 1, -524285, 196609, 2, -589821, 196609, 1, -524286, 196609, 2, -589822, 196609, 1, -524287, 1, 0, -589823, 196609, 1, -524288, 196609, 1, -589824, 196609, 1, -196595, 196609, 1, -262131, 196609, 1, -393203, 196609, 1, -458739, 196609, 1, -524275, 196609, 1, -589811, 196609, 1, -196596, 131073, 1, -262132, 131073, 1, -393204, 131073, 1, -458740, 131073, 1, -524276, 65537, 0, -589812, 196609, 1, 13, 196609, 1, 12, 196609, 1, 11, 196609, 1, 10, 196609, 1, 9, 196609, 1, 8, 196609, 1, 7, 196609, 1, 6, 196609, 1, 5, 196609, 1, 4, 196609, 1, 3, 196609, 1, 2, 196609, 1, 1, 196609, 1, 0, 196609, 1, 65535, 196609, 1, -1, 196609, 1, -65537, 196609, 1, -131073, 196609, 1, -458753, 196609, 1, -524289, 196609, 1, -262143, 262145, 1, -262144, 196609, 1, -327680, 196609, 1, -327679, 262145, 1, -196609, 196609, 1, -262145, 196609, 1, -327681, 196609, 1, -393216, 196609, 1, -393215, 262145, 1, -393217, 196609, 1, -458752, 196609, 1, -458751, 262145, 1, -524281, 196609, 2, -524280, 196609, 2, -589817, 196609, 1, -589816, 196609, 1, -327668, 131073, 1, -327667, 196609, 1)
 
 [node name="RespawnPos" type="Node2D" parent="."]
-position = Vector2(124, -127)
+position = Vector2(115, -117)
 
 [node name="Camera" type="Camera2D" parent="." groups=["Camera"]]
 process_mode = 1
-position = Vector2(206, -88)
+position = Vector2(166, -93)
 process_callback = 0
 limit_left = 0
 limit_top = -704
@@ -63,11 +111,22 @@ position_smoothing_enabled = true
 editor_draw_limits = true
 script = ExtResource("4_54v2v")
 
-[node name="Player" parent="." instance=ExtResource("5_ktwjp")]
-position = Vector2(206, -88)
-_respawnDelay = 1.0
-
 [node name="Interactables" type="Node" parent="."]
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WinButton" parent="." instance=ExtResource("18_h80vn")]
+position = Vector2(328, -80)
+
+[node name="CameraFocusPoint" parent="WinButton" node_paths=PackedStringArray("_camera") instance=ExtResource("19_111oi")]
+_camera = NodePath("../../Camera")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinButton/CameraFocusPoint"]
+shape = SubResource("CircleShape2D_ykwqi")
+
+[node name="Player" parent="." instance=ExtResource("5_ktwjp")]
+position = Vector2(166, -93)
+Stats = ExtResource("21_4lhqp")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -76,11 +135,15 @@ _respawnDelay = 1.0
 [node name="Code" parent="UI" groups=["Code"] instance=ExtResource("9_6jf3d")]
 visible = false
 
-[node name="PauseMenu" parent="UI" instance=ExtResource("10_rvdh2")]
-visible = false
-
 [node name="Guide" parent="UI" groups=["Guide"] instance=ExtResource("11_lqd2n")]
 visible = false
 
-[node name="GlobalAudioPlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
-script = ExtResource("10_t5lsj")
+[node name="PauseMenu" parent="UI" instance=ExtResource("10_rvdh2")]
+visible = false
+
+[node name="LevelRestartTransition" parent="UI" instance=ExtResource("18_kdokg")]
+visible = false
+offset_left = 5.0
+offset_top = 495.0
+offset_right = 5.0
+offset_bottom = 495.0

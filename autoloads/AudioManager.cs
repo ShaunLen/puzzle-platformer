@@ -16,11 +16,12 @@ public partial class AudioManager : Node
         DoorStop,
         ButtonPress,
         ButtonRelease,
-        PageFlip1,
-        PageFlip2,
-        PageFlip3,
         Fabricate,
-        Static
+        Static,
+        Shutter,
+        Footsteps,
+        Jump,
+        Sizzle
     }
 
     public override void _Ready()
@@ -48,6 +49,12 @@ public partial class AudioManager : Node
 
         PlaySound(sound, player);
     }
+
+    public void StopSound(AudioStreamPlayer2D player)
+    {
+        player.Stop();
+        // TODO: Handle global audio?
+    }
 }
 
 internal static class AudioExtensions
@@ -61,11 +68,12 @@ internal static class AudioExtensions
             AudioManager.Sound.DoorStop => ResourceLoader.Load("res://audio/effects/door_stop.wav") as AudioStream,
             AudioManager.Sound.ButtonPress => ResourceLoader.Load("res://audio/effects/button_press.wav") as AudioStream,
             AudioManager.Sound.ButtonRelease => ResourceLoader.Load("res://audio/effects/button_release.wav") as AudioStream,
-            AudioManager.Sound.PageFlip1 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_1.wav") as AudioStream,
-            AudioManager.Sound.PageFlip2 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_2.wav") as AudioStream,
-            AudioManager.Sound.PageFlip3 => ResourceLoader.Load("res://audio/effects/page_flip/page_flip_3.wav") as AudioStream,
             AudioManager.Sound.Fabricate => ResourceLoader.Load("res://audio/effects/warp-sound.wav") as AudioStream,
             AudioManager.Sound.Static => ResourceLoader.Load("res://audio/effects/static.wav") as AudioStream,
+            AudioManager.Sound.Shutter => ResourceLoader.Load("res://audio/effects/shutter.wav") as AudioStream,
+            AudioManager.Sound.Footsteps => ResourceLoader.Load("res://audio/effects/footsteps.wav") as AudioStream,
+            AudioManager.Sound.Jump => ResourceLoader.Load("res://audio/effects/jump.wav") as AudioStream,
+            AudioManager.Sound.Sizzle => ResourceLoader.Load("res://audio/effects/sizzle.wav") as AudioStream,
             _ => null
         };
     }

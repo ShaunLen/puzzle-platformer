@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://3mq80saqtvlt"]
+[gd_scene load_steps=11 format=3 uid="uid://3mq80saqtvlt"]
 
 [ext_resource type="Script" path="res://objects/interactable/conveyor/ConveyorObj.cs" id="1_kkvje"]
 [ext_resource type="Shader" path="res://shaders/highlight.gdshader" id="1_ysbjl"]
@@ -55,6 +55,9 @@ _data = {
 radius = 9.0
 height = 156.0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dw724"]
+polygon = PackedVector2Array(-75, -10, 75, -10, 78, -7, 79, -5, 80, -3, 80, 3, 79, 5, 78, 7, 75, 10, -75, 10, -78, 7, -79, 5, -80, 3, -80, -3, -79, -5, -78, -7)
+
 [node name="Conveyor" type="Node2D" node_paths=PackedStringArray("_body") groups=["Interactable"]]
 script = ExtResource("1_kkvje")
 _body = NodePath("StaticBody2D")
@@ -92,3 +95,6 @@ autowrap_mode = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_83gx5")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_dw724")

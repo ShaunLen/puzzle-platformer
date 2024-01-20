@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq8ng33fgrnf7"]
+
+[ext_resource type="Theme" uid="uid://ohx5n1qt52t2" path="res://ui/themes/nord_theme.tres" id="1_565pq"]
+[ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="2_veor3"]
+
+[node name="Subtitle" type="Label"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -208.0
+offset_top = -30.0
+offset_right = 208.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_565pq")
+theme_override_fonts/font = ExtResource("2_veor3")
+horizontal_alignment = 1
+vertical_alignment = 1

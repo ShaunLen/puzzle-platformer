@@ -1,8 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://couxwdf1cvkg8"]
+[gd_scene load_steps=28 format=3 uid="uid://couxwdf1cvkg8"]
 
 [ext_resource type="Script" path="res://components/HealthComponent.cs" id="1_gfvpp"]
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_sr3iy"]
-[ext_resource type="Resource" uid="uid://72n6wvpfgs7d" path="res://entities/player/player_stats.tres" id="2_flxjy"]
+[ext_resource type="Resource" uid="uid://bgodgdlx1nijq" path="res://entities/player/player_stats_experimental.tres" id="2_e8767"]
 [ext_resource type="Script" path="res://entities/common/StateMachine.cs" id="3_5sb4k"]
 [ext_resource type="Script" path="res://components/HitboxComponent.cs" id="4_cfdbm"]
 [ext_resource type="Texture2D" uid="uid://cpo3prfrxaq3w" path="res://entities/player/player_sprite.png" id="4_v528k"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://components/HurtboxComponent.cs" id="9_n6y7a"]
 [ext_resource type="Script" path="res://entities/player/states/JumpState.cs" id="9_yejaq"]
 [ext_resource type="Texture2D" uid="uid://beftovlukfcrh" path="res://art/light_texture.webp" id="10_juijd"]
-[ext_resource type="Script" path="res://addons/trail_2d/trail_2d.gd" id="11_73x7r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_832pm"]
 size = Vector2(24, 48)
@@ -20,12 +19,84 @@ size = Vector2(24, 48)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_td835"]
 size = Vector2(24, 48)
 
-[sub_resource type="Curve" id="Curve_m5lbe"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.252632), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="Animation" id="Animation_qvcb2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [25]
+}
 
-[sub_resource type="Gradient" id="Gradient_sd3gs"]
-colors = PackedColorArray(1, 0.788235, 0.0431373, 0.811765, 1, 0.764706, 0.145098, 0)
+[sub_resource type="Animation" id="Animation_l0fjd"]
+resource_name = "fall"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [28, 27, 26, 25, 24]
+}
+
+[sub_resource type="Animation" id="Animation_fy3u2"]
+resource_name = "idle_left"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+
+[sub_resource type="Animation" id="Animation_swbea"]
+resource_name = "idle_right"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_d66vd"]
+resource_name = "jump"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [25, 26, 27, 28]
+}
 
 [sub_resource type="Animation" id="Animation_seg03"]
 resource_name = "walk_left"
@@ -61,51 +132,86 @@ tracks/0/keys = {
 "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0]
 }
 
-[sub_resource type="Animation" id="Animation_swbea"]
-resource_name = "idle_right"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_fy3u2"]
-resource_name = "idle_left"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [12]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4agr8"]
 _data = {
+"RESET": SubResource("Animation_qvcb2"),
+"fall": SubResource("Animation_l0fjd"),
 "idle_left": SubResource("Animation_fy3u2"),
 "idle_right": SubResource("Animation_swbea"),
+"jump": SubResource("Animation_d66vd"),
 "walk_left": SubResource("Animation_seg03"),
 "walk_right": SubResource("Animation_y8bby")
 }
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
+[sub_resource type="Gradient" id="Gradient_tga22"]
+colors = PackedColorArray(1, 1, 1, 0.662745, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5cbsa"]
+gradient = SubResource("Gradient_tga22")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1cun5"]
+lifetime_randomness = 0.75
+emission_shape = 3
+emission_box_extents = Vector3(2, 15, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 20, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+radial_accel_max = 20.0
+angle_min = -184.5
+angle_max = 720.0
+scale_min = 0.25
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_5cbsa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nf0fl"]
+lifetime_randomness = 0.75
+emission_shape = 3
+emission_box_extents = Vector3(2, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 12.27
+gravity = Vector3(0, 20, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+radial_accel_max = 20.0
+scale_min = 0.25
+scale_max = 1.2
+color_ramp = SubResource("GradientTexture1D_5cbsa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j5w6j"]
+lifetime_randomness = 0.75
+emission_shape = 3
+emission_box_extents = Vector3(2, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 12.27
+gravity = Vector3(0, 20, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+radial_accel_max = 20.0
+scale_min = 0.25
+scale_max = 1.2
+color_ramp = SubResource("GradientTexture1D_5cbsa")
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_footstepsAudioPlayer", "_otherAudioPlayer", "_dustParticles", "_dustParticlesLeft", "_dustParticlesRight") groups=["Player"]]
 process_mode = 1
 z_index = 10
 script = ExtResource("1_sr3iy")
-Stats = ExtResource("2_flxjy")
+Stats = ExtResource("2_e8767")
+_respawnDelay = 0.25
+_footstepsAudioPlayer = NodePath("FootstepsAudioPlayer")
+_otherAudioPlayer = NodePath("OtherAudioPlayer")
+_dustParticles = NodePath("DustParticles")
+_dustParticlesLeft = NodePath("DustParticlesLeft")
+_dustParticlesRight = NodePath("DustParticlesRight")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_states", "_startingState")]
 script = ExtResource("3_5sb4k")
@@ -140,32 +246,18 @@ script = ExtResource("9_n6y7a")
 shape = SubResource("RectangleShape2D_td835")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 10
 texture = ExtResource("4_v528k")
 hframes = 12
-vframes = 2
-frame = 12
+vframes = 3
+frame = 25
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-visible = false
 color = Color(0.580346, 1, 1, 1)
-energy = 0.2
+energy = 0.3
 shadow_enabled = true
 texture = ExtResource("10_juijd")
-texture_scale = 2.0
-
-[node name="Trail" type="Line2D" parent="."]
-visible = false
-z_index = 5
-position = Vector2(1, 0)
-points = PackedVector2Array(2, -6)
-width = 3.0
-width_curve = SubResource("Curve_m5lbe")
-default_color = Color(0.925781, 0.944277, 0, 0.345098)
-gradient = SubResource("Gradient_sd3gs")
-joint_mode = 2
-antialiased = true
-script = ExtResource("11_73x7r")
-length = 20
+texture_scale = 1.5
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -177,16 +269,58 @@ wait_time = 0.3
 [node name="PlayerTransform" type="RemoteTransform2D" parent="."]
 remote_path = NodePath("../../Camera")
 
-[node name="HealthComponent" type="Node2D" parent="."]
-script = ExtResource("1_gfvpp")
-
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-speed_scale = 5.0
+speed_scale = 4.0
 libraries = {
 "": SubResource("AnimationLibrary_4agr8")
 }
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("1_gfvpp")
+
+[node name="FootstepsAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = -5.0
+
+[node name="OtherAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0
+
+[node name="DustParticles" type="GPUParticles2D" parent="."]
+z_index = 20
+position = Vector2(0, 24)
+rotation = -1.5708
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_1cun5")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="DustParticlesRight" type="GPUParticles2D" parent="."]
+position = Vector2(12, 24)
+rotation = -0.610865
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_nf0fl")
+lifetime = 0.5
+one_shot = true
+preprocess = 0.02
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="DustParticlesLeft" type="GPUParticles2D" parent="."]
+position = Vector2(-12, 24)
+rotation = -2.44346
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_j5w6j")
+lifetime = 0.5
+one_shot = true
+preprocess = 0.02
+explosiveness = 1.0
+randomness = 1.0
 
 [connection signal="timeout" from="JumpBufferTimer" to="." method="OnJumpBufferTimerTimeout"]

@@ -1,8 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://wdr0v0pcfg0y"]
+[gd_scene load_steps=2 format=3 uid="uid://wdr0v0pcfg0y"]
 
 [ext_resource type="Script" path="res://ui/hud/Hud.cs" id="1_nd57q"]
-[ext_resource type="Theme" uid="uid://ohx5n1qt52t2" path="res://ui/themes/nord_theme.tres" id="2_wnmnf"]
-[ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="3_ot2vj"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -24,23 +22,20 @@ offset_right = 265.0
 grow_vertical = 0
 alignment = 2
 
-[node name="Subtitle" type="Label" parent="."]
+[node name="SubtitleTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="SubtitleContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -208.0
-offset_top = -30.0
-offset_right = 208.0
+offset_left = -148.0
+offset_top = -43.0
+offset_right = 148.0
 grow_horizontal = 2
 grow_vertical = 0
-theme = ExtResource("2_wnmnf")
-theme_override_fonts/font = ExtResource("3_ot2vj")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SubtitleTimer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
+alignment = 1

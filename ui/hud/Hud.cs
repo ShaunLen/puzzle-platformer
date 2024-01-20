@@ -1,21 +1,23 @@
 using Godot;
-using PuzzlePlatformer.audio.scripts;
+using PuzzlePlatformer.world;
 
 namespace PuzzlePlatformer.ui.hud;
 
 public partial class Hud : Control
 {
 	private VBoxContainer _notificationContainer;
-	private Label _subtitleLabel;
+	private VBoxContainer _subtitleContainer;
 	private Timer _subtitleTimer;
 		
 	public override void _Ready()
 	{
-		HudManager.Instance.NotificationSent += WriteNotification;
-		VoiceManager.Instance.ShowSubtitle += ShowSubtitle;
+		if(!LevelManager.Instance.CodelessLevel)
+			HudManager.Instance.NotificationSent += WriteNotification;
+		
+		HudManager.Instance.ShowSubtitle += ShowSubtitle;
 
 		_notificationContainer = GetNode<VBoxContainer>("NotificationContainer");
-		_subtitleLabel = GetNode<Label>("Subtitle");
+		_subtitleContainer = GetNode<VBoxContainer>("SubtitleContainer");
 		_subtitleTimer = GetNode<Timer>("SubtitleTimer");
 	}
 
@@ -25,17 +27,9 @@ public partial class Hud : Control
 		_notificationContainer.AddChild(notification);
 	}
 
-	private void ShowSubtitle(string subtitle)
+	private void ShowSubtitle(string text, double voiceDuration, float showTime = 3)
 	{
-		_subtitleLabel.Text = subtitle;
-		_subtitleTimer.Timeout += RemoveSubtitle;
-		_subtitleTimer.Start();
-		return;
-
-		void RemoveSubtitle()
-		{
-			_subtitleLabel.Text = "";
-			_subtitleTimer.Timeout -= RemoveSubtitle;
-		}
+		var subtitle = new Subtitle(text, voiceDuration, showTime);
+		_subtitleContainer.AddChild(subtitle);
 	}
 }

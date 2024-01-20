@@ -16,6 +16,13 @@ public partial class Player : CharacterBody2D
 	/* Exports */
 	[Export] public PlayerStats Stats;
 	[Export] private float _respawnDelay = 0.5f;
+
+	[ExportCategory("Components")] 
+	[Export] private AudioStreamPlayer2D _footstepsAudioPlayer;
+	[Export] private AudioStreamPlayer2D _otherAudioPlayer;
+	[Export] private GpuParticles2D _dustParticles;
+	[Export] private GpuParticles2D _dustParticlesLeft;
+	[Export] private GpuParticles2D _dustParticlesRight;
 	
 	/* Fields */
 	private StateMachine _stateMachine;
@@ -41,12 +48,14 @@ public partial class Player : CharacterBody2D
 		_stateMachine = GetNode<StateMachine>("StateMachine");
 		_stateMachine.Init();
 		
+		/* Initialise Components */
+		_healthComponent.Init(Stats.Health);
+		
 		/* Signal Connections */
 		_healthComponent.Died += HandleDeath;
 		_stateMachine.ChangeAnimation += ChangeAnimation;
-		
-		/* Initialise Components */
-		_healthComponent.Init(Stats.Health);
+		_stateMachine.PlaySound += PlaySound;
+		_stateMachine.StopSound += StopSound;
 	}
 
 	public override void _Process(double delta)
@@ -60,6 +69,40 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 	
+	/* Public Methods */
+
+	public void EmitDustEffect(bool landing = false)
+	{
+		_dustParticles.Restart();
+
+		if (landing)
+		{
+			_dustParticles.Lifetime = 0.35;
+			_dustParticles.Amount = 40;
+			_dustParticles.Modulate = new Color(1, 1, 1, 0.5f);
+		}
+		else
+		{
+			_dustParticles.Lifetime = 0.5;
+			_dustParticles.Amount = 100;
+			_dustParticles.Modulate = new Color(1, 1, 1, 1);
+		}
+		
+		_dustParticles.Emitting = true;
+	}
+
+	public void EmitDustEffectRight()
+	{
+		_dustParticlesRight.Restart();;
+		_dustParticlesRight.Emitting = true;
+	}
+
+	public void EmitDustEffectLeft()
+	{
+		_dustParticlesLeft.Restart();;
+		_dustParticlesLeft.Emitting = true;
+	}
+	
 	/* Private Methods */
 	private void StoreNodes()
 	{
@@ -67,7 +110,9 @@ public partial class Player : CharacterBody2D
 		_healthComponent = GetNode<HealthComponent>("HealthComponent");
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		_remoteTransform = GetNode<RemoteTransform2D>("PlayerTransform");
-		_remoteTransform.RemotePath = GetTree().GetFirstNodeInGroup("Camera").GetPath();
+		
+		if(!GameManager.Instance.InMenu)
+			_remoteTransform.RemotePath = GetTree().GetFirstNodeInGroup("Camera").GetPath();
 	}
 	
 	private void OnJumpBufferTimerTimeout()
@@ -77,26 +122,21 @@ public partial class Player : CharacterBody2D
 
 	private void HandleDeath()
 	{
-		Visible = false;
-		InputManager.InputEnabled = false;
-		Position = LevelManager.Instance.CurrentLevel.GetRespawnPosition();
+		AudioManager.Instance.PlaySound(AudioManager.Sound.Sizzle, _otherAudioPlayer);
 		
-		var t = GetTree().CreateTimer(_respawnDelay);
-		t.Timeout += () =>
-		{
-			Visible = true;
-			InputManager.InputEnabled = true;
-		};
+		var timer = GetTree().CreateTimer(_respawnDelay);
+		timer.Timeout += () => GameManager.Instance.ReloadScene();
 	}
 
 	private void ChangeAnimation(string animationName)
 	{
-		GD.Print(animationName);
-
 		switch (animationName)
 		{
 			case "walk_left" or "walk_right":
 				IsFacingLeft = animationName == "walk_left";
+				break;
+			case "idle_left" or "idle_right":
+				IsFacingLeft = animationName == "idle_left";
 				break;
 			case "idle":
 				_animationPlayer.Play(IsFacingLeft ? "idle_left" : "idle_right");
@@ -104,5 +144,19 @@ public partial class Player : CharacterBody2D
 		}
 
 		_animationPlayer.Play(animationName);
+	}
+
+	private void PlaySound(AudioManager.Sound sound)
+	{
+		var audioPlayer = sound == AudioManager.Sound.Footsteps ? _footstepsAudioPlayer : _otherAudioPlayer;
+		
+		AudioManager.Instance.StopSound(audioPlayer);
+		AudioManager.Instance.PlaySound(sound, audioPlayer);
+	}
+
+	private void StopSound()
+	{
+		AudioManager.Instance.StopSound(_footstepsAudioPlayer);
+		AudioManager.Instance.StopSound(_otherAudioPlayer);
 	}
 }

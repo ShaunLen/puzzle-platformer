@@ -7,7 +7,9 @@ public partial class GlobalAudioPlayer : AudioStreamPlayer
 {
 	public override void _Ready()
 	{
-		PlaySound(AudioManager.Sound.Static);
+		if(GameManager.Instance.CanRestart)
+			PlaySound(AudioManager.Sound.Static);
+		
 		AudioManager.Instance.PlayGlobalSound += PlaySound;
 	}
 

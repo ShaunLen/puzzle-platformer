@@ -38,7 +38,7 @@ public partial class InputManager : Node
     public override void _Process(double delta)
     {
         if(IsActionJustPressed(Action.ToggleFullscreen, true))
-            DisplayServer.WindowSetMode(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Windowed ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Windowed);
+            DisplayServer.WindowSetMode(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Windowed ? DisplayServer.WindowMode.ExclusiveFullscreen : DisplayServer.WindowMode.Windowed);
     }
 
     /* Methods */

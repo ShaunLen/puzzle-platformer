@@ -3,22 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://bx8cyqcr4wvu" path="res://objects/environment/window/window.png" id="1_6i21d"]
 [ext_resource type="Script" path="res://objects/environment/window/Window.cs" id="1_bkkbf"]
 
-[sub_resource type="Animation" id="Animation_goe7g"]
-resource_name = "walk_right"
-length = 1.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-}
-
 [sub_resource type="Animation" id="Animation_j234t"]
 resource_name = "walk_left"
 length = 1.1
@@ -35,6 +19,22 @@ tracks/0/keys = {
 "values": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
 }
 
+[sub_resource type="Animation" id="Animation_goe7g"]
+resource_name = "walk_right"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a6a4k"]
 _data = {
 "walk_left": SubResource("Animation_j234t"),
@@ -48,7 +48,7 @@ script = ExtResource("1_bkkbf")
 texture = ExtResource("1_6i21d")
 hframes = 11
 vframes = 2
-frame = 10
+frame = 21
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

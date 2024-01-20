@@ -8,6 +8,8 @@ namespace PuzzlePlatformer.entities.common;
 public partial class StateMachine : Node
 {
     [Signal] public delegate void ChangeAnimationEventHandler(string animationName);
+    [Signal] public delegate void PlaySoundEventHandler(AudioManager.Sound sound);
+    [Signal] public delegate void StopSoundEventHandler();
     
     [ExportGroup("Debug")]
     [Export] public bool EnterStateLog;
@@ -68,8 +70,10 @@ public partial class StateMachine : Node
         return _previousState.GetType() == typeof(TState) || _previousState.GetType().IsSubclassOf(typeof(TState));
     }
 
-    public void SetAnimation(string animationName)
+    public void SetAnimation(string animationName) => EmitSignal(SignalName.ChangeAnimation, animationName);
+    public void PlayAudio(AudioManager.Sound sound) => EmitSignal(SignalName.PlaySound, (int) sound);
+    public void StopAudio()
     {
-        EmitSignal(SignalName.ChangeAnimation, animationName);
+        EmitSignal(SignalName.StopSound);
     }
 }

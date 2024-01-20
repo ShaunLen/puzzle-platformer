@@ -1,14 +1,9 @@
-using System;
 using Godot;
 
 namespace PuzzlePlatformer.ui.hud;
 
 public partial class Notification : Label
 {
-    public Notification()
-    {
-    }
-
     public Notification(string message)
     {
         Text = message;

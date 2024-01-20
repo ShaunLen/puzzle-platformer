@@ -16,7 +16,6 @@ public partial class VoicePlayer : AudioStreamPlayer
 
 	private void PlayVoiceLine(VoiceManager.VoiceLine voiceLine)
 	{
-		GD.Print("PlayVoiceLine");
 		Stream = voiceLine.ToAudioStream();
 		Play();
 	}

@@ -4,6 +4,9 @@ using Godot;
 using PuzzlePlatformer.litescript_two.IO;
 using PuzzlePlatformer.litescript_two.Nodes;
 using PuzzlePlatformer.litescript_two.Runtime.Values;
+using PuzzlePlatformer.ui;
+using PuzzlePlatformer.ui.code;
+using PuzzlePlatformer.ui.hud;
 using NodeType = PuzzlePlatformer.litescript_two.Nodes.NodeType;
 using ValueType = PuzzlePlatformer.litescript_two.Runtime.Values.ValueType;
 
@@ -17,7 +20,7 @@ public partial class Interpreter(ErrorReporter reporter) : Node
     private ErrorReporter Reporter { get; } = reporter;
     
     // Needed for while loops
-    private bool _isLooping;
+    public bool IsLooping;
     private Timer _loopTimer;
     private IRuntimeValue _conditional;
     private WhileStatementNode _node;
@@ -32,26 +35,24 @@ public partial class Interpreter(ErrorReporter reporter) : Node
         
         StartLoop += () =>
         {
-            _isLooping = true;
+            IsLooping = true;
             _loopTimer.Start();
+            CodeManager.Instance.ConsoleWriteLine("Looping...");
         };
 
         _loopTimer.Timeout += () =>
         {
-            if (!_isLooping) return;
+            if (!IsLooping) return;
             
-            _isLooping = false;
+            IsLooping = false;
             Reporter.RecordError(_node.Position, "Whoops! The loop is infinite!");
         };
     }
 
     public override void _Process(double delta)
     {
-        if (_isLooping)
-        {
+        if (IsLooping)
             ExecuteLoop();
-        }
-        
         return;
 
         void ExecuteLoop()
@@ -66,7 +67,7 @@ public partial class Interpreter(ErrorReporter reporter) : Node
             else
             {
                 EmitSignal(SignalName.ExecutionFinished);
-                _isLooping = false;
+                IsLooping = false;
                 _conditional = null;
                 _node = null;
                 _env = null;
@@ -332,8 +333,24 @@ public partial class Interpreter(ErrorReporter reporter) : Node
             lastEvaluated = Evaluate(statement, env);
 
 
-        if (!_isLooping)
-            EmitSignal(SignalName.ExecutionFinished);
+        GD.Print("Checking if looping.");
+
+        if (!IsLooping)
+        {
+            GD.Print("Is not looping");
+            // EmitSignal(SignalName.ExecutionFinished); TODO: Not emitting for some reason - temporary "fix" below
+
+            CodeManager.Instance.FinishedExecuting = true;
+            CodeManager.Instance.Executing = false;
+            CodeManager.Instance.ConsoleWriteLine("\n" + "Program finished with 0 errors.");
+        
+            if (!UiManager.Instance.CodeInterfaceOpen)
+                HudManager.Instance.SendNotification("Program finished with 0 errors");
+        }
+        else
+        {
+            GD.Print("Is looping");
+        }
         
         return lastEvaluated;
     }

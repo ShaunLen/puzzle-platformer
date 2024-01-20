@@ -30,6 +30,14 @@ public partial class FallState : InAirState
         _velocity.Y = Player.Velocity.Y;
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+        
+        if(Player.Velocity.Y == Player.Stats.MaxFallSpeed)
+            Player.EmitDustEffect(true);
+    }
+
     public override void PhysicsProcess(double delta)
     {
         base.PhysicsProcess(delta);

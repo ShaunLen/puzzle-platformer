@@ -1,0 +1,16 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://ct6lluwtb4srr"]
+
+[ext_resource type="Texture2D" uid="uid://yoi5myrwxkwi" path="res://world/tiles/bg_sheet.png" id="1_uiksd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_esc1a"]
+texture = ExtResource("1_uiksd")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+0:1/0/probability = 0.0
+1:1/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/1 = SubResource("TileSetAtlasSource_esc1a")

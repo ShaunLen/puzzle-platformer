@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using PuzzlePlatformer.entities.player;
 using PuzzlePlatformer.objects.boxes.heavy_box;

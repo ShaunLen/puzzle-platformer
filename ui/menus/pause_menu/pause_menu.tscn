@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://brxgucbe5e5hm"]
+[gd_scene load_steps=13 format=3 uid="uid://brxgucbe5e5hm"]
 
 [ext_resource type="Theme" uid="uid://ohx5n1qt52t2" path="res://ui/themes/nord_theme.tres" id="1_iu6sy"]
-[ext_resource type="Script" path="res://ui/menus/PauseMenu.cs" id="1_r6ev0"]
+[ext_resource type="Script" path="res://ui/menus/pause_menu/PauseMenu.cs" id="1_k635v"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="2_18by5"]
+[ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="4_v73fa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tavkl"]
 shader = ExtResource("2_18by5")
@@ -17,6 +18,10 @@ shader_parameter/bloomAmount = 16.0
 shader_parameter/warp = Vector2(64, 24)
 shader_parameter/maskDark = 0.5
 shader_parameter/maskLight = 1.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_qnd38"]
+font = ExtResource("4_v73fa")
+font_size = 28
 
 [sub_resource type="Gradient" id="Gradient_s6hgc"]
 offsets = PackedFloat32Array(0, 0.497608, 1)
@@ -52,7 +57,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_r6ev0")
+script = ExtResource("1_k635v")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_tavkl")
@@ -83,23 +88,26 @@ alignment = 1
 [node name="Title" type="Label" parent="MenuContainer"]
 layout_mode = 2
 theme = ExtResource("1_iu6sy")
-text = "GAME PAUSED"
+text = "PARTICIPANT NOW RESTING"
+label_settings = SubResource("LabelSettings_qnd38")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
 [node name="ResumeButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
+theme_override_fonts/font = ExtResource("4_v73fa")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_s2nyu")
 theme_override_styles/hover = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/focus = SubResource("StyleBoxTexture_jh2tw")
-text = "RESUME"
+text = "RESUME STUDY"
 
 [node name="OptionsButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
+theme_override_fonts/font = ExtResource("4_v73fa")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_s2nyu")
 theme_override_styles/hover = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_jh2tw")
@@ -108,9 +116,10 @@ text = "OPTIONS"
 
 [node name="QuitButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
+theme_override_fonts/font = ExtResource("4_v73fa")
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_s2nyu")
 theme_override_styles/hover = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/focus = SubResource("StyleBoxTexture_jh2tw")
-text = "QUIT GAME"
+text = "ASK TO LEAVE"

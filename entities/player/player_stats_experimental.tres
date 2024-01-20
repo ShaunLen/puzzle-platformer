@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="PlayerStats" load_steps=2 format=3 uid="uid://bgodgdlx1nijq"]
+
+[ext_resource type="Script" path="res://resources/PlayerStats.cs" id="1_bn7by"]
+
+[resource]
+script = ExtResource("1_bn7by")
+Health = 0
+JumpEnabled = true
+DashEnabled = false
+WallJumpEnabled = false
+WalkSpeed = 200
+WalkAcceleration = 210
+WalkDeceleration = 210
+AirSpeed = 180
+AirAcceleration = 210
+AirDeceleration = 210
+MaxFallSpeed = 700
+FastFallSpeed = 20
+JumpHeight = 110
+JumpTimeToApex = 0.32
+JumpTimeToGround = 0.24
+JumpApexBoost = 2.0
+JumpCutMultiplier = 2
+WallSlideSpeed = 10
+FastSlideMultiplier = 2

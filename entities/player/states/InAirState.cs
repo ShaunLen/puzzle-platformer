@@ -15,6 +15,8 @@ public partial class InAirState : BaseState
 
         Player.Velocity = new Vector2(Mathf.MoveToward(Player.Velocity.X, InputManager.GetWalkAxis() * Stats.AirSpeed, (Stats.AirAcceleration * 10) * (float) delta),
             Player.Velocity.Y);
+        
+        StateMachine.SetAnimation(InputManager.GetWalkAxis() < 0 ? "idle_left" : "idle_right");
     }
 
     protected void QueueJump()

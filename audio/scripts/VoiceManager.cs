@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using PuzzlePlatformer.autoloads;
+using PuzzlePlatformer.ui.hud;
 using static PuzzlePlatformer.audio.scripts.VoiceManager;
 
 namespace PuzzlePlatformer.audio.scripts;
@@ -8,7 +9,6 @@ namespace PuzzlePlatformer.audio.scripts;
 public partial class VoiceManager : Node
 {
 	[Signal] public delegate void PlayVoiceLineEventHandler(VoiceLine voiceLine);
-	[Signal] public delegate void ShowSubtitleEventHandler(string subtitle);
 	public static VoiceManager Instance { get; private set; }
 
 	public enum VoiceLineType
@@ -29,13 +29,12 @@ public partial class VoiceManager : Node
 	public override void _Ready()
 	{
 		CallDeferred(nameof(CheckForRestarts));
-		
 		Instance = this;
 	}
 
 	private void CheckForRestarts()
 	{
-		if(GameManager.Instance.LevelRestarts > 0 && GD.RandRange(0, 100) < 40)
+		if(GameManager.Instance.LevelRestarts > 0 && !GameManager.Instance.InIntro && GD.RandRange(0, 100) < 40 && GameManager.Instance.CurrentScene >= GameManager.Scene.LevelOne)
 			PlayRandomVoiceLine(VoiceLineType.LevelRestart);
 	}
 
@@ -43,7 +42,7 @@ public partial class VoiceManager : Node
 	{
 		var randomVoiceLine = voiceLineType.GetRandomLine();
 		EmitSignal(SignalName.PlayVoiceLine, (int) randomVoiceLine);
-		EmitSignal(SignalName.ShowSubtitle, randomVoiceLine.GetSubtitle());
+		HudManager.Instance.AddSubtitle(randomVoiceLine.GetSubtitle(), randomVoiceLine.ToAudioStream().GetLength());
 	}
 }
 
@@ -51,7 +50,6 @@ internal static class VoiceExtensions
 {
 	public static AudioStream ToAudioStream(this VoiceLine voiceLine)
 	{
-		GD.Print("In ToAudioStream");
 		return voiceLine switch
 		{
 			VoiceLine.LevelRestart1 => ResourceLoader.Load("res://audio/voice/level_restart/level_restart_line_1.wav") as AudioStream,

@@ -11,8 +11,9 @@ public partial class LevelManager : Node
 {
     public static LevelManager Instance { get; private set; }
     [Export] public LevelRoot CurrentLevel;
-    [Export] private Player _player;
-    public Vector2 PlayerPosition => _player.Position;
+    [Export] public bool CodelessLevel;
+    [Export] public Player Player;
+    public Vector2 PlayerPosition => Player.Position;
 
     public override void _Ready() => Instance = this;
 

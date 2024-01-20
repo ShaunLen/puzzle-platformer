@@ -18,16 +18,7 @@ public partial class HealthComponent : Node2D
     /* Override Methods */
     public override void _Ready()
     {
-        GetParent().Ready += () =>
-        {
-            if (_initialised)
-                return;
-
-            const string errorMsg = "HealthComponent was not initialised.";
-                
-            GD.PrintErr("HealthComponent was not initialised.");
-            GetTree().Quit();
-        };
+        // GetParent().Ready += CheckForInit; TODO: Why is this not initialised when switching back to a previously visited scene?
     }
 
     /* Public Methods */
@@ -51,5 +42,16 @@ public partial class HealthComponent : Node2D
     public void Kill()
     {
         EmitSignal(SignalName.Died);
+    }
+    
+    /* Private Methods */
+    private void CheckForInit()
+    {
+        GetParent().Ready -= CheckForInit;
+        if (_initialised)
+            return;
+                
+        GD.PrintErr("HealthComponent was not initialised.");
+        GetTree().Quit();
     }
 }

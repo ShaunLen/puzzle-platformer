@@ -29,11 +29,20 @@ public partial class JumpState : InAirState
     public override void Enter()
     {
         base.Enter();
+        Player.EmitDustEffect();
+        StateMachine.PlayAudio(AudioManager.Sound.Jump);
+        // StateMachine.SetAnimation("jump");
         Player.IsJumpQueued = false;
         _velocity.Y = _jumpVelocity;
         
         if(!InputManager.IsActionPressed(InputManager.Action.Jump))
             _velocity.Y /= 2;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        // StateMachine.SetAnimation("fall");
     }
 
     public override void PhysicsProcess(double delta)
@@ -43,7 +52,7 @@ public partial class JumpState : InAirState
         
         _velocity.Y += (float) (_jumpGravity * delta);
         
-        if((InputManager.InputEnabled || false) && Input.IsActionJustReleased(InputManager.Action.Jump.ToInputMapName()))
+        if((InputManager.InputEnabled) && Input.IsActionJustReleased(InputManager.Action.Jump.ToInputMapName()))
             _velocity.Y /= Stats.JumpCutMultiplier;
         
         Player.Velocity = new Vector2(Player.Velocity.X, _velocity.Y);

@@ -1,18 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://brg2kwvgntwcn"]
+[gd_scene load_steps=8 format=3 uid="uid://brg2kwvgntwcn"]
 
 [ext_resource type="Texture2D" uid="uid://coy15egh0chpg" path="res://objects/environment/cctv/cctv_bracket.png" id="1_vu1q8"]
 [ext_resource type="Texture2D" uid="uid://cd1nnfkq86t6" path="res://objects/environment/cctv/cctv_base.png" id="2_m5kx0"]
 [ext_resource type="Script" path="res://objects/environment/cctv/Cctv.cs" id="2_mb4p7"]
 [ext_resource type="Script" path="res://components/HitboxComponent.cs" id="4_ge4ol"]
+[ext_resource type="Texture2D" uid="uid://beftovlukfcrh" path="res://art/light_texture.webp" id="5_bcjf5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rct1x"]
 size = Vector2(16, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3oy1t"]
-size = Vector2(86, 43)
+size = Vector2(28, 19)
 
-[node name="Camera" type="Node2D" node_paths=PackedStringArray("_rigidBody")]
+[node name="CCTV" type="Node2D" node_paths=PackedStringArray("_hitboxComponent", "_rigidBody")]
 script = ExtResource("2_mb4p7")
+_hitboxComponent = NodePath("HitboxComponent")
 _rigidBody = NodePath("RigidBody2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -29,6 +31,15 @@ texture = ExtResource("2_m5kx0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
 position = Vector2(1, 0.5)
 shape = SubResource("RectangleShape2D_rct1x")
+
+[node name="LensLight" type="PointLight2D" parent="RigidBody2D"]
+position = Vector2(10, 1)
+rotation = 3.14159
+color = Color(0.52549, 0.0313726, 0, 1)
+energy = 4.0
+shadow_enabled = true
+texture = ExtResource("5_bcjf5")
+texture_scale = 0.05
 
 [node name="HitboxComponent" type="Area2D" parent="."]
 script = ExtResource("4_ge4ol")

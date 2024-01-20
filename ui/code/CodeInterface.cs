@@ -47,6 +47,7 @@ public partial class CodeInterface : Control
 		_closeButton.Pressed += CloseCode;
 		UiManager.Instance.OpenCodeInterface += OpenCode;
 		UiManager.Instance.CloseCodeInterface += CloseCode;
+		_codeEdit.TextChanged += () => GameManager.Instance.PlayerWrittenCode = _codeEdit.Text;
 	}
 
 	public override void _ExitTree()
@@ -57,10 +58,7 @@ public partial class CodeInterface : Control
 	public override void _Process(double delta)
 	{
 		if (InputManager.IsActionJustPressed(InputManager.Action.RunCode, true))
-		{
-			ConsoleClear();
-			EmitSignal(SignalName.RequestCodeExecute, _codeEdit.Text);
-		}
+			RequestCodeExecution();
 	}
 	
 	/* Public Methods */
@@ -132,6 +130,13 @@ public partial class CodeInterface : Control
 
 	private void RequestCodeExecution()
 	{
+		if (CodeManager.Instance.Executing || CodeManager.Instance.FinishedExecuting)
+		{
+			AudioManager.Instance.PlaySound(AudioManager.Sound.Error);
+			HudManager.Instance.SendNotification("Code already executed!", true);
+			return;
+		}
+		
 		ConsoleClear();
 		EmitSignal(SignalName.RequestCodeExecute, _codeEdit.Text);
 	}
