@@ -97,7 +97,7 @@ public class Parser(ErrorReporter reporter)
         Accept(TokenType.LeftBrace);
         
         while(NotEof() && CurrentToken.Type != TokenType.RightBrace)
-            consequent.Add(ParseExpression());
+            consequent.Add(ParseStatement());
 
         Accept(TokenType.RightBrace);
 
@@ -109,7 +109,7 @@ public class Parser(ErrorReporter reporter)
         Accept(TokenType.LeftBrace);
         
         while(NotEof() && CurrentToken.Type != TokenType.RightBrace)
-            alternate.Add(ParseExpression());
+            alternate.Add(ParseStatement());
 
         Accept(TokenType.RightBrace);
         return new IfStatementNode(startPos, condition, consequent, alternate);
@@ -125,7 +125,7 @@ public class Parser(ErrorReporter reporter)
         Accept(TokenType.LeftBrace);
         
         while(NotEof() && CurrentToken.Type != TokenType.RightBrace)
-            body.Add(ParseExpression());
+            body.Add(ParseStatement());
 
         Accept(TokenType.RightBrace);
 
