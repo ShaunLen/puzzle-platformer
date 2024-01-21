@@ -6,6 +6,8 @@ namespace PuzzlePlatformer.objects.win_button;
 
 public partial class WinButton : Node2D
 {
+	[Signal] public delegate void PressedEventHandler();
+	
 	private AnimationPlayer _animationPlayer;
 	private HitboxComponent _hitbox;
 	private bool _playerNearby;
@@ -30,7 +32,7 @@ public partial class WinButton : Node2D
 
 	public override void _Process(double delta)
 	{
-		if(_playerNearby && InputManager.IsActionJustPressed(InputManager.Action.Interact))
-			GameManager.Instance.ChangeScene(GameManager.Scene.MainMenu);
+		if (_playerNearby && InputManager.IsActionJustPressed(InputManager.Action.Interact))
+			EmitSignal(SignalName.Pressed);
 	}
 }

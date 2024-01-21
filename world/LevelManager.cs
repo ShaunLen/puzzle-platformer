@@ -11,9 +11,11 @@ public partial class LevelManager : Node
 {
     public static LevelManager Instance { get; private set; }
     [Export] public LevelRoot CurrentLevel;
+    [Export] public GameManager.Scene NextLevel;
     [Export] public bool CodelessLevel;
     [Export] public Player Player;
     public Vector2 PlayerPosition => Player.Position;
+    public ProgramNode Program;
 
     public override void _Ready() => Instance = this;
 
@@ -25,7 +27,8 @@ public partial class LevelManager : Node
 
     public bool CheckRequirementsMet(ProgramNode program)
     {
-        return CurrentLevel.Requirements.All(req => req.RequirementMet(program));
+        Program = program;
+        return !CurrentLevel.Requirements.Any(req => !req.RequirementMet(program) && req.Required);
     }
 
     private void HighlightInteractables(double delta)

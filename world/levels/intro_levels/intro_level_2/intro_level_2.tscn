@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dboas74ihf843"]
+[gd_scene load_steps=38 format=3 uid="uid://dboas74ihf843"]
 
 [ext_resource type="Script" path="res://world/levels/intro_levels/intro_level_2/IntroLevelTwo.cs" id="1_s6li5"]
 [ext_resource type="Script" path="res://world/LevelManager.cs" id="2_inqut"]
@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://3mq80saqtvlt" path="res://objects/interactable/conveyor/conveyor.tscn" id="20_jea22"]
 [ext_resource type="PackedScene" uid="uid://cvvbilu5h10ey" path="res://objects/environment/shutter/shutter.tscn" id="23_7i8to"]
 [ext_resource type="Texture2D" uid="uid://bva4shw055d0n" path="res://ui/key_hint/keys/key_e.png" id="24_6qpx8"]
-[ext_resource type="PackedScene" uid="uid://dxxj24m0o8teg" path="res://ui/report/report.tscn" id="24_8o0na"]
 [ext_resource type="PackedScene" uid="uid://s5mvpsxjln4y" path="res://ui/key_hint/key_hint.tscn" id="25_0f24c"]
 [ext_resource type="Texture2D" uid="uid://ct41oefawt8nr" path="res://ui/key_hint/keys/key_r.png" id="26_d2tpt"]
 [ext_resource type="PackedScene" uid="uid://d0vpf4nmt84df" path="res://objects/environment/signs/small_sign/small_sign.tscn" id="26_jpsdc"]
@@ -268,8 +267,6 @@ visible = false
 
 [node name="LevelRestartTransition" parent="UI" instance=ExtResource("12_pu8s5")]
 visible = false
-
-[node name="Report" parent="UI" instance=ExtResource("24_8o0na")]
 
 [node name="Player" parent="." instance=ExtResource("15_o1t5s")]
 position = Vector2(160, -88)

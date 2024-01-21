@@ -58,7 +58,6 @@ public static class NativeFunctions
             }
         }
         
-        GD.Print(output);
         CodeManager.Instance.ConsoleWriteLine(output.ToString());
 
         return new NullValue();

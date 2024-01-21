@@ -13,6 +13,7 @@ public partial class Guide : Control
 	private RichTextLabel _objectDesc;
 	private Label _rightPaneLabel;
 	private VBoxContainer _requirementsContainer;
+	private VBoxContainer _goalsContainer;
 	private VBoxContainer _propertiesContainer;
 	private VBoxContainer _methodsContainer;
 	private VBoxContainer _objectsContainer;
@@ -43,6 +44,7 @@ public partial class Guide : Control
 		_objectDesc = GetNode<RichTextLabel>("NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/MarginContainer/ObjectDesc");
 		_rightPaneLabel = GetNode<Label>("NinePatchRect/RightPane/RightPaneHeader/RightPaneHeaderLabel");
 		_requirementsContainer = GetNode<VBoxContainer>("NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer/RequirementsContainer");
+		_goalsContainer = GetNode<VBoxContainer>("NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer/GoalsContainer");
 		_propertiesContainer = GetNode<VBoxContainer>("NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/PropertiesContainer");
 		_methodsContainer = GetNode<VBoxContainer>("NinePatchRect/RightPane/TabContainer/ObjectOverview/ObjectOverviewContainer/MethodsContainer");
 		_objectsContainer = GetNode<VBoxContainer>("NinePatchRect/LeftPane/ObjectsPanel/ObjectsScrollContainer/ObjectsContainer");
@@ -107,7 +109,11 @@ public partial class Guide : Control
 		{
 			var instance = _requirement.Instantiate();
 			instance.GetNode<RichTextLabel>("RequirementDesc").Text = "[center]" + req.Desc;
-			_requirementsContainer.AddChild(instance);
+			
+			if(req.Required)
+				_requirementsContainer.AddChild(instance);
+			else
+				_goalsContainer.AddChild(instance);
 		}
 
 		foreach (var node in GetTree().GetNodesInGroup("Interactable"))

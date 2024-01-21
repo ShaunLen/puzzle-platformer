@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -54,7 +55,7 @@ public partial class CodeManager : Node
 
     public void SetCode(string code)
     {
-        _codeInterface.SetCode(GameManager.Instance.PlayerWrittenCode == ""
+        _codeInterface.SetCode(string.IsNullOrWhiteSpace(GameManager.Instance.PlayerWrittenCode)
             ? code
             : GameManager.Instance.PlayerWrittenCode);
     }

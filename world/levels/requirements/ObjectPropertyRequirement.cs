@@ -8,10 +8,11 @@ namespace PuzzlePlatformer.world.levels.requirements;
 public partial class ObjectPropertyRequirement : Requirement
 {
     public override sealed string Desc { get; set; }
+    public override bool Required { get; set; }
     private string _object, _property;
     private bool _isMethod;
 
-    public ObjectPropertyRequirement(string obj, string property, bool isMethod = false)
+    public ObjectPropertyRequirement(string obj, string property, bool required, bool isMethod = false)
     {
         if(isMethod)   
             Desc = "Call the '" + property + "()' method of the '" + obj + "' object.";
@@ -20,6 +21,7 @@ public partial class ObjectPropertyRequirement : Requirement
         
         _object = obj;
         _property = property;
+        Required = required;
         _isMethod = isMethod;
     }
 
@@ -33,8 +35,15 @@ public partial class ObjectPropertyRequirement : Requirement
             {
                 case NodeType.IfStatementNode:
                 {
-                    var memberExprs = GetMemberExpressions(stmt as IfStatementNode);
+                    var memberExprs = GetMemberExpressionsIfStatement(stmt as IfStatementNode);
+                    if (memberExprs.Any(MemberExpressionMatch))
+                        return true;
 
+                    continue;
+                }
+                case NodeType.WhileStatementNode:
+                {
+                    var memberExprs = GetMemberExpressionsWhileStatement(stmt as WhileStatementNode);
                     if (memberExprs.Any(MemberExpressionMatch))
                         return true;
 
@@ -71,7 +80,7 @@ public partial class ObjectPropertyRequirement : Requirement
         return false;
     }
 
-    private List<MemberExpressionNode> GetMemberExpressions(IfStatementNode ifStmt)
+    private List<MemberExpressionNode> GetMemberExpressionsIfStatement(IfStatementNode ifStmt)
     {
         var memberExpressions = new List<MemberExpressionNode>();
         
@@ -92,13 +101,18 @@ public partial class ObjectPropertyRequirement : Requirement
             }
         }
         
-        foreach (var stmt in ifStmt.Consequent)
+        var statements = ifStmt.Consequent.Concat(ifStmt.Alternate);
+        
+        foreach (var stmt in statements)
         {
             switch (stmt.Type)
             {
+                case NodeType.WhileStatementNode:
+                    memberExpressions.AddRange(GetMemberExpressionsWhileStatement(stmt as WhileStatementNode));
+                    break;
+                
                 case NodeType.IfStatementNode:
-                    var memberExprs = GetMemberExpressions(stmt as IfStatementNode);
-                    memberExpressions.AddRange(memberExprs);
+                    memberExpressions.AddRange(GetMemberExpressionsIfStatement(stmt as IfStatementNode));
                     break;
 
                 case NodeType.MemberExpressionNode:
@@ -111,20 +125,47 @@ public partial class ObjectPropertyRequirement : Requirement
                     break;
             }
         }
+
+        return memberExpressions;
+    }
+    
+    private List<MemberExpressionNode> GetMemberExpressionsWhileStatement(WhileStatementNode whileStmt)
+    {
+        var memberExpressions = new List<MemberExpressionNode>();
         
-        foreach (var stmt in ifStmt.Alternate)
+        switch (whileStmt.Condition.Type)
+        {
+            case NodeType.MemberExpressionNode:
+                memberExpressions.Add(whileStmt.Condition as MemberExpressionNode);
+                break;
+            
+            case NodeType.CallExpressionNode:
+            {
+                var callExpr = whileStmt.Condition as CallExpressionNode;
+                
+                if(callExpr!.Caller.Type == NodeType.MemberExpressionNode)
+                    memberExpressions.Add(callExpr.Caller as MemberExpressionNode);
+
+                break;
+            }
+        }
+        
+        foreach (var stmt in whileStmt.Body)
         {
             switch (stmt.Type)
             {
+                case NodeType.WhileStatementNode:
+                    memberExpressions.AddRange(GetMemberExpressionsWhileStatement(stmt as WhileStatementNode));
+                    break;
+                
                 case NodeType.IfStatementNode:
-                    var memberExprs = GetMemberExpressions(stmt as IfStatementNode);
-                    memberExpressions.AddRange(memberExprs);
+                    memberExpressions.AddRange(GetMemberExpressionsIfStatement(stmt as IfStatementNode));
                     break;
 
                 case NodeType.MemberExpressionNode:
                     memberExpressions.Add(stmt as MemberExpressionNode);
                     break;
-                
+
                 case NodeType.CallExpressionNode:
                     var callExpr = stmt as CallExpressionNode;
                     memberExpressions.Add(callExpr!.Caller as MemberExpressionNode);

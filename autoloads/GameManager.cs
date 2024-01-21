@@ -82,6 +82,7 @@ public partial class GameManager : Node
         InMenu = scene == Scene.MainMenu;
         InIntro = scene < Scene.LevelOne;
         CanRestart = scene > Scene.IntroLevelOne;
+        LevelRestarts = 0;
     }
 
     public void ReloadScene()

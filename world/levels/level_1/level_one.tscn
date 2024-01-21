@@ -82,12 +82,10 @@ Conveyor.SetSpeed(speed);
 if(Conveyor.IsMoving)
 {
 	Conveyor.Stop();
-	Print(\"Stopped conveyor.\");
 }
 else
 {
 	Conveyor.Start();
-	Print(\"Started conveyor\");
 }
 
 while(RedButton.IsPressed == false)
@@ -162,7 +160,7 @@ position = Vector2(385, -121)
 
 [node name="Camera" type="Camera2D" parent="." groups=["Camera"]]
 process_mode = 1
-position = Vector2(399, -88)
+position = Vector2(390, -88)
 process_callback = 0
 limit_left = 0
 limit_top = -704
@@ -174,7 +172,7 @@ editor_draw_limits = true
 script = ExtResource("4_ip011")
 
 [node name="Player" parent="." instance=ExtResource("5_7qey8")]
-position = Vector2(399, -88)
+position = Vector2(390, -88)
 _respawnDelay = 1.0
 
 [node name="KeyHintGuide" parent="Player" instance=ExtResource("30_4fb47")]
@@ -258,8 +256,9 @@ visible = false
 [node name="Guide" parent="UI" groups=["Guide"] instance=ExtResource("11_dr7la")]
 visible = false
 
-[node name="Report" parent="UI" instance=ExtResource("17_g0mx3")]
+[node name="Report" parent="UI" node_paths=PackedStringArray("_winButton") instance=ExtResource("17_g0mx3")]
 visible = false
+_winButton = NodePath("../../WinButton")
 
 [node name="LevelRestartTransition" parent="UI" instance=ExtResource("19_b1kf7")]
 visible = false

@@ -85,6 +85,7 @@ theme_override_font_sizes/font_size = 15
 text = "Objects"
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="VSeparator" type="VSeparator" parent="NinePatchRect/LeftPane/ObjectsPanel"]
 layout_mode = 0
@@ -141,6 +142,7 @@ theme_override_font_sizes/font_size = 15
 text = "Links"
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="LinksContainer" type="VBoxContainer" parent="NinePatchRect/LeftPane/LinksPanel"]
 custom_minimum_size = Vector2(178, 0)
@@ -194,6 +196,7 @@ theme_override_font_sizes/font_size = 15
 text = "Title"
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="TabContainer" type="TabContainer" parent="NinePatchRect/RightPane"]
 layout_mode = 0
@@ -241,8 +244,35 @@ theme_override_font_sizes/font_size = 15
 text = "Requirements"
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="RequirementsContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="GoalsHeader" type="NinePatchRect" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer"]
+custom_minimum_size = Vector2(0, 33)
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("2_mbxms")
+
+[node name="GoalsHeaderLabel" type="Label" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer/GoalsHeader"]
+layout_mode = 0
+offset_right = 468.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.6, 0.713726, 0.733333, 1)
+theme_override_fonts/font = ExtResource("3_dil0u")
+theme_override_font_sizes/font_size = 15
+text = "Goals"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="GoalsContainer" type="VBoxContainer" parent="NinePatchRect/RightPane/TabContainer/LevelOverview/LevelOverviewContainer"]
 layout_mode = 2
 
 [node name="ObjectOverview" type="Control" parent="NinePatchRect/RightPane/TabContainer"]

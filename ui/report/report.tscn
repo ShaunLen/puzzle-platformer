@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxxj24m0o8teg"]
+[gd_scene load_steps=8 format=3 uid="uid://dxxj24m0o8teg"]
 
 [ext_resource type="Texture2D" uid="uid://qpy8erk73kw0" path="res://ui/report/report_background.png" id="1_glvu4"]
+[ext_resource type="Script" path="res://ui/report/Report.cs" id="1_v3t47"]
 [ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="2_70jmn"]
+[ext_resource type="Texture2D" uid="uid://drsgvfbuav5su" path="res://ui/key_hint/keys/key_c.png" id="4_nd5hv"]
+[ext_resource type="Texture2D" uid="uid://bva4shw055d0n" path="res://ui/key_hint/keys/key_e.png" id="4_pxq8i"]
+[ext_resource type="Texture2D" uid="uid://ct41oefawt8nr" path="res://ui/key_hint/keys/key_r.png" id="5_7oi2j"]
 
-[node name="Report" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya3rg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 5
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[node name="Report" type="Control" node_paths=PackedStringArray("_reportHeaderLabel", "_dividerOne", "_trialInformationLabel", "_dividerTwo", "_resultsContainer", "_dividerThree", "_gradeLabel", "_dividerFour", "_keyHintContainer", "_blackBackground", "_skipHint")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,8 +21,30 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_v3t47")
+_reportHeaderLabel = NodePath("VBoxContainer/Title")
+_dividerOne = NodePath("VBoxContainer/Divider")
+_trialInformationLabel = NodePath("VBoxContainer/TrialInformation")
+_dividerTwo = NodePath("VBoxContainer/Divider2")
+_resultsContainer = NodePath("VBoxContainer/ResultsContainer")
+_dividerThree = NodePath("VBoxContainer/Divider3")
+_gradeLabel = NodePath("VBoxContainer/Grade")
+_dividerFour = NodePath("VBoxContainer/Divider4")
+_keyHintContainer = NodePath("VBoxContainer/KeyHintContainer")
+_blackBackground = NodePath("BlackBackground")
+_skipHint = NodePath("KeyHintSkip")
+
+[node name="BlackBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.921569)
 
 [node name="PaperBehind" type="NinePatchRect" parent="."]
+visible = false
 custom_minimum_size = Vector2(0.47, 0)
 layout_mode = 1
 offset_left = 17.0
@@ -28,6 +59,7 @@ patch_margin_right = 6
 patch_margin_bottom = 6
 
 [node name="Background" type="NinePatchRect" parent="."]
+visible = false
 custom_minimum_size = Vector2(0.47, 0)
 layout_mode = 1
 offset_left = 20.0
@@ -41,59 +73,74 @@ patch_margin_top = 6
 patch_margin_right = 6
 patch_margin_bottom = 6
 
-[node name="Grade" type="Label" parent="."]
-layout_mode = 2
-offset_left = 29.0
-offset_top = 419.0
-offset_right = 323.0
-offset_bottom = 469.0
-theme_override_colors/font_color = Color(0.611765, 0.0392157, 0.0431373, 1)
+[node name="KeyHintSkip" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -46.5
+offset_top = -60.0
+offset_right = 46.5
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_fonts/font = ExtResource("2_70jmn")
-theme_override_font_sizes/font_size = 46
-text = "Grade: B"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_ya3rg")
+button_mask = 0
+text = " SKIP"
+icon = ExtResource("4_nd5hv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 64.0
-offset_right = 320.0
-offset_bottom = 478.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -147.0
+offset_top = -115.0
+offset_right = 147.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Title" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.0392157, 0.0431373, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_70jmn")
 theme_override_font_sizes/font_size = 24
-text = "Testing Report"
+text = "NExus Trial Report"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
 [node name="Divider" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.0392157, 0.0431373, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_70jmn")
 theme_override_font_sizes/font_size = 13
 text = "------------------------------------------"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TestInformation" type="Label" parent="VBoxContainer"]
+[node name="TrialInformation" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.0392157, 0.0431373, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_70jmn")
 theme_override_font_sizes/font_size = 15
 text = "Test Subject: #95742 (SECTOR G2)
-Test ID: While While While...
+Trial ID: Example
 Date: 08/01/2024"
 horizontal_alignment = 1
 vertical_alignment = 1
+visible_ratio = -0.0149254
 
 [node name="Divider2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.0392157, 0.0431373, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_70jmn")
 theme_override_font_sizes/font_size = 13
 text = "------------------------------------------"
@@ -105,42 +152,58 @@ layout_mode = 2
 
 [node name="ResultsHeader" type="Label" parent="VBoxContainer/ResultsContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.0392157, 0.0431373, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_70jmn")
 theme_override_font_sizes/font_size = 17
-text = "Test Results:"
+text = "Trial Results:"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Result1" type="Label" parent="VBoxContainer/ResultsContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.454902, 0.0431373, 1)
-theme_override_fonts/font = ExtResource("2_70jmn")
-theme_override_font_sizes/font_size = 13
-text = "Use Print() function."
-horizontal_alignment = 1
-
-[node name="Result2" type="Label" parent="VBoxContainer/ResultsContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.454902, 0.0431373, 1)
-theme_override_fonts/font = ExtResource("2_70jmn")
-theme_override_font_sizes/font_size = 13
-text = "Access \"IsPressed\" property of RedButton."
-horizontal_alignment = 1
-
-[node name="Result3" type="Label" parent="VBoxContainer/ResultsContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.705882, 0, 0.12549, 1)
-theme_override_fonts/font = ExtResource("2_70jmn")
-theme_override_font_sizes/font_size = 13
-text = "Declare a const/var."
-horizontal_alignment = 1
-
 [node name="Divider3" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0196078, 0.0392157, 0.0431373, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_70jmn")
 theme_override_font_sizes/font_size = 13
 text = "------------------------------------------"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Grade" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.611765, 0.0392157, 0.0431373, 1)
+theme_override_fonts/font = ExtResource("2_70jmn")
+theme_override_font_sizes/font_size = 46
+text = "Grade: B"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Divider4" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_70jmn")
+theme_override_font_sizes/font_size = 13
+text = "------------------------------------------"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyHintContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="KeyHintContinue" type="Button" parent="VBoxContainer/KeyHintContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_70jmn")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_ya3rg")
+button_mask = 0
+text = " CONTINUE   "
+icon = ExtResource("4_pxq8i")
+
+[node name="KeyHintRestart" type="Button" parent="VBoxContainer/KeyHintContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_70jmn")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_ya3rg")
+button_mask = 0
+text = " REATTEMPT"
+icon = ExtResource("5_7oi2j")

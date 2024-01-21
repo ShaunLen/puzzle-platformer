@@ -10,10 +10,10 @@ public partial class LevelOne : LevelRoot
 	{
 		Requirements = new List<Requirement>
 		{
-			// new NodeRequirement(NodeType.IfStatementNode),
-			// new ObjectPropertyRequirement("RedButton", "IsPressed"),
-			// new ObjectPropertyRequirement("BlueDoor", "Open", true),
-			// new NativeFuncRequirement("Print")
+			// new NodeRequirement(NodeType.WhileStatementNode, true),
+			// new ObjectPropertyRequirement("RedButton", "IsPressed", true),
+			// new ObjectPropertyRequirement("BlueDoor", "Open", true, true),
+			new NativeFuncRequirement("Print", false)
 		};
 	}
 }

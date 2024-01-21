@@ -6,14 +6,16 @@ namespace PuzzlePlatformer.world.levels.requirements;
 
 public partial class NativeFuncRequirement : Requirement
 {
-    public override sealed string Desc { get; set; }
+    public sealed override string Desc { get; set; }
+    public sealed override bool Required { get; set; }
 
     private string _methodName;
 
-    public NativeFuncRequirement(string methodName)
+    public NativeFuncRequirement(string methodName, bool required)
     {
         Desc = "Call the native function '" + methodName + "()'.";
         _methodName = methodName;
+        Required = required;
     }
 
     public override bool RequirementMet(ProgramNode program)
@@ -24,8 +26,14 @@ public partial class NativeFuncRequirement : Requirement
             {
                 case NodeType.IfStatementNode:
                 {
-                    var callExpressions = GetCallExpressions(stmt as IfStatementNode);
-
+                    var callExpressions = GetCallExpressionsIfStatement(stmt as IfStatementNode);
+                    if (callExpressions.Any(NativeFuncMatch))
+                        return true;
+                } break;
+                
+                case NodeType.WhileStatementNode:
+                {
+                    var callExpressions = GetCallExpressionsWhileStatement(stmt as WhileStatementNode);
                     if (callExpressions.Any(NativeFuncMatch))
                         return true;
                 } break;
@@ -43,7 +51,7 @@ public partial class NativeFuncRequirement : Requirement
         return false;
     }
 
-    private List<CallExpressionNode> GetCallExpressions(IfStatementNode ifStmt)
+    private List<CallExpressionNode> GetCallExpressionsIfStatement(IfStatementNode ifStmt)
     {
         var callExpressions = new List<CallExpressionNode>();
 
@@ -57,8 +65,39 @@ public partial class NativeFuncRequirement : Requirement
             switch (stmt.Type)
             {
                 case NodeType.IfStatementNode:
-                    var callExprs = GetCallExpressions(stmt as IfStatementNode);
-                    callExpressions.AddRange(callExprs);
+                    callExpressions.AddRange(GetCallExpressionsIfStatement(stmt as IfStatementNode));
+                    break;
+                
+                case NodeType.WhileStatementNode:
+                    callExpressions.AddRange(GetCallExpressionsWhileStatement(stmt as WhileStatementNode));
+                    break;
+                
+                case NodeType.CallExpressionNode:
+                    callExpressions.Add(stmt as CallExpressionNode);
+                    break;
+            }
+        }
+
+        return callExpressions;
+    }
+    
+    private List<CallExpressionNode> GetCallExpressionsWhileStatement(WhileStatementNode whileStmt)
+    {
+        var callExpressions = new List<CallExpressionNode>();
+
+        if(whileStmt.Condition.Type == NodeType.CallExpressionNode)
+            callExpressions.Add(whileStmt.Condition as CallExpressionNode);
+
+        foreach (var stmt in whileStmt.Body)
+        {
+            switch (stmt.Type)
+            {
+                case NodeType.IfStatementNode:
+                    callExpressions.AddRange(GetCallExpressionsIfStatement(stmt as IfStatementNode));
+                    break;
+                
+                case NodeType.WhileStatementNode:
+                    callExpressions.AddRange(GetCallExpressionsWhileStatement(stmt as WhileStatementNode));
                     break;
                 
                 case NodeType.CallExpressionNode:
