@@ -139,13 +139,14 @@ public partial class Interpreter(ErrorReporter reporter) : Node
     private IRuntimeValue EvaluateIfStatement(IfStatementNode node, Env env)
     {
         var conditional = Evaluate(node.Condition, env);
+        var localEnv = new Env(env);
 
         if (IsTrue(conditional))
             foreach (var statement in node.Consequent)
-                Evaluate(statement, env);
+                Evaluate(statement, localEnv);
         else
             foreach (var statement in node.Alternate)
-                Evaluate(statement, env);
+                Evaluate(statement, localEnv);
 
         return new NullValue();
     }
@@ -153,11 +154,12 @@ public partial class Interpreter(ErrorReporter reporter) : Node
     private IRuntimeValue EvaluateWhileStatement(WhileStatementNode node, Env env)
     {
         var conditional = Evaluate(node.Condition, env);
+        var localEnv = new Env(env);
 
         EmitSignal(SignalName.StartLoop);
         _conditional = conditional;
         _node = node;
-        _env = env;
+        _env = localEnv;
     
         return new NullValue();
     }

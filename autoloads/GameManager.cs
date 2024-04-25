@@ -13,6 +13,7 @@ public partial class GameManager : Node
     public enum Scene
     {
         MainMenu,
+        TrialSelect,
         IntroLevelOne,
         IntroLevelTwo,
         LevelOne,
@@ -79,7 +80,7 @@ public partial class GameManager : Node
         
         var packedScene = GD.Load<PackedScene>(scene.ToPath());
         GetTree().ChangeSceneToPacked(packedScene);
-        InMenu = scene == Scene.MainMenu;
+        InMenu = scene < Scene.IntroLevelOne;
         InIntro = scene < Scene.LevelOne;
         CanRestart = scene > Scene.IntroLevelOne;
         LevelRestarts = 0;
@@ -100,6 +101,7 @@ internal static class GameManagerExtensions
         return scene switch
         {
             GameManager.Scene.MainMenu => "res://ui/menus/main_menu/main_menu.tscn",
+            GameManager.Scene.TrialSelect => "res://ui/menus/trial_select/trial_select.tscn",
             GameManager.Scene.IntroLevelOne => "res://world/levels/intro_levels/intro_level_1/intro_level_1.tscn",
             GameManager.Scene.IntroLevelTwo => "res://world/levels/intro_levels/intro_level_2/intro_level_2.tscn",
             GameManager.Scene.LevelOne => "res://world/levels/level_1/level_one.tscn",

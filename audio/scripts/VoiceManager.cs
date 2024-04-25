@@ -40,9 +40,9 @@ public partial class VoiceManager : Node
 
 	public void PlayRandomVoiceLine(VoiceLineType voiceLineType)
 	{
-		var randomVoiceLine = voiceLineType.GetRandomLine();
-		EmitSignal(SignalName.PlayVoiceLine, (int) randomVoiceLine);
-		HudManager.Instance.AddSubtitle(randomVoiceLine.GetSubtitle(), randomVoiceLine.ToAudioStream().GetLength());
+		// var randomVoiceLine = voiceLineType.GetRandomLine();
+		// EmitSignal(SignalName.PlayVoiceLine, (int) randomVoiceLine);
+		// HudManager.Instance.AddSubtitle(randomVoiceLine.GetSubtitle(), randomVoiceLine.ToAudioStream().GetLength());
 	}
 }
 

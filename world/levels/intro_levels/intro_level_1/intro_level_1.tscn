@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bfy1i8nrs24y"]
+[gd_scene load_steps=29 format=3 uid="uid://bfy1i8nrs24y"]
 
 [ext_resource type="Script" path="res://world/levels/intro_levels/intro_level_1/IntroLevelOne.cs" id="1_kqqww"]
 [ext_resource type="Script" path="res://world/LevelManager.cs" id="2_ies43"]
@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://bav8cbefjak6i" path="res://audio/ambience/factory_ambience_1.wav" id="4_hjd08"]
 [ext_resource type="Script" path="res://audio/scripts/GlobalAudioPlayer.cs" id="4_uy0fm"]
 [ext_resource type="Script" path="res://audio/scripts/VoicePlayer.cs" id="5_8gctl"]
-[ext_resource type="AudioStream" uid="uid://vynyivf7n7fy" path="res://audio/voice/intro_levels/good_morning.wav" id="5_p4k8m"]
 [ext_resource type="Texture2D" uid="uid://yoi5myrwxkwi" path="res://world/tiles/bg_sheet.png" id="7_pnyk1"]
 [ext_resource type="TileSet" uid="uid://bxxc5cggpvo7n" path="res://world/tilesets/ground_tile_set.tres" id="8_wqa2h"]
 [ext_resource type="Script" path="res://addons/camera_2d_plus/Camera2DPlus.cs" id="9_hp3gm"]
@@ -81,7 +80,6 @@ volume_db = -40.0
 script = ExtResource("4_uy0fm")
 
 [node name="VoicePlayer" type="AudioStreamPlayer" parent="." groups=["AudioPlayer"]]
-stream = ExtResource("5_p4k8m")
 volume_db = -12.0
 pitch_scale = 0.95
 autoplay = true
@@ -192,7 +190,7 @@ _floatComponent = NodePath("../KeyHintWalk/FloatComponent")
 [node name="Shutter" parent="." instance=ExtResource("20_h22wc")]
 position = Vector2(1760, -336)
 _enabled = true
-_scene = 2
+_scene = 3
 _text = "Proceed"
 _keyHintIcon = ExtResource("21_g61mp")
 

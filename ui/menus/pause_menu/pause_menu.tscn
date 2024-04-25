@@ -88,7 +88,7 @@ alignment = 1
 [node name="Title" type="Label" parent="MenuContainer"]
 layout_mode = 2
 theme = ExtResource("1_iu6sy")
-text = "PARTICIPANT NOW RESTING"
+text = "GAME PAUSED"
 label_settings = SubResource("LabelSettings_qnd38")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -102,17 +102,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_s2nyu")
 theme_override_styles/hover = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/focus = SubResource("StyleBoxTexture_jh2tw")
-text = "RESUME STUDY"
-
-[node name="OptionsButton" type="Button" parent="MenuContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_v73fa")
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxTexture_s2nyu")
-theme_override_styles/hover = SubResource("StyleBoxTexture_jh2tw")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_jh2tw")
-theme_override_styles/focus = SubResource("StyleBoxTexture_jh2tw")
-text = "OPTIONS"
+text = "RESUME GAME"
 
 [node name="QuitButton" type="Button" parent="MenuContainer"]
 layout_mode = 2
@@ -122,4 +112,4 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_s2nyu")
 theme_override_styles/hover = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_jh2tw")
 theme_override_styles/focus = SubResource("StyleBoxTexture_jh2tw")
-text = "ASK TO LEAVE"
+text = "EXIT TO MENU"

@@ -97,7 +97,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("4_x5cqh")
 theme_override_font_sizes/font_size = 30
-text = "A PROGRAMMING PUZZLE PLATFORMER"
+text = "PLAYTESTING DEMO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -125,21 +125,21 @@ _lookAtOverride = NodePath("../Player")
 [node name="ShutterNewGame" parent="Shutters" instance=ExtResource("6_i5ko5")]
 position = Vector2(256, -112)
 _enabled = true
-_scene = 1
-_text = "New Game"
+_scene = 2
+_text = "Movement"
 _keyHintIcon = ExtResource("7_hgi5w")
 
 [node name="ShutterLevelSelect" parent="Shutters" instance=ExtResource("6_i5ko5")]
 position = Vector2(416, -112)
 _enabled = true
-_scene = 2
-_text = "Trials"
+_scene = 4
+_text = "Coding"
 _keyHintIcon = ExtResource("7_hgi5w")
 
 [node name="ShutterQuitGame" parent="Shutters" instance=ExtResource("6_i5ko5")]
 position = Vector2(576, -112)
 _enabled = true
-_scene = 3
+_scene = 5
 _text = "Exit"
 _keyHintIcon = ExtResource("7_hgi5w")
 

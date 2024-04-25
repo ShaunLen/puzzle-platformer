@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bwwyslacygcax"]
+[gd_scene load_steps=33 format=3 uid="uid://bwwyslacygcax"]
 
 [ext_resource type="Script" path="res://world/levels/level_1/LevelOne.cs" id="1_6sqrh"]
 [ext_resource type="Script" path="res://ui/code/CodeManager.cs" id="2_lvpum"]
@@ -24,15 +24,11 @@
 [ext_resource type="PackedScene" uid="uid://0klwmy33ndxl" path="res://objects/interactable/fabricator/fabricator.tscn" id="17_5hgik"]
 [ext_resource type="PackedScene" uid="uid://dxxj24m0o8teg" path="res://ui/report/report.tscn" id="17_g0mx3"]
 [ext_resource type="PackedScene" uid="uid://brg2kwvgntwcn" path="res://objects/environment/cctv/cctv.tscn" id="17_pcc5t"]
-[ext_resource type="Texture2D" uid="uid://b4h0h3it5q2wd" path="res://ui/key_hint/keys/key_f2.png" id="18_qximl"]
 [ext_resource type="PackedScene" uid="uid://cvqvpuh22w81v" path="res://ui/transitions/reload_level/reload_level.tscn" id="19_b1kf7"]
 [ext_resource type="PackedScene" uid="uid://dcy58wwm3k0qx" path="res://objects/environment/window/window.tscn" id="19_hwk3o"]
 [ext_resource type="PackedScene" uid="uid://d0vpf4nmt84df" path="res://objects/environment/signs/small_sign/small_sign.tscn" id="20_xrfpc"]
 [ext_resource type="PackedScene" uid="uid://dl6xd6677eo42" path="res://addons/camera_2d_plus/camera_focus_point.tscn" id="26_1xbyw"]
 [ext_resource type="PackedScene" uid="uid://brxgucbe5e5hm" path="res://ui/menus/pause_menu/pause_menu.tscn" id="27_3balw"]
-[ext_resource type="PackedScene" uid="uid://s5mvpsxjln4y" path="res://ui/key_hint/key_hint.tscn" id="30_4fb47"]
-[ext_resource type="Texture2D" uid="uid://b765lup1sfjl5" path="res://ui/key_hint/keys/key_f1.png" id="31_2ly65"]
-[ext_resource type="Texture2D" uid="uid://k21a57mhk153" path="res://ui/key_hint/keys/key_f5.png" id="31_tg2c6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yjugm"]
 texture = ExtResource("12_sb3yt")
@@ -67,34 +63,12 @@ radius = 69.029
 [node name="LevelOne" type="Node2D" node_paths=PackedStringArray("_respawnPosition", "GroundTilemap", "BackgroundTilemap") groups=["Level"]]
 script = ExtResource("1_6sqrh")
 LevelName = "Trial X - While It Fabricates"
-LevelDesc = "Participant must pass through BlueDoor to complete the trial."
+LevelDesc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 InitialCode = "# This is a comment.
 # Comments are denoted with a '#' at the start of a line.
 # They will continue until the end of the line.
 
-const speed = 150;
-
-Fabricator.Fabricate();
-Fabricator.Open();
-
-Conveyor.SetSpeed(speed);
-
-if(Conveyor.IsMoving)
-{
-	Conveyor.Stop();
-}
-else
-{
-	Conveyor.Start();
-}
-
-while(RedButton.IsPressed == false)
-{
-	if(RedButton.IsPressed)
-	{
-		BlueDoor.Open();
-	}
-}"
+"
 DefaultZoom = 1.2
 _respawnPosition = NodePath("RespawnPos")
 GroundTilemap = NodePath("Tilemaps/GroundTilemap")
@@ -174,33 +148,6 @@ script = ExtResource("4_ip011")
 [node name="Player" parent="." instance=ExtResource("5_7qey8")]
 position = Vector2(390, -88)
 _respawnDelay = 1.0
-
-[node name="KeyHintGuide" parent="Player" instance=ExtResource("30_4fb47")]
-offset_left = -26.0
-offset_top = -38.0
-offset_right = 152.0
-offset_bottom = -5.0
-scale = Vector2(0.3, 0.3)
-text = " OPEN GUIDE"
-icon = ExtResource("31_tg2c6")
-
-[node name="KeyHintOpenCode" parent="Player" instance=ExtResource("30_4fb47")]
-offset_left = -24.0
-offset_top = -38.0
-offset_right = 141.0
-offset_bottom = -5.0
-scale = Vector2(0.3, 0.3)
-text = " OPEN CODE"
-icon = ExtResource("31_2ly65")
-
-[node name="KeyHintRunCode" parent="Player" instance=ExtResource("30_4fb47")]
-offset_left = -22.0
-offset_top = -38.0
-offset_right = 130.0
-offset_bottom = -5.0
-scale = Vector2(0.3, 0.3)
-text = "RUN CODE"
-icon = ExtResource("18_qximl")
 
 [node name="WinButton" parent="." instance=ExtResource("14_p6y2l")]
 position = Vector2(928, -80)
