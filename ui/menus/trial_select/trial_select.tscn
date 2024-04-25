@@ -1,0 +1,102 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpvi06xjpm8ad"]
+
+[ext_resource type="Texture2D" uid="uid://b68evdp38sk7i" path="res://ui/guide/guide_border.png" id="1_35qk6"]
+[ext_resource type="Script" path="res://ui/menus/trial_select/TrialSelect.cs" id="1_w8kxg"]
+[ext_resource type="Texture2D" uid="uid://blhf7714ineuq" path="res://ui/code/header_border.png" id="2_erwxg"]
+[ext_resource type="FontFile" uid="uid://bmnbolghef78v" path="res://ui/fonts/DinaRemasterII-Bold-02.ttf" id="2_y02h3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twu8k"]
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0976563, 0.140625, 0.148438, 1)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.0703125, 0.0976563, 0.105469, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksss7"]
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0976563, 0.140625, 0.148438, 1)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.47451, 0.564706, 0.588235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t5avl"]
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0976563, 0.140625, 0.148438, 1)
+border_width_left = 5
+border_width_right = 5
+border_color = Color(0.670588, 0.74902, 0.772549, 1)
+
+[node name="TrialSelect" type="Control" node_paths=PackedStringArray("_sceneBtn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w8kxg")
+_sceneBtn = NodePath("Border/TrialsMarginContainer/TrialsList/Button")
+
+[node name="Border" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_35qk6")
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="Header" type="NinePatchRect" parent="Border"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -462.0
+offset_top = 18.0
+offset_right = 462.0
+offset_bottom = 70.0
+grow_horizontal = 2
+texture = ExtResource("2_erwxg")
+
+[node name="HeaderLabel" type="Label" parent="Border/Header"]
+layout_mode = 0
+offset_right = 924.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(0.6, 0.713726, 0.733333, 1)
+theme_override_fonts/font = ExtResource("2_y02h3")
+theme_override_font_sizes/font_size = 31
+text = "SELECT TRIAL"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="TrialsMarginContainer" type="MarginContainer" parent="Border"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="TrialsList" type="VBoxContainer" parent="Border/TrialsMarginContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Border/TrialsMarginContainer/TrialsList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_y02h3")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_twu8k")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ksss7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_t5avl")
+text = "TRIAL X - WHILE IT FABRICATES 
+[BEST GRADE: F]"
